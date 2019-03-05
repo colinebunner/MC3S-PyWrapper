@@ -5,6 +5,7 @@ import random
 # Our module files
 import code
 import runtime
+import io
 
 class Sim:
 
