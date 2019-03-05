@@ -36,9 +36,10 @@ class Code:
 
     # Don't let the user proceed without a working executable. Executable not found is likely error.
     except (subprocess.CalledProcessError, OSError) as e:
-      errorMessage = ("Type: init\nVar.: Code/__init__\nError: Couldn't set information about code "
-        "source and build. Likely couldn't find executable. Proposed path: {}.".format(execPath))
-      self.__errorLog.append(errorMessage)
+      errorMessage = ("Couldn't set information about code source and build. Likely couldn't find  "
+                      "executable. Proposed path: {}.".format(execPath))
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'__init__','Module':'Code',
+                              'Variable':'execPath','ErrorMessage':errorMessage})
 
 
   @property

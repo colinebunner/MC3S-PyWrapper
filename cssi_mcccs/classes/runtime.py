@@ -3,7 +3,7 @@ import cssi_mcccs.utilities as utilities
 
 class Runtime:
 
-  def __init__(self,nProc=None,nThreadsPerProc=None,changeLog=[],errorLog=[]):
+  def __init__(self,nProc=1,nThreadsPerProc=1,changeLog=[],errorLog=[]):
 
     self.__nProc           = nProc
     self.__nThreadsPerProc = nThreadsPerProc
