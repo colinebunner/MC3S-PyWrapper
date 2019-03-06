@@ -11,7 +11,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python /tmp/CSSI-MCCCS/setup.py install
+            python /tmp/CSSI-MCCCS/setup.py develop
       - run:
           name: run test
           command: |
