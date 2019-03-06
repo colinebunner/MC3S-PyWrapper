@@ -13,6 +13,12 @@ def is_integer(val):
 
 def is_positive_integer(val):
   if is_integer(val):
-    return val > 0
+    return val >= 0
+  else:
+    return False
+
+def is_positive_number(val):
+  if is_number(val):
+    return val >= 0
   else:
     return False

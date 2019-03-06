@@ -6,6 +6,8 @@ import random
 import cssi_mcccs.classes.code as code
 import cssi_mcccs.classes.runtime as runtime
 import cssi_mcccs.classes.io as io
+import cssi_mcccs.classes.checkpoint as checkpoint
+import cssi_mcccs.classes.system as system
 
 class Sim:
 
@@ -20,6 +22,8 @@ class Sim:
     self.__code               = code.Code(execPath=execPath,changeLog=self.__changeLog,errorLog=self.__errorLog)
     self.__runtime            = runtime.Runtime(changeLog=self.__changeLog,errorLog=self.__errorLog)
     self.__io                 = io.IO(changeLog=self.__changeLog,errorLog=self.__errorLog)
+    self.__checkpoint         = checkpoint.Checkpoint(changeLog=self.__changeLog,errorLog=self.__errorLog)
+    self.__system             = system.System(changeLog=self.__changeLog,errorLog=self.__errorLog)
 
   @property
   def prod(self):
@@ -56,6 +60,14 @@ class Sim:
   @property
   def io(self):
     return self.__io
+
+  @property
+  def checkpoint(self):
+    return self.__checkpoint
+
+  @property
+  def system(self):
+    return self.__system
 
   def write_errorLog(self,fn=None):
     # No argument or explicit None prints to screen

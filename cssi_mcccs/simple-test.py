@@ -6,3 +6,4 @@ mySim.runtime.nProc = 4
 mySim.write_changeLog()
 mySim.io.ltraj = 4
 mySim.write_errorLog()
+mySim.write_changeLog()
