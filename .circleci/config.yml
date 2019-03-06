@@ -4,15 +4,16 @@ jobs:
     docker:
       - image: circleci/python:3.7
 
-    working_directory: /tmp/CSSI-MCCCS
+    working_directory: /home/CSSI-MCCCS
 
     steps:
       - checkout
+      - run: mkdir -p /home/CSSI-MCCCS
       - run:
           name: install dependencies
           command: |
-            python /tmp/CSSI-MCCCS/setup.py develop
+            python setup.py develop
       - run:
           name: run test
           command: |
-            python /tmp/CSSI-MCCCS/cssi_mcccs.py/simple-test.py
+            python simple-test.py
