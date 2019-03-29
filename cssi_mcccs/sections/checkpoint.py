@@ -78,7 +78,7 @@ class Checkpoint:
 
   @checkpoint_copies.setter
   def checkpoint_copies(self,val):
-    if ti.is_positive_integer:
+    if ti.is_positive_integer(val):
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                'Variable':'checkpoint_copies','Success':True,
                                'Previous':self.__checkpoint_copies,'New':val,'ErrorMessage':None})
