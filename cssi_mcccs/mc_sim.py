@@ -3,12 +3,16 @@ import os
 import datetime
 import random
 # Our module files
+from cssi_mcccs.utilities import oneDimArray as oda
 import cssi_mcccs.sections.code as code
 import cssi_mcccs.sections.runtime as runtime
 import cssi_mcccs.sections.io as io
 import cssi_mcccs.sections.checkpoint as checkpoint
 import cssi_mcccs.sections.system as system
 import cssi_mcccs.sections.volume as volume
+import cssi_mcccs.sections.swap as swap
+import cssi_mcccs.sections.cbmc as cbmc
+import cssi_mcccs.sections.simbox as simbox
 
 class Sim:
 
@@ -21,12 +25,15 @@ class Sim:
     self.__location           = "Sim"
     self.__homeDirectory      = os.getcwd()
     self.__scratchDirectory   = "/tmp/cssi-mcccs-{}".format(int(random.random()*123456789))
+    self.__boxes              = []
     self.__code               = code.Code(execPath=execPath,changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__runtime            = runtime.Runtime(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__io                 = io.IO(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__checkpoint         = checkpoint.Checkpoint(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__system             = system.System(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__volume             = volume.Volume(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__swap               = swap.Swap(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__cbmc               = cbmc.CBMC(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
 
 
   @property
@@ -80,6 +87,26 @@ class Sim:
   @property
   def volume(self):
     return self.__volume
+
+  @property
+  def swap(self):
+    return self.__swap
+
+  @property
+  def cbmc(self):
+    return self.__cbmc
+
+  @property
+  def boxes(self):
+    return self.__boxes
+
+  def init_boxes(self,nbox):
+    boxes = {}
+    for i in range(nbox):
+      boxes[i+1] = simbox.SimBox(number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                   location=self.__location)
+    # Still don't think I need to convert this to an oda, but time will tell
+    self.__boxes = boxes
 
   def write_errorLog(self,fn=None):
     # No argument or explicit None prints to screen

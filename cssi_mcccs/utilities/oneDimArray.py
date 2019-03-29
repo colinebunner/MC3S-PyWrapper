@@ -37,8 +37,8 @@ class oneDimArray(object):
   def __repr__(self):
     rep = '['
     for i in range(self.__length-1):
-      rep += '{:<f}, '.format(self.__data[i+1])
-    rep += '{:<f}]'.format(self.__data[self.__length])
+      rep += '{}, '.format(self.__data[i+1])
+    rep += '{}]'.format(self.__data[self.__length])
     return rep
 
   @classmethod

@@ -278,39 +278,39 @@ class CBMC:
                                  'New':repr(val),'ErrorMessage':None})
       self.__nchoih = val
 
-  @nchoitor.setter
-  def nchoitor(self,val):
+  @nchtor.setter
+  def nchtor(self,val):
     if not isinstance(val,oda.oneDimArray):
       if not isinstance(val,list):
         # Single numbers are OK
         if not ti.is_positive_integer(val):
-          errorMessage = ("To properly set nchoitor you have a few options. You can always pass it as a "
-                          " python list (e.g. mySim.swap.nchoitor = [16,16])."
+          errorMessage = ("To properly set nchtor you have a few options. You can always pass it as a "
+                          " python list (e.g. mySim.swap.nchtor = [16,16])."
                           " This will automatically convert to the special oneDimArray used by the code."
                           " You can also set it as a oneDimArray object yourself, but this is far more "
                           " tedious and you need to be careful that the errorLog, changeLog, location, "
                           " and variable flags are set properly, which involves passing the right "
                           " reference. Note that single values can be passed as an int.")
           self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                   'Variable':'nchoitor','Success':False,'Previous':repr(self.__nchoitor),
+                                   'Variable':'nchtor','Success':False,'Previous':repr(self.__nchtor),
                                    'New':repr(val),'ErrorMessage':errorMessage})
           self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
-                                  'Location':self.__location,'Variable':'nchoitor',
+                                  'Location':self.__location,'Variable':'nchtor',
                                   'ErrorMessage':errorMessage})
       else:
         # For single values, cast to list
         val = list(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
-                                          location=self.__location,var="nchoitor")
+                                          location=self.__location,var="nchtor")
         self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchoitor','Success':True,'Previous':repr(self.__nchoitor),
+                                 'Variable':'nchtor','Success':True,'Previous':repr(self.__nchtor),
                                  'New':repr(myODA),'ErrorMessage':None})
-        self.__nchoitor = myODA
+        self.__nchtor = myODA
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchoitor','Success':True,'Previous':repr(self.__nchoitor),
+                                 'Variable':'nchtor','Success':True,'Previous':repr(self.__nchtor),
                                  'New':repr(val),'ErrorMessage':None})
-      self.__nchoitor = val
+      self.__nchtor = val
 
   @nchbna.setter
   def nchbna(self,val):

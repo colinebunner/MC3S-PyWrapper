@@ -38,7 +38,6 @@ class Swap:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                'Variable':'pmswap','Success':True,'Previous':self.__pmswap,'New':val,
                                'ErrorMessage':None})
-
       self.__pmswap = val
     else:
       errorMessage = "pmswap must be a number less than 1."
