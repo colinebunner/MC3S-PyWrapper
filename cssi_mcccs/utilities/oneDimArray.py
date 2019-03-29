@@ -34,6 +34,13 @@ class oneDimArray(object):
       self.__changeLog.append({'Location':self.__location,'Variable':self.__var,'New':val,'Previous':self.__data[pos]})
       self.__data[pos] = val
 
+  def __repr__(self):
+    rep = '['
+    for i in range(self.__length-1):
+      rep += '{:<f}, '.format(self.__data[i+1])
+    rep += '{:<f}]'.format(self.__data[self.__length])
+    return rep
+
   @classmethod
   def listToData(cls,val):
     length = len(val)

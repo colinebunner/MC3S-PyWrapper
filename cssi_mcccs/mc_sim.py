@@ -8,6 +8,7 @@ import cssi_mcccs.sections.runtime as runtime
 import cssi_mcccs.sections.io as io
 import cssi_mcccs.sections.checkpoint as checkpoint
 import cssi_mcccs.sections.system as system
+import cssi_mcccs.sections.volume as volume
 
 class Sim:
 
@@ -25,6 +26,8 @@ class Sim:
     self.__io                 = io.IO(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__checkpoint         = checkpoint.Checkpoint(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__system             = system.System(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__volume             = volume.Volume(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+
 
   @property
   def prod(self):
@@ -73,6 +76,10 @@ class Sim:
   @property
   def system(self):
     return self.__system
+
+  @property
+  def volume(self):
+    return self.__volume
 
   def write_errorLog(self,fn=None):
     # No argument or explicit None prints to screen
