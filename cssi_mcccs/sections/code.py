@@ -4,7 +4,7 @@ import shlex
 
 class Code:
 
-  def __init__(self,execPath,changeLog=[],errorLog=[]):
+  def __init__(self,execPath,changeLog=[],errorLog=[],location=""):
 
     self.__execPath         = execPath
     self.__gitBranch        = None
@@ -14,6 +14,7 @@ class Code:
     self.__compilerLocation = None
     self.__changeLog        = changeLog
     self.__errorLog         = errorLog
+    self.__location         = "{}/Code".format(location)
 
     getCodeInfo = "{} -v".format(execPath)
     args = shlex.split(getCodeInfo)
@@ -38,7 +39,7 @@ class Code:
     except (subprocess.CalledProcessError, OSError) as e:
       errorMessage = ("Couldn't set information about code source and build. Likely couldn't find  "
                       "executable. Proposed path: {}.".format(execPath))
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'__init__','Module':'Code',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'__init__','Location':self.__location,
                               'Variable':'execPath','ErrorMessage':errorMessage})
 
 
@@ -74,6 +75,10 @@ class Code:
   def changeLog(self):
     return self.__changeLog
 
+  @property
+  def location(self):
+    return self.__location
+
   @execPath.setter
   def execPath(self,val):
     # Test code by trying to output version before accepting executable path change
@@ -81,13 +86,13 @@ class Code:
     args = shlex.split(testCode)
     try:
       version = subprocess.check_output(args)      
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'Code','Variable':'execPath',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'execPath',
                                'Success':True,'Previous':self.__execPath,'New':val,'ErrorMessage':None})
       self.__execPath = val
     except (subprocess.CalledProcessError,OSError) as e:
       errorMessage = ("Type: Setter\nVar.: Code/execPath\nError: Couldn't set new code executable "
         "path. Likely couldn't find executable.")
-      self.__errorLog.append(errorMessage)
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'Code','Variable':'execPath',
-                               'Success':False,'Previous':self.__execPath,'New':val,
-                               'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'execPath','ErrorMessage':errorMessage})
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'execPath',
+                               'Success':False,'Previous':self.__execPath,'New':val,'ErrorMessage':errorMessage})

@@ -6,7 +6,7 @@ class IO:
                     file_movie="movie1a.dat",file_solute="solute.dat",file_traj="fort.12",outputLocation="file",
                     run_num=1,suffix="a",L_movie_xyz=None,L_movie_pdb=None,file_cbmc_bend="cbmc_bend_table.dat",
                     checkpoint_interval=None,checkpoint_copies=None,use_checkpoint=None,ltraj=None,changeLog=[],
-                    errorLog=[]):
+                    errorLog=[],location=""):
 
     self.__file_input          = file_input
     self.__file_restart        = file_restart
@@ -24,6 +24,7 @@ class IO:
     self.__ltraj               = ltraj
     self.__changeLog           = changeLog
     self.__errorLog            = errorLog
+    self.__location            = location
     if (outputLocation.upper()=="FILE"):  # Rather have users choose "screen" or "terminal" than 2 or 6 
                                           # like original MCCCS input
       self.__io_output = 2
@@ -32,7 +33,7 @@ class IO:
     else:
       errorMessage = ("Couldn't set code output location {}. Options are \"file\" or "
                       "\"terminal\" (any case).".format(outputLocation))
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'__init__','Module':'IO',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'__init__','Location':self.__location,
                               'Variable':'outputLocation','ErrorMessage':errorMessage})
 
 
@@ -108,46 +109,58 @@ class IO:
   def ltraj(self):
     return self.__ltraj
 
+  @property
+  def errorLog(self):
+    return self.__errorLog
+
+  @property
+  def changeLog(self):
+    return self.__changeLog
+
+  @property
+  def location(self):
+    return self.__location
+
   @file_input.setter
   def file_input(self,val):
-    self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'fileInput',
+    self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'fileInput',
                              'Success':True,'Previous':self.__file_input,'New':val,'ErrorMessage':None})
     self.__file_input = str(val)
 
   @file_restart.setter
   def file_restart(self,val):
-    self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'file_restart',
+    self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'file_restart',
                              'Success':True,'Previous':self.__file_restart,'New':val,
                              'ErrorMessage':None})
     self.__file_restart = str(val)
 
   @file_struct.setter
   def file_struct(self,val):
-    self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'file_struct',
+    self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'file_struct',
                              'Success':True,'Previous':self.__file_struct,'New':val,'ErrorMessage':None})
     self.__file_struct = str(val)
 
   @file_run.setter
   def file_run(self,val):
-    self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'file_run',
+    self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'file_run',
                              'Success':True,'Previous':self.__file_run,'New':val,'ErrorMessage':None})
     self.__file_run = str(val)
 
   @file_movie.setter
   def file_movie(self,val):
-    self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'file_movie',
+    self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'file_movie',
                              'Success':True,'Previous':self.__file_movie,'New':val,'ErrorMessage':None})
     self.__file_movie = str(val)
 
   @file_solute.setter
   def file_solute(self,val):
-    self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'file_solute',
+    self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'file_solute',
                              'Success':True,'Previous':self.__file_solute,'New':val,'ErrorMessage':None})
     self.__file_solute=str(val)
 
   @file_traj.setter
   def file_traj(self,val):
-    self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'file_traj',
+    self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'file_traj',
                              'Success':True,'Previous':self.__file_traj,'New':val,'ErrorMessage':None})
     self.__file_traj=str(val)
 
@@ -155,72 +168,72 @@ class IO:
   def outputLocation(self,val):
     val = str(val).upper()
     if val in ["FILE","TERMINAL"]:
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'outputLocation',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'outputLocation',
                                'Success':True,'Previous':self.__outputLocation,'New':val,
                                'ErrorMessage':None})
       self.__outputLocation = val
     else:
       errorMessage = ("Error setting outputLocation. Allowed values are \"file\" and \"terminal\" "
         "(any case).")
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'outputLocation',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'outputLocation',
                                'Success':False,'Previous':self.__outputLocation,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'IO',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'outputLocation','ErrorMessage':errorMessage})
 
   @run_num.setter
   def run_num(self,val):
     if utilities.is_integer(val):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'run_num',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'run_num',
                                'Success':True,'Previous':self.__run_num,'New':val,'ErrorMessage':None})
       self.__run_num=val
     else:
       errorMessage = "Error setting run_num. Must be an integer."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'run_num',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'run_num',
                                'Success':False,'Previous':self.__run_num,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'IO',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'run_num','ErrorMessage':errorMessage})
 
   @suffix.setter
   def suffix(self,val):
-    self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'suffix',
+    self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'suffix',
                              'Success':True,'Previous':self.__suffix,'New':val,'ErrorMessage':None})
     self.__suffix=str(val)
 
   @L_movie_xyz.setter
   def L_movie_xyz(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'L_movie_xyz',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'L_movie_xyz',
                                'Success':True,'Previous':self.__L_movie_xyz,'New':val,
                                'ErrorMessage':None})
       self.__L_movie_xyz = val
     else:
       errorMessage = "Error setting L_movie_xyz. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'L_movie_xyz',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'L_movie_xyz',
                                'Success':False,'Previous':self.__L_movie_xyz,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'IO',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'L_movie_xyz','ErrorMessage':errorMessage})
 
   @L_movie_pdb.setter
   def L_movie_pdb(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'L_movie_pdb',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'L_movie_pdb',
                                'Success':True,'Previous':self.__L_movie_pdb,'New':val,
                                'ErrorMessage':None})
       self.__L_movie_pdb = val
     else:
       errorMessage = "Error setting L_movie_pdb. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'L_movie_pdb',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'L_movie_pdb',
                                'Success':False,'Previous':self.__L_movie_pdb,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'IO',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'L_movie_pdb','ErrorMessage':errorMessage})
 
   @file_cbmc_bend.setter
   def file_cbmc_bend(self,val):
-    self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'file_cbmc_bend',
+    self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'file_cbmc_bend',
                              'Success':True,'Previous':self.__file_cbmc_bend,'New':val,
                              'ErrorMessage':None})
     self.__file_cbmc_bend = str(val)
@@ -228,13 +241,13 @@ class IO:
   @ltraj.setter
   def ltraj(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'ltraj',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'ltraj',
                                'Success':True,'Previous':self.__ltraj,'New':val,'ErrorMessage':None})
       self.__ltraj = val
     else:
       errorMessage = "Error setting ltraj. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'IO','Variable':'ltraj',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'ltraj',
                                'Success':False,'Previous':self.__ltraj,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'IO',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'ltraj','ErrorMessage':errorMessage})

@@ -3,11 +3,11 @@ import os
 import datetime
 import random
 # Our module files
-import cssi_mcccs.classes.code as code
-import cssi_mcccs.classes.runtime as runtime
-import cssi_mcccs.classes.io as io
-import cssi_mcccs.classes.checkpoint as checkpoint
-import cssi_mcccs.classes.system as system
+import cssi_mcccs.sections.code as code
+import cssi_mcccs.sections.runtime as runtime
+import cssi_mcccs.sections.io as io
+import cssi_mcccs.sections.checkpoint as checkpoint
+import cssi_mcccs.sections.system as system
 
 class Sim:
 
@@ -17,13 +17,14 @@ class Sim:
     self.__ncycles            = 0
     self.__errorLog           = []
     self.__changeLog          = []
+    self.__location           = "Sim"
     self.__homeDirectory      = os.getcwd()
     self.__scratchDirectory   = "/tmp/cssi-mcccs-{}".format(int(random.random()*123456789))
-    self.__code               = code.Code(execPath=execPath,changeLog=self.__changeLog,errorLog=self.__errorLog)
-    self.__runtime            = runtime.Runtime(changeLog=self.__changeLog,errorLog=self.__errorLog)
-    self.__io                 = io.IO(changeLog=self.__changeLog,errorLog=self.__errorLog)
-    self.__checkpoint         = checkpoint.Checkpoint(changeLog=self.__changeLog,errorLog=self.__errorLog)
-    self.__system             = system.System(changeLog=self.__changeLog,errorLog=self.__errorLog)
+    self.__code               = code.Code(execPath=execPath,changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__runtime            = runtime.Runtime(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__io                 = io.IO(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__checkpoint         = checkpoint.Checkpoint(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__system             = system.System(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
 
   @property
   def prod(self):
@@ -40,6 +41,10 @@ class Sim:
   @property
   def changeLog(self):
     return self.__changeLog
+
+  @property
+  def location(self):
+    return self.__location
 
   @property
   def homeDirectory(self):

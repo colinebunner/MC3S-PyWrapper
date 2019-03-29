@@ -1,12 +1,12 @@
 import datetime
-import cssi_mcccs.utilities as utilities
+import cssi_mcccs.utilities.test_instance as ti
 
 class System:
 
   def __init__(self,lnpt=None,lgibbs=None,lgrand=None,losmotic_nvt=None,lanes=None,lpbc=None,lpbcx=None,
                lpbcy=None,lpbcz=None,lfold=None,lexzeo=None,lslit=None,lgraphite=None,lsami=None,
                lmuir=None,lelect_field=None,lgaro=None,lionic=None,lkdtree=None,changeLog=[],
-               errorLog=[]):
+               errorLog=[],location=""):
 
     self.__lnpt         = lnpt
     self.__lgibbs       = lgibbs
@@ -28,6 +28,7 @@ class System:
     self.__lionic       = lionic
     self.__changeLog    = changeLog
     self.__errorLog     = errorLog
+    self.__location     = "{}/System".format(location)
 
   @property
   def lnpt(self):
@@ -109,256 +110,260 @@ class System:
   def errorLog(self):
     return self.__errorLog
 
+  @property
+  def location(self):
+    return self.__location
+
   @lnpt.setter
   def lnpt(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lnpt',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lnpt',
                                'Success':True,'Previous':self.__lnpt,'New':val,'ErrorMessage':None})
       self.__lnpt = val
     else:
       errorMessage = "Error setting value for lnpt. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lnpt',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lnpt',
                                'Success':False,'Previous':self.__lnpt,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lnpt','ErrorMessage':errorMessage})
 
   @lgibbs.setter
   def lgibbs(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lgibbs',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lgibbs',
                                'Success':True,'Previous':self.__lgibbs,'New':val,'ErrorMessage':None})
       self.__lgibbs = val
     else:
       errorMessage = "Error setting value for lgibbs. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lgibbs',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lgibbs',
                                'Success':False,'Previous':self.__lgibbs,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lgibbs','ErrorMessage':errorMessage})
 
   @lgrand.setter
   def lgrand(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lgrand',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lgrand',
                                'Success':True,'Previous':self.__lgrand,'New':val,'ErrorMessage':None})
       self.__lgrand = val
     else:
       errorMessage = "Error setting value for lgrand. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lgrand',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lgrand',
                                'Success':False,'Previous':self.__lgrand,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lgrand','ErrorMessage':errorMessage})
 
   @losmotic_nvt.setter
   def losmotic_nvt(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                 'Variable':'losmotic_nvt','Success':True,'Previous':self.__losmotic_nvt,
                                 'New':val,'ErrorMessage':None})
       self.__losmotic_nvt = val
     else:
       errorMessage = "Error setting losmotic_nvt. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                'Variable':'losmotic_nvt','Success':False,'Previous':self.__losmotic_nvt,
                                'New':val,'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'losmotic_nvt','ErrorMessage':errorMessage})
 
   @lanes.setter
   def lanes(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lanes',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lanes',
                                'Success':True,'Previous':self.__lanes,'New':val,'ErrorMessage':None})
       self.__lanes = val
     else:
       errorMessage = "Error setting lanes. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lanes',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lanes',
                                'Success':False,'Previous':self.__lanes,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lanes','ErrorMessage':errorMessage})
 
   @lpbc.setter
   def lpbc(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lpbc',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lpbc',
                                'Success':True,'Previous':self.__lpbc,'New':val,'ErrorMessage':None})
       self.__lpbc = val
     else:
       errorMessage = "Error setting lpbc. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lpbc',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lpbc',
                                'Success':False,'Previous':self.__lpbc,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lpbc','ErrorMessage':errorMessage})
 
   @lpbcx.setter
   def lpbcx(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lpbcx',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lpbcx',
                                'Success':True,'Previous':self.__lpbcx,'New':val,'ErrorMessage':None})
       self.__lpbcx = val
     else:
       errorMessage = "Error setting lpbcx. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lpbcx',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lpbcx',
                                'Success':False,'Previous':self.__lpbcx,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lpbcx','ErrorMessage':errorMessage})
 
   @lpbcy.setter
   def lpbcy(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lpbcy',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lpbcy',
                                'Success':True,'Previous':self.__lpbcy,'New':val,'ErrorMessage':None})
       self.__lpbcy = val
     else:
       errorMessage = "Error setting lpbcy. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lpbcy',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lpbcy',
                                'Success':False,'Previous':self.__lpbcy,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lpbcy','ErrorMessage':errorMessage})
 
   @lpbcz.setter
   def lpbcz(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lpbcz',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lpbcz',
                                'Success':True,'Previous':self.__lpbcz,'New':val,'ErrorMessage':None})
       self.__lpbcz = val
     else:
       errorMessage = "Error setting lpbcz. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lpbcz',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lpbcz',
                                'Success':False,'Previous':self.__lpbcz,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lpbcz','ErrorMessage':errorMessage})
 
   @lfold.setter
   def lfold(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lfold',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lfold',
                                'Success':True,'Previous':self.__lfold,'New':val,'ErrorMessage':None})
       self.__lfold = val
     else:
       errorMessage = "Error setting lfold. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lfold',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lfold',
                                'Success':False,'Previous':self.__lfold,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lfold','ErrorMessage':errorMessage})
 
   @lexzeo.setter
   def lexzeo(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lexzeo',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lexzeo',
                                'Success':True,'Previous':self.__lexzeo,'New':val,'ErrorMessage':None})
       self.__lexzeo = val
     else:
       errorMessage = "Error setting lexzeo. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lexzeo',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lexzeo',
                                'Success':False,'Previous':self.__lexzeo,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lexzeo','ErrorMessage':errorMessage})
 
   @lslit.setter
   def lslit(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lslit',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lslit',
                                'Success':True,'Previous':self.__lslit,'New':val,'ErrorMessage':None})
       self.__lslit = val
     else:
       errorMessage = "Error setting lslit. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lslit',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lslit',
                                'Success':False,'Previous':self.__lslit,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lslit','ErrorMessage':errorMessage})
 
   @lgraphite.setter
   def lgraphite(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lgraphite',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lgraphite',
                                'Success':True,'Previous':self.__lgraphite,'New':val,'ErrorMessage':None})
       self.__lgraphite = val
     else:
       errorMessage = "Error setting lgraphite. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lgraphite',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lgraphite',
                                'Success':False,'Previous':self.__lgraphite,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lgraphite','ErrorMessage':errorMessage})
 
   @lsami.setter
   def lsami(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lsami',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lsami',
                                'Success':True,'Previous':self.__lsami,'New':val,'ErrorMessage':None})
       self.__lsami = val
     else:
       errorMessage = "Error setting lsami. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lsami',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lsami',
                                'Success':False,'Previous':self.__lsami,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lsami','ErrorMessage':errorMessage})
 
   @lmuir.setter
   def lmuir(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lmuir',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lmuir',
                                'Success':True,'Previous':self.__lmuir,'New':val,'ErrorMessage':None})
       self.__lmuir = val
     else:
       errorMessage = "Error setting lmuir. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lmuir',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lmuir',
                                'Success':False,'Previous':self.__lmuir,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lmuir','ErrorMessage':errorMessage})
 
   @lelectric_field.setter
   def lelectric_field(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                'Variable':'lelectric_field','Success':True,
                                'Previous':self.__lelectric_field,'New':val,'ErrorMessage':None})
       self.__lelect_field = val
     else:
       errorMessage = "Error setting lelectric_field. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                'Variable':'lelectric_field','Success':False,
                                'Previous':self.__lelectric_field,'New':val,'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lelectric_field','ErrorMessage':errorMessage})
 
   @lgaro.setter
   def lgaro(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lgaro',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lgaro',
                                'Success':True,'Previous':self.__lgaro,'New':val,'ErrorMessage':None})
       self.__lgaro = val
     else:
       errorMessage = "Error setting lgaro. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                'Variable':'lgaro','Success':False,'Previous':self.__lgaro,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lgaro','ErrorMessage':errorMessage})
 
   @lionic.setter
   def lionic(self,val):
     if isinstance(val,bool):
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lionic',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lionic',
                                'Success':True,'Previous':self.__lionic,'New':val,'ErrorMessage':None})
       self.__lionic=val
     else:
       errorMessage = "Error setting lionic. Must be a boolean."
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Module':'System','Variable':'lionic',
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'lionic',
                                'Success':False,'Previous':self.__lionic,'New':val,
                                'ErrorMessage':errorMessage})
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Module':'System',
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'lionic','ErrorMessage':errorMessage})
