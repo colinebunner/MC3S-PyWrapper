@@ -8,4 +8,4 @@ COPY       . /cssi-cp2k
 RUN        python setup.py install
 RUN        pip install -r /cssi-cp2k/cssi_cp2k.egg-info/requires.txt
 
-CMD        ["python","/cssi-cp2k/cssi_cp2k/simple-test.py"]
+CMD        ["python","/cssi-cp2k/cssi_cp2k/tests/simple-test.py"]
