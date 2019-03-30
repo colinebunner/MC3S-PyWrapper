@@ -7,10 +7,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install dependencies
-          command: |
-            python setup.py develop
-      - run:
           name: run test
           command: |
             python cssi_mcccs/tests/simple-test.py
