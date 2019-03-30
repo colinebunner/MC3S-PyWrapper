@@ -1,12 +1,20 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/cssi-cp2k
     docker:
       - image: circleci/python:3.7
       
     steps:
       - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+      - run: sudo mkdir -p ~/cssi-cp2k
+      - run:
+          name: run setup
+          command: |
+            sudo python3 setup.py install
       - run:
           name: run test
           command: |
-            python cssi_mcccs/tests/simple-test.py
+            python3 cssi_mcccs/tests/simple-test.py
