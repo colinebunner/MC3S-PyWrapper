@@ -4,6 +4,7 @@ import datetime
 import random
 # Our module files
 from cssi_mcccs.utilities import oneDimArray as oda
+from cssi_mcccs.utilities import objectArray as oba
 import cssi_mcccs.sections.code as code
 import cssi_mcccs.sections.runtime as runtime
 import cssi_mcccs.sections.io as io
@@ -13,6 +14,7 @@ import cssi_mcccs.sections.volume as volume
 import cssi_mcccs.sections.swap as swap
 import cssi_mcccs.sections.cbmc as cbmc
 import cssi_mcccs.sections.simbox as simbox
+import cssi_mcccs.sections.mtype as mtype
 
 class Sim:
 
@@ -101,12 +103,19 @@ class Sim:
     return self.__boxes
 
   def init_boxes(self,nbox):
-    boxes = {}
-    for i in range(nbox):
-      boxes[i+1] = simbox.SimBox(number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,
-                   location=self.__location)
-    # Still don't think I need to convert this to an oda, but time will tell
-    self.__boxes = boxes
+    boxes = []
+    for i in range(1,nbox+1):
+      boxes.append(simbox.SimBox(number=i,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                 location=self.__location))
+    self.__boxes = oba.objectArray.listToOBA(boxes,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                             location=self.__location)
+
+  def init_mtypes(self,nmolty):
+    mtypes = []
+    for i in range(nmolty):
+      mtypes[i+1] = mtype.MType(number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                location=self.__location)
+    self.__mtypes = mtypes
 
   def write_errorLog(self,fn=None):
     # No argument or explicit None prints to screen

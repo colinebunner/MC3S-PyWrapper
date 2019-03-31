@@ -3,7 +3,7 @@ from cssi_mcccs.utilities import test_instance as ti
 from cssi_mcccs.utilities import oneDimArray   as oda
 from cssi_mcccs.sections  import bead
 
-class mtype:
+class MType:
 
   def __init__(self,nunit=None,nugrow=None,ncarbon=None,maxcbmc=None,maxgrow=None,iring=None,
                lelect=None,lring=None,lrigid=None,lbranch=None,lsetup=None,lq14scale=None,qscale=None,
