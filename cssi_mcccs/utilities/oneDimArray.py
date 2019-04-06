@@ -1,3 +1,5 @@
+import datetime
+
 class oneDimArray(object):
 
   def __init__(self,length,errorLog=[],changeLog=[],location="",var=""):
@@ -31,7 +33,9 @@ class oneDimArray(object):
       self._errorLog.append({"ErrorMessage":errorMessage,'Location':self._location,'Variable':self._var})
       raise IndexError(errorMessage)
     else:
-      self._changeLog.append({'Location':self._location,'Variable':self._var,'New':val,'Previous':self._data[pos]})
+      self._changeLog.append({'Date':datetime.datetime.now(),'Location':self._location,'Index':pos,
+                               'Variable':self._var,'Success':True,'Previous':self._data[pos],'New':val,
+                               'ErrorMessage':None})
       self._data[pos] = val
 
   def __repr__(self):
@@ -79,13 +83,3 @@ class oneDimArray(object):
   @property
   def length(self):
     return self._length
-
-  @data.setter
-  def data(self,val):
-    if type(val) != dict:
-      errorMessage = "Data must be a specific dictionary format. Are you sure you know what you are doing?"
-      self._errorLog.append({"ErrorMessage":errorMessage,'Location':self._location,'Variable':self._var})
-      raise ValueError("This douchebag tried to set oda data but failed")
-    else:
-      self._changeLog.append({'Location':self._location,'Variable':self._var,'New':self._val,'Previous':self._data})
-      self._data = val

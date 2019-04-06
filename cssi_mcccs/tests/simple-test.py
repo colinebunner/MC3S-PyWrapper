@@ -52,11 +52,11 @@ mySim.system.lmuir       = False
 mySim.system.L_Ewald_Auto = True
 mySim.system.lmixlb       = True
 mySim.system.lmixjo       = False
-mySim.L_spline            = False
-mySim.L_linear            = False
-mySim.L_vib_table         = False
-mySim.L_bend_table        = False
-mySim.L_elect_table       = False
+mySim.system.L_spline            = False
+mySim.system.L_linear            = False
+mySim.system.L_vib_table         = False
+mySim.system.L_bend_table        = False
+mySim.system.L_elect_table       = False
 
 # Volume namelist
 mySim.volume.pmvlmt = [1.0,1.0]
@@ -65,4 +65,5 @@ mySim.volume.pmvlmt[1] = 0.5
 mySim.init_boxes(2)
 mySim.boxes[1].temperature = 400.0
 mySim.boxes[1].nchain_mt = [1200,0]
+
 mySim.write_changeLog()

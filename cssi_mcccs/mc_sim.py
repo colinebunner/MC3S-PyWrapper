@@ -5,6 +5,8 @@ import random
 # Our module files
 from cssi_mcccs.utilities import oneDimArray as oda
 from cssi_mcccs.utilities import objectArray as oba
+from cssi_mcccs.utilities import dateTools   as dt
+from cssi_mcccs.utilities import changeLog   as chl
 import cssi_mcccs.sections.code as code
 import cssi_mcccs.sections.runtime as runtime
 import cssi_mcccs.sections.io as io
@@ -23,7 +25,7 @@ class Sim:
     self.__prod               = False
     self.__ncycles            = 0
     self.__errorLog           = []
-    self.__changeLog          = []
+    self.__changeLog          = chl.changeLog()
     self.__location           = "Sim"
     self.__homeDirectory      = os.getcwd()
     self.__scratchDirectory   = "/tmp/cssi-mcccs-{}".format(int(random.random()*123456789))
@@ -124,7 +126,7 @@ class Sim:
         print(error)
 
   def write_changeLog(self,fn=None):
-    # No argument or explicit None prints to screen
+     # No argument or explicit None prints to screen
     if fn is None:
       for change in self.__changeLog:
         print(change)

@@ -824,6 +824,20 @@ class System:
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'L_bend_table','ErrorMessage':errorMessage})
 
+  @L_elect_table.setter
+  def L_elect_table(self,val):
+    if isinstance(val,bool):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'L_elect_table',
+                               'Success':True,'Previous':self.__L_elect_table,'New':val,'ErrorMessage':None})
+      self.__L_elect_table = val
+    else:
+      errorMessage = "Error setting L_elect_table. Must be a boolean."
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'L_elect_table',
+                               'Success':False,'Previous':self.__L_elect_table,'New':val,
+                               'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'L_elect_table','ErrorMessage':errorMessage})
+
   @L_cbmc_bend.setter
   def L_cbmc_bend(self,val):
     if isinstance(val,bool):
