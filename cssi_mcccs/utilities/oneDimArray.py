@@ -54,7 +54,8 @@ class oneDimArray(object):
   def listToODA(cls,val,errorLog=[],changeLog=[],location="",var=""):
     length = len(val)
     myODA = oneDimArray(length=length,errorLog=errorLog,changeLog=changeLog,location=location,var=var)
-    myODA._data = oneDimArray.listToData(val)
+    for i in range(length):
+      myODA[i+1] = val[i]
     return myODA
 
   def dataAsArray(self):

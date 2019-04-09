@@ -3,7 +3,7 @@ from cssi_mcccs.utilities import test_instance as ti
 from cssi_mcccs.utilities import oneDimArray   as oda
 
 class Volume:
-  
+
   def __init__(self,tavol=None,iratv=None,pmvlmt=None,pmvolb=None,box5=None,box6=None,pmvol=None,
                pmvolx=None,pmvoly=None,rmvolume=None,allow_cutoff_failure=None,errorLog=[],changeLog=[],
                location=""):
@@ -135,9 +135,6 @@ class Volume:
         val = list(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="pmvlmt")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'pmvlmt','Success':True,'Previous':repr(self.__pmvlmt),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__pmvlmt = myODA
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
@@ -167,9 +164,6 @@ class Volume:
       else:
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="pmvolb")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'pmvolb','Success':True,'Previous':repr(self.__pmvolb),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__pmvolb = myODA
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,

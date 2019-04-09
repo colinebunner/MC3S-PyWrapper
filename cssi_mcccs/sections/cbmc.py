@@ -82,7 +82,7 @@ class CBMC:
   @property
   def errorLog(self):
     return self.__errorLog
- 
+
   @property
   def changeLog(self):
     return self.__changeLog
@@ -130,12 +130,12 @@ class CBMC:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="pmcbmt")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'pmcbmt','Success':True,'Previous':repr(self.__pmcbmt),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__pmcbmt = myODA
+        for i in range(length):
+          self.__pmcbmt[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'pmcbmt','Success':True,'Previous':repr(self.__pmcbmt),
@@ -164,12 +164,12 @@ class CBMC:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchoi1")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchoi1','Success':True,'Previous':repr(self.__nchoi1),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__nchoi1 = myODA
+        for i in range(length):
+          self.__nchoi1[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchoi1','Success':True,'Previous':repr(self.__nchoi1),
@@ -198,12 +198,12 @@ class CBMC:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
-                                          location=self.__location,var="nchoi")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchoi','Success':True,'Previous':repr(self.__nchoi),
-                                 'New':repr(myODA),'ErrorMessage':None})
+                                         location=self.__location,var="nchoi")
         self.__nchoi = myODA
+        for i in range(length):
+          self.__nchoi[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchoi','Success':True,'Previous':repr(self.__nchoi),
@@ -232,18 +232,18 @@ class CBMC:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchoir")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchoir','Success':True,'Previous':repr(self.__nchoir),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__nchoir = myODA
+        for i in range(length):
+          self.__nchoir[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchoir','Success':True,'Previous':repr(self.__nchoir),
                                  'New':repr(val),'ErrorMessage':None})
       self.__nchoir = val
- 
+
   @nchoih.setter
   def nchoih(self,val):
     if not isinstance(val,oda.oneDimArray):
@@ -266,12 +266,12 @@ class CBMC:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchoih")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchoih','Success':True,'Previous':repr(self.__nchoih),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__nchoih = myODA
+        for i in range(length):
+          self.__nchoih[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchoih','Success':True,'Previous':repr(self.__nchoih),
@@ -300,12 +300,12 @@ class CBMC:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchtor")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchtor','Success':True,'Previous':repr(self.__nchtor),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__nchtor = myODA
+        for i in range(length):
+          self.__nchtor[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchtor','Success':True,'Previous':repr(self.__nchtor),
@@ -334,12 +334,12 @@ class CBMC:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchbna")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchbna','Success':True,'Previous':repr(self.__nchbna),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__nchbna = myODA
+        for i in range(length):
+          self.__nchbna[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchbna','Success':True,'Previous':repr(self.__nchbna),
@@ -368,12 +368,12 @@ class CBMC:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
-                                          location=self.__location,var="nchbnb")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchbnb','Success':True,'Previous':repr(self.__nchbnb),
-                                 'New':repr(myODA),'ErrorMessage':None})
+                                location=self.__location,var="nchbnb")
         self.__nchbnb = myODA
+        for i in range(length):
+          self.__nchbnb[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchbnb','Success':True,'Previous':repr(self.__nchbnb),
@@ -402,11 +402,9 @@ class CBMC:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
-                                          location=self.__location,var="icbdir")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'icbdir','Success':True,'Previous':repr(self.__icbdir),
-                                 'New':repr(myODA),'ErrorMessage':None})
+                                location=self.__location,var="icbdir")
         self.__icbdir = myODA
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
@@ -438,9 +436,6 @@ class CBMC:
         val = list(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="icbsta")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'icbsta','Success':True,'Previous':repr(self.__icbsta),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__icbsta = myODA
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,

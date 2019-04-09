@@ -45,7 +45,7 @@ class SimBox:
   @property
   def boxly(self):
     return self.__boxly
- 
+
   @property
   def boxlz(self):
     return self.__boxlz
@@ -190,7 +190,7 @@ class SimBox:
                                'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'boxlz','ErrorMessage':errorMessage})
- 
+
   @rcut.setter
   def rcut(self,val):
     if ti.is_positive_number(val):
@@ -366,9 +366,6 @@ class SimBox:
       else:
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchain_mt")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'nchain_mt','Success':True,'Previous':repr(self.__nchain_mt),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__nchain_mt = myODA
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,

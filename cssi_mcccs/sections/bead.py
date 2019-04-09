@@ -6,7 +6,7 @@ class Bead:
 
   def __init__(self,unit=None,ntype=None,leaderq=None,nbond=None,bondList=None,nangle=None,angleList=None,ndihedral=None,
                dihedralList=None,errorLog=[],changeLog=[],location=""):
-    
+
     self.__unit         = unit
     self.__ntype        = ntype
     self.__leaderq      = leaderq
@@ -50,7 +50,7 @@ class Bead:
   @property
   def angleList(self):
     return self.__angleList
- 
+
   @property
   def ndihedral(self):
     return self.__ndihedral
@@ -118,7 +118,7 @@ class Bead:
                                'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'nbond','ErrorMessage':errorMessage})
-  
+
   @bondList.setter
   def bondList(self,val):
     if not isinstance(val,oda.oneDimArray):
@@ -142,12 +142,12 @@ class Bead:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="bondList")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'bondList','Success':True,'Previous':repr(self.__bondList),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__bondList = myODA
+        for i in range(length):
+          self.__bondlist[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'bondList','Success':True,'Previous':repr(self.__bondList),
@@ -192,12 +192,12 @@ class Bead:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="angleList")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'angleList','Success':True,'Previous':repr(self.__angleList),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__angleList = myODA
+        for i in range(length):
+          self.__angleList[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'angleList','Success':True,'Previous':repr(self.__angleList),
@@ -242,12 +242,12 @@ class Bead:
       else:
         # For single values, cast to list
         val = list(val)
+        length = len(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="dihedralList")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'dihedralList','Success':True,'Previous':repr(self.__dihedralList),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__dihedralList = myODA
+        for i in range(length):
+          self.__dihedralList[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'dihedralList','Success':True,'Previous':repr(self.__dihedralList),

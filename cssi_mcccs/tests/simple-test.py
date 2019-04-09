@@ -1,7 +1,7 @@
 #Example that uses nearly all setters to test for errors in the code
 from cssi_mcccs import mc_sim as mcs
 
-# 
+#
 mySim = mcs.Sim("/home/cbunner/git-repos/MCCCS-ABE/exe-pc/src/topmon")
 
 # runtime info
@@ -61,6 +61,13 @@ mySim.system.L_elect_table       = False
 # Volume namelist
 mySim.volume.pmvlmt = [1.0,1.0]
 mySim.volume.pmvlmt[1] = 0.5
+
+# Swap namelist
+mySim.swap.pmswap = 0.300
+mySim.swap.pmswmt = [0.5,1.0]
+
+# CBMC namelist
+mySim.cbmc.nchbnb = [12,16]
 
 mySim.init_boxes(2)
 mySim.boxes[1].temperature = 400.0

@@ -72,9 +72,6 @@ class Swap:
         val = list(val)
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="pmswmt")
-        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                 'Variable':'pmswmt','Success':True,'Previous':repr(self.__pmswmt),
-                                 'New':repr(myODA),'ErrorMessage':None})
         self.__pmswmt = myODA
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
