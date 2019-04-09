@@ -59,15 +59,27 @@ mySim.system.L_bend_table        = False
 mySim.system.L_elect_table       = False
 
 # Volume namelist
-mySim.volume.pmvlmt = [1.0,1.0]
-mySim.volume.pmvlmt[1] = 0.5
+mySim.volume.tavol  = 0.3e0
+mySim.volume.iratv  = 10
+mySim.volume.pmvlmt = [1.0e0,1.0e0]
+mySim.volume.pmvolb = 1.0e0
+mySim.volume.pmvol  = 0.0e0
 
 # Swap namelist
 mySim.swap.pmswap = 0.300
 mySim.swap.pmswmt = [0.5,1.0]
 
 # CBMC namelist
-mySim.cbmc.nchbnb = [12,16]
+mySim.cbmc.rcutin = 9.0
+mySim.cbmc.pmcb   = 0.0e0
+mySim.cbmc.pmcbmt = 1.0e0
+mySim.cbmc.nchoi1 = 32
+mySim.cbmc.nchoi  = 16
+mySim.cbmc.nchoir = 16
+mySim.cbmc.nchoih = 1
+mySim.cbmc.nchtor = 100
+mySim.cbmc.nchbna = 1000
+mySim.cbmc.nchbnb = 1000
 
 mySim.init_boxes(2)
 mySim.boxes[1].temperature = 400.0

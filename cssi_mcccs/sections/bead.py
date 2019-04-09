@@ -222,9 +222,7 @@ class Bead:
   @dihedralList.setter
   def dihedralList(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single tuples are OK in the case of one bond
-        if not isinstance(val,tuple) or (isinstance(val,tuple) and len(val) != 4):
+      if not (isinstance(val,list) or isinstance(val,tuple) or (isinstance(val,tuple) and len(val) != 4)):
           errorMessage = ("To properly set dihedralList you have a few options. You can always pass it as a "
                           " python list (e.g. mySim.mtypes[1].beads[1].dihedralList = [(2,3,4,401),(2,3,5,402)])."
                           " This will automatically convert to the special oneDimArray used by the code."
@@ -240,14 +238,11 @@ class Bead:
                                   'Location':self.__location,'Variable':'dihedralList',
                                   'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="dihedralList")
         self.__dihedralList = myODA
-        for i in range(length):
-          self.__dihedralList[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'dihedralList','Success':True,'Previous':repr(self.__dihedralList),

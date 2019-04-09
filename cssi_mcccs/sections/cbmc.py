@@ -91,6 +91,22 @@ class CBMC:
   def location(self):
     return self.__location
 
+  @rcutin.setter
+  def rcutin(self,val):
+    if ti.is_positive_number(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'rcutin','Success':True,'Previous':self.__rcutin,'New':val,
+                               'ErrorMessage':None})
+
+      self.__rcutin = val
+    else:
+      errorMessage = "rcutin must be a positive number."
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'rcutin','Success':False,'Previous':self.__rcutin,'New':val,
+                               'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'rcutin','ErrorMessage':errorMessage})
+
   @pmcb.setter
   def pmcb(self,val):
     if ti.is_probability(val):
@@ -110,32 +126,27 @@ class CBMC:
   @pmcbmt.setter
   def pmcbmt(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not ti.is_probability(val):
-          errorMessage = ("To properly set pmcbmt you have a few options. You can always pass it as a "
-                          " python list (e.g. mySim.swap.pmcbmt = [1.0,1.0])."
-                          " This will automatically convert to the special oneDimArray used by the code."
-                          " You can also set it as a oneDimArray object yourself, but this is far more "
-                          " tedious and you need to be careful that the errorLog, changeLog, location, "
-                          " and variable flags are set properly, which involves passing the right "
-                          " reference. Note that single values can be passed as a float/int, but they "
-                          " must be less than or equal to 1.0.")
-          self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                   'Variable':'pmcbmt','Success':False,'Previous':repr(self.__pmcbmt),
-                                   'New':repr(val),'ErrorMessage':errorMessage})
-          self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
-                                  'Location':self.__location,'Variable':'pmcbmt',
-                                  'ErrorMessage':errorMessage})
+      if not (isinstance(val,list) or ti.is_probability(val)):
+        errorMessage = ("To properly set pmcbmt you have a few options. You can always pass it as a "
+                        " python list (e.g. mySim.swap.pmcbmt = [1.0,1.0])."
+                        " This will automatically convert to the special oneDimArray used by the code."
+                        " You can also set it as a oneDimArray object yourself, but this is far more "
+                        " tedious and you need to be careful that the errorLog, changeLog, location, "
+                        " and variable flags are set properly, which involves passing the right "
+                        " reference. Note that single values can be passed as a float/int, but they "
+                        " must be less than or equal to 1.0.")
+        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'pmcbmt','Success':False,'Previous':repr(self.__pmcbmt),
+                                 'New':repr(val),'ErrorMessage':errorMessage})
+        self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+                                'Location':self.__location,'Variable':'pmcbmt',
+                                'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="pmcbmt")
         self.__pmcbmt = myODA
-        for i in range(length):
-          self.__pmcbmt[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'pmcbmt','Success':True,'Previous':repr(self.__pmcbmt),
@@ -145,31 +156,26 @@ class CBMC:
   @nchoi1.setter
   def nchoi1(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not ti.is_positive_integer(val):
-          errorMessage = ("To properly set nchoi1 you have a few options. You can always pass it as a "
-                          " python list (e.g. mySim.swap.nchoi1 = [16,16])."
-                          " This will automatically convert to the special oneDimArray used by the code."
-                          " You can also set it as a oneDimArray object yourself, but this is far more "
-                          " tedious and you need to be careful that the errorLog, changeLog, location, "
-                          " and variable flags are set properly, which involves passing the right "
-                          " reference. Note that single values can be passed as an int.")
-          self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                   'Variable':'nchoi1','Success':False,'Previous':repr(self.__nchoi1),
-                                   'New':repr(val),'ErrorMessage':errorMessage})
-          self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
-                                  'Location':self.__location,'Variable':'nchoi1',
-                                  'ErrorMessage':errorMessage})
+      if not (isinstance(val,list) or ti.is_positive_integer(val)):
+        errorMessage = ("To properly set nchoi1 you have a few options. You can always pass it as a "
+                        " python list (e.g. mySim.swap.nchoi1 = [16,16])."
+                        " This will automatically convert to the special oneDimArray used by the code."
+                        " You can also set it as a oneDimArray object yourself, but this is far more "
+                        " tedious and you need to be careful that the errorLog, changeLog, location, "
+                        " and variable flags are set properly, which involves passing the right "
+                        " reference. Note that single values can be passed as an int.")
+        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'nchoi1','Success':False,'Previous':repr(self.__nchoi1),
+                                 'New':repr(val),'ErrorMessage':errorMessage})
+        self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+                                'Location':self.__location,'Variable':'nchoi1',
+                                'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchoi1")
         self.__nchoi1 = myODA
-        for i in range(length):
-          self.__nchoi1[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchoi1','Success':True,'Previous':repr(self.__nchoi1),
@@ -179,31 +185,26 @@ class CBMC:
   @nchoi.setter
   def nchoi(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not ti.is_positive_integer(val):
-          errorMessage = ("To properly set nchoi you have a few options. You can always pass it as a "
+      if not (isinstance(val,list) or ti.is_positive_integer(val)):
+        errorMessage = ("To properly set nchoi you have a few options. You can always pass it as a "
                           " python list (e.g. mySim.swap.nchoi = [16,16])."
                           " This will automatically convert to the special oneDimArray used by the code."
                           " You can also set it as a oneDimArray object yourself, but this is far more "
                           " tedious and you need to be careful that the errorLog, changeLog, location, "
                           " and variable flags are set properly, which involves passing the right "
                           " reference. Note that single values can be passed as an int.")
-          self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                   'Variable':'nchoi','Success':False,'Previous':repr(self.__nchoi),
-                                   'New':repr(val),'ErrorMessage':errorMessage})
-          self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'nchoi','Success':False,'Previous':repr(self.__nchoi),
+                                 'New':repr(val),'ErrorMessage':errorMessage})
+        self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
                                   'Location':self.__location,'Variable':'nchoi',
                                   'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                          location=self.__location,var="nchoi")
         self.__nchoi = myODA
-        for i in range(length):
-          self.__nchoi[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchoi','Success':True,'Previous':repr(self.__nchoi),
@@ -213,31 +214,26 @@ class CBMC:
   @nchoir.setter
   def nchoir(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not ti.is_positive_integer(val):
-          errorMessage = ("To properly set nchoir you have a few options. You can always pass it as a "
+      if not (isinstance(val,list) or ti.is_positive_integer(val)):
+        errorMessage = ("To properly set nchoir you have a few options. You can always pass it as a "
                           " python list (e.g. mySim.swap.nchoir = [16,16])."
                           " This will automatically convert to the special oneDimArray used by the code."
                           " You can also set it as a oneDimArray object yourself, but this is far more "
                           " tedious and you need to be careful that the errorLog, changeLog, location, "
                           " and variable flags are set properly, which involves passing the right "
                           " reference. Note that single values can be passed as an int.")
-          self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                   'Variable':'nchoir','Success':False,'Previous':repr(self.__nchoir),
-                                   'New':repr(val),'ErrorMessage':errorMessage})
-          self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
-                                  'Location':self.__location,'Variable':'nchoir',
-                                  'ErrorMessage':errorMessage})
+        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'nchoir','Success':False,'Previous':repr(self.__nchoir),
+                                 'New':repr(val),'ErrorMessage':errorMessage})
+        self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+                                'Location':self.__location,'Variable':'nchoir',
+                                'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchoir")
         self.__nchoir = myODA
-        for i in range(length):
-          self.__nchoir[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchoir','Success':True,'Previous':repr(self.__nchoir),
@@ -247,9 +243,7 @@ class CBMC:
   @nchoih.setter
   def nchoih(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not ti.is_positive_integer(val):
+      if not (isinstance(val,list) or ti.is_positive_integer(val)):
           errorMessage = ("To properly set nchoih you have a few options. You can always pass it as a "
                           " python list (e.g. mySim.swap.nchoih = [16,16])."
                           " This will automatically convert to the special oneDimArray used by the code."
@@ -264,14 +258,11 @@ class CBMC:
                                   'Location':self.__location,'Variable':'nchoih',
                                   'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchoih")
         self.__nchoih = myODA
-        for i in range(length):
-          self.__nchoih[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchoih','Success':True,'Previous':repr(self.__nchoih),
@@ -281,31 +272,26 @@ class CBMC:
   @nchtor.setter
   def nchtor(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not ti.is_positive_integer(val):
-          errorMessage = ("To properly set nchtor you have a few options. You can always pass it as a "
-                          " python list (e.g. mySim.swap.nchtor = [16,16])."
-                          " This will automatically convert to the special oneDimArray used by the code."
-                          " You can also set it as a oneDimArray object yourself, but this is far more "
-                          " tedious and you need to be careful that the errorLog, changeLog, location, "
-                          " and variable flags are set properly, which involves passing the right "
-                          " reference. Note that single values can be passed as an int.")
-          self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                   'Variable':'nchtor','Success':False,'Previous':repr(self.__nchtor),
-                                   'New':repr(val),'ErrorMessage':errorMessage})
-          self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
-                                  'Location':self.__location,'Variable':'nchtor',
-                                  'ErrorMessage':errorMessage})
+      if not (isinstance(val,list) or ti.is_positive_integer(val)):
+        errorMessage = ("To properly set nchtor you have a few options. You can always pass it as a "
+                        " python list (e.g. mySim.swap.nchtor = [16,16])."
+                        " This will automatically convert to the special oneDimArray used by the code."
+                        " You can also set it as a oneDimArray object yourself, but this is far more "
+                        " tedious and you need to be careful that the errorLog, changeLog, location, "
+                        " and variable flags are set properly, which involves passing the right "
+                        " reference. Note that single values can be passed as an int.")
+        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'nchtor','Success':False,'Previous':repr(self.__nchtor),
+                                 'New':repr(val),'ErrorMessage':errorMessage})
+        self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+                                'Location':self.__location,'Variable':'nchtor',
+                                'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchtor")
         self.__nchtor = myODA
-        for i in range(length):
-          self.__nchtor[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchtor','Success':True,'Previous':repr(self.__nchtor),
@@ -315,31 +301,26 @@ class CBMC:
   @nchbna.setter
   def nchbna(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not ti.is_positive_integer(val):
-          errorMessage = ("To properly set nchbna you have a few options. You can always pass it as a "
-                          " python list (e.g. mySim.swap.nchbna = [16,16])."
-                          " This will automatically convert to the special oneDimArray used by the code."
-                          " You can also set it as a oneDimArray object yourself, but this is far more "
-                          " tedious and you need to be careful that the errorLog, changeLog, location, "
-                          " and variable flags are set properly, which involves passing the right "
-                          " reference. Note that single values can be passed as an int.")
-          self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                   'Variable':'nchbna','Success':False,'Previous':repr(self.__nchbna),
-                                   'New':repr(val),'ErrorMessage':errorMessage})
-          self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
-                                  'Location':self.__location,'Variable':'nchbna',
-                                  'ErrorMessage':errorMessage})
+      if not (isinstance(val,list) or ti.is_positive_integer(val)):
+        errorMessage = ("To properly set nchbna you have a few options. You can always pass it as a "
+                        " python list (e.g. mySim.swap.nchbna = [16,16])."
+                        " This will automatically convert to the special oneDimArray used by the code."
+                        " You can also set it as a oneDimArray object yourself, but this is far more "
+                        " tedious and you need to be careful that the errorLog, changeLog, location, "
+                        " and variable flags are set properly, which involves passing the right "
+                        " reference. Note that single values can be passed as an int.")
+        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'nchbna','Success':False,'Previous':repr(self.__nchbna),
+                                 'New':repr(val),'ErrorMessage':errorMessage})
+        self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+                                'Location':self.__location,'Variable':'nchbna',
+                                'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="nchbna")
         self.__nchbna = myODA
-        for i in range(length):
-          self.__nchbna[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchbna','Success':True,'Previous':repr(self.__nchbna),
@@ -349,9 +330,7 @@ class CBMC:
   @nchbnb.setter
   def nchbnb(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not ti.is_positive_integer(val):
+      if not (isinstance(val,list) or ti.is_positive_integer(val)):
           errorMessage = ("To properly set nchbnb you have a few options. You can always pass it as a "
                           " python list (e.g. mySim.swap.nchbnb = [16,16])."
                           " This will automatically convert to the special oneDimArray used by the code."
@@ -366,14 +345,11 @@ class CBMC:
                                   'Location':self.__location,'Variable':'nchbnb',
                                   'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                 location=self.__location,var="nchbnb")
         self.__nchbnb = myODA
-        for i in range(length):
-          self.__nchbnb[i+1] = val[i]
     else:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchbnb','Success':True,'Previous':repr(self.__nchbnb),
@@ -383,9 +359,7 @@ class CBMC:
   @icbdir.setter
   def icbdir(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not val in icbdir_vals:
+      if not (isinstance(val,list) or val in icbdir_vals):
           errorMessage = ("To properly set  you have a few options. You can always pass it as a "
                           " python list (e.g. mySim.swap.icbdir = [0,0])."
                           " This will automatically convert to the special oneDimArray used by the code."
@@ -400,9 +374,8 @@ class CBMC:
                                   'Location':self.__location,'Variable':'icbdir',
                                   'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
-        length = len(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                 location=self.__location,var="icbdir")
         self.__icbdir = myODA
@@ -415,25 +388,23 @@ class CBMC:
   @icbsta.setter
   def icbsta(self,val):
     if not isinstance(val,oda.oneDimArray):
-      if not isinstance(val,list):
-        # Single numbers are OK
-        if not ti.is_integer(val):
-          errorMessage = ("To properly set  you have a few options. You can always pass it as a "
-                          " python list (e.g. mySim.swap.icbsta = [-5,2])."
-                          " This will automatically convert to the special oneDimArray used by the code."
-                          " You can also set it as a oneDimArray object yourself, but this is far more "
-                          " tedious and you need to be careful that the errorLog, changeLog, location, "
-                          " and variable flags are set properly, which involves passing the right "
-                          " reference. Note that single values can be passed as an int.")
-          self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                   'Variable':'icbsta','Success':False,'Previous':repr(self.__icbsta),
-                                   'New':repr(val),'ErrorMessage':errorMessage})
-          self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
-                                  'Location':self.__location,'Variable':'icbsta',
-                                  'ErrorMessage':errorMessage})
+      if not (isinstance(val,list) or ti.is_integer(val)):
+        errorMessage = ("To properly set  you have a few options. You can always pass it as a "
+                        " python list (e.g. mySim.swap.icbsta = [-5,2])."
+                        " This will automatically convert to the special oneDimArray used by the code."
+                        " You can also set it as a oneDimArray object yourself, but this is far more "
+                        " tedious and you need to be careful that the errorLog, changeLog, location, "
+                        " and variable flags are set properly, which involves passing the right "
+                        " reference. Note that single values can be passed as an int.")
+        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'icbsta','Success':False,'Previous':repr(self.__icbsta),
+                                 'New':repr(val),'ErrorMessage':errorMessage})
+        self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+                                'Location':self.__location,'Variable':'icbsta',
+                                'ErrorMessage':errorMessage})
       else:
-        # For single values, cast to list
-        val = list(val)
+        if not isinstance(val,list):
+          val = [val]
         myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                           location=self.__location,var="icbsta")
         self.__icbsta = myODA
