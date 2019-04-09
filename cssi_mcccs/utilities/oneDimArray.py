@@ -21,7 +21,7 @@ class oneDimArray(object):
       raise IndexError(errorMessage)
     else:
       return self._data[pos]
-      
+
 
   def __setitem__(self,pos,val):
     if type(pos) != int:
@@ -58,7 +58,7 @@ class oneDimArray(object):
     return myODA
 
   def dataAsArray(self):
-    return [self._data[i+1] for i in range(self.__length)]
+    return [self._data[i+1] for i in range(self._length)]
 
   @property
   def data(self):
@@ -70,7 +70,7 @@ class oneDimArray(object):
 
   @property
   def changeLog(self):
-    return self.__changeLog
+    return self._changeLog
 
   @property
   def location(self):

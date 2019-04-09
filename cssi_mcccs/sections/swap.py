@@ -5,7 +5,7 @@ from cssi_mcccs.utilities import oneDimArray   as oda
 class Swap:
 
   def __init__(self,pmswap=None,pmswmt=None,errorLog=[],changeLog=[],location=""):
-  
+
     self.__pmswap    = pmswap
     self.__pmswmt    = pmswmt
     self.__errorLog  = errorLog
@@ -53,7 +53,7 @@ class Swap:
       if not isinstance(val,list):
         # Single numbers are OK
         if not ti.is_probability(val):
-          errorMessage = ("To properly set pmsmt you have a few options. You can always pass it as a "
+          errorMessage = ("To properly set pmswmt you have a few options. You can always pass it as a "
                           " python list (e.g. mySim.swap.pmswmt = [1.0,1.0])."
                           " This will automatically convert to the special oneDimArray used by the code."
                           " You can also set it as a oneDimArray object yourself, but this is far more "
