@@ -58,6 +58,36 @@ mySim.system.L_vib_table         = False
 mySim.system.L_bend_table        = False
 mySim.system.L_elect_table       = False
 
+# Create 2 atom types
+mySim.init_atoms(2)
+mySim.atoms[1].intID     = 101
+mySim.atoms[1].aType     = 1
+mySim.atoms[1].vdWParams = [50.0,2.80]
+mySim.atoms[1].charge    = -0.26
+mySim.atoms[1].mass      = 12.0e0
+mySim.atoms[1].chemID    = "C"
+mySim.atoms[1].chName    = "C-CS2"
+mySim.atoms[2].intID     = 102
+mySim.atoms[2].aType     = 1
+mySim.atoms[2].vdWParams = [180.0,3.60]
+mySim.atoms[2].charge    = 0.13
+mySim.atoms[2].mass      = 32.07e0
+mySim.atoms[2].chemID    = "S"
+mySim.atoms[2].chName    = "S-CS2"
+
+mySim.init_bonds(1)
+mySim.bonds[1].intID     = 201
+mySim.bonds[1].bType     = 1
+mySim.bonds[1].brvib     = 1.550e0
+mySim.bonds[1].brvibk    = 0.0e0
+
+mySim.init_angles(1)
+mySim.angles[1].intID    = 301
+mySim.angles[1].aType    = 1
+mySim.angles[1].brben    = 180.0e0
+mySim.angles[1].brbenk   = 0.0e0
+
+### fort.4 stuff
 # Volume namelist
 mySim.volume.tavol  = 0.3e0
 mySim.volume.iratv  = 10

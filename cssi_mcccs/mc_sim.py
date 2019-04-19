@@ -17,19 +17,27 @@ import cssi_mcccs.sections.swap as swap
 import cssi_mcccs.sections.cbmc as cbmc
 import cssi_mcccs.sections.simbox as simbox
 import cssi_mcccs.sections.mtype as mtype
+import cssi_mcccs.sections.atom as atom
+import cssi_mcccs.sections.bond as bond
+import cssi_mcccs.sections.angle as angle
+import cssi_mcccs.sections.dihedral as dihedral
 
 class Sim:
 
   def __init__(self,execPath):
 
     self.__prod               = False
-    self.__ncycles            = 0
+    self.__ncycles            = None
     self.__errorLog           = []
     self.__changeLog          = chl.changeLog()
     self.__location           = "Sim"
     self.__homeDirectory      = os.getcwd()
-    self.__scratchDirectory   = "/tmp/cssi-mcccs-{}".format(int(random.random()*123456789))
-    self.__boxes              = []
+    self.__scratchDirectory   = None
+    self.__boxes              = None
+    self.__atoms              = None
+    self.__bonds              = None
+    self.__angles             = None
+    self.__dihedrals          = None
     self.__code               = code.Code(execPath=execPath,changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__runtime            = runtime.Runtime(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__io                 = io.IO(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
@@ -104,6 +112,22 @@ class Sim:
   def boxes(self):
     return self.__boxes
 
+  @property
+  def atoms(self):
+    return self.__atoms
+
+  @property
+  def bonds(self):
+    return self.__bonds
+
+  @property
+  def angles(self):
+    return self.__angles
+
+  @property
+  def dihedrals(self):
+    return self.__dihedrals
+
   def init_boxes(self,nbox):
     boxes = []
     for i in range(1,nbox+1):
@@ -115,9 +139,42 @@ class Sim:
   def init_mtypes(self,nmolty):
     mtypes = []
     for i in range(nmolty):
-      mtypes[i+1] = mtype.MType(number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,
-                                location=self.__location)
-    self.__mtypes = mtypes
+      mtypes.append(mtype.MType(number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                location=self.__location))
+    self.__mtypes = oba.objectArray.listToOBA(mtypes,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                             location=self.__location)
+
+  def init_atoms(self,natomty):
+    atoms = []
+    for i in range(natomty):
+      atoms.append(atom.Atom(number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                location=self.__location))
+    self.__atoms = oba.objectArray.listToOBA(atoms,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                                location=self.__location)
+
+  def init_bonds(self,nbonds):
+    bonds = []
+    for i in range(nbonds):
+      bonds.append(bond.Bond(number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                location=self.__location))
+    self.__bonds = oba.objectArray.listToOBA(bonds,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                                location=self.__location)
+
+  def init_angles(self,nangles):
+    angles = []
+    for i in range(nangles):
+      angles.append(angle.Angle(number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                location=self.__location))
+    self.__angles = oba.objectArray.listToOBA(angles,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                              location=self.__location)
+
+  def init_dihedrals(self,ndihedrals):
+    dihedrals = []
+    for i in range(ndihedrals):
+      dihedrals.append(dihedral.Dihedral(number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                         location=self.__location))
+    self.__dihedrals = oba.objectArray.listToOBA(dihedrals,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                                 location=self.__location)
 
   def write_errorLog(self,fn=None):
     # No argument or explicit None prints to screen
