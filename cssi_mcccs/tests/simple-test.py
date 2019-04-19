@@ -157,4 +157,32 @@ mySim.boxes[2].dshift                  = bl/7.0e0
 mySim.boxes[2].use_linkcell            = False
 mySim.boxes[2].rintramax               = 0.0e0
 
+mySim.init_mtypes(1)
+mySim.mtypes[1].nunit     = 3
+mySim.mtypes[1].nugrow    = 3
+mySim.mtypes[1].ncarbon   = 3
+mySim.mtypes[1].maxcbmc   = 3
+mySim.mtypes[1].maxgrow   = 3
+mySim.mtypes[1].iring     = 3
+mySim.mtypes[1].lelect    = True
+mySim.mtypes[1].lring     = False
+mySim.mtypes[1].lrigid    = False
+mySim.mtypes[1].lbranch   = False
+mySim.mtypes[1].lsetup    = False
+mySim.mtypes[1].lq14scale = False
+mySim.mtypes[1].qscale    = 0.5e0
+mySim.mtypes[1].iurot     = 0
+mySim.mtypes[1].isolute   = 1000000
+mySim.mtypes[1].init_beads()
+mySim.mtypes[1].beads[1].unit          = 1
+mySim.mtypes[1].beads[1].ntype         = 102
+mySim.mtypes[1].beads[1].leaderq       = 1
+mySim.mtypes[1].beads[1].nbonds        = 1
+mySim.mtypes[1].beads[1].init_bonds()
+mySim.mtypes[1].beads[1].bonds         = (2,201)
+mySim.mtypes[1].beads[1].nangles       = 1
+mySim.mtypes[1].beads[1].init_angles()
+mySim.mtypes[1].beads[1].angles        = (2,3,301)
+mySim.mtypes[1].beads[1].ndihedrals    = 0
+
 mySim.write_changeLog()

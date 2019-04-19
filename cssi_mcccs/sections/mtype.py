@@ -1,6 +1,7 @@
 import datetime
 from cssi_mcccs.utilities import test_instance as ti
 from cssi_mcccs.utilities import oneDimArray   as oda
+from cssi_mcccs.utilities import objectArray   as oba
 from cssi_mcccs.sections  import bead
 
 class MType:
@@ -29,20 +30,14 @@ class MType:
     self.__changeLog = changeLog
     self.__location  = "{}/mtype-{}".format(location,number)
 
-  def init_beads(self,nbeads,override=False):
-    if beads is None or override == True:
-      beads = []
-      for i in range(nbeads):
-        beads.append(bead.Bead(errorLog=self.__errorLog,changeLog=self.__changeLog,
-                               location=self.__location,number=i+1))
-      # Pass dummy errorLog and changeLog because changes will be tracked at the bead property level,
-      # so extra messages would be redundant. Still need an oda to properly propagate object changes.
-      self.__beads = oda.oneDimArray.listToODA(beads,errorLog=[],changeLog=[],location="",var="")
-    else:
-      errorMessage = ("Can't instantiate bead list because beads is not None and override is False.")
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'instancemethod',
-                              'Location':self.__location,'Variable':'init_beads',
-                              'ErrorMessage':errorMessage})
+  def init_beads(self,nbeads=None):
+    if nbeads is None:
+      nbeads = self.__nunit
+    beads = []
+    for i in range(nbeads):
+      beads.append(bead.Bead(errorLog=self.__errorLog,changeLog=self.__changeLog,
+                             location=self.__location,unit=i+1))
+    self.__beads = oba.objectArray.listToOBA(beads,errorLog=[],changeLog=[],location="",var="")
 
   @property
   def nunit(self):

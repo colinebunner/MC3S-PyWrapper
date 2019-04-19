@@ -38,6 +38,7 @@ class Sim:
     self.__bonds              = None
     self.__angles             = None
     self.__dihedrals          = None
+    self.__mtypes             = None
     self.__code               = code.Code(execPath=execPath,changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__runtime            = runtime.Runtime(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__io                 = io.IO(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
@@ -127,6 +128,10 @@ class Sim:
   @property
   def dihedrals(self):
     return self.__dihedrals
+
+  @property
+  def mtypes(self):
+    return self.__mtypes
 
   def init_boxes(self,nbox):
     boxes = []
