@@ -38,6 +38,25 @@ class SimBox:
     self.__changeLog               = changeLog
     self.__location                = "{}/SimBox-{}".format(location,number)
 
+  def set_boxlengths(self,val):
+    if not (isinstance(val,list) or isinstance(val,tuple)):
+      errorMessage = "Couldn't set boxlength array because a list or tuple wasn't provided"
+    elif (isinstance(val,list) or isinstance(val,tuple)) and len(val) != 3:
+      errorMessage = "Couldn't set boxlength array because {} values were passed, not 3".format(len(val))
+    else:
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'boxlx','Success':True,'Previous':self.__boxlx,'New':val[0],
+                               'ErrorMessage':None})
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'boxly','Success':True,'Previous':self.__boxly,'New':val[1],
+                               'ErrorMessage':None})
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'boxlz','Success':True,'Previous':self.__boxlz,'New':val[2],
+                               'ErrorMessage':None})
+      self.__boxlx = val[0]
+      self.__boxly = val[1]
+      self.__boxlz = val[2]
+
   @property
   def boxlx(self):
     return self.__boxlx
@@ -372,3 +391,138 @@ class SimBox:
                                  'Variable':'nchain_mt','Success':True,'Previous':repr(self.__nchain_mt),
                                  'New':repr(val),'ErrorMessage':None})
       self.__nchain_mt = val
+
+  @inix.setter
+  def inix(self,val):
+    if ti.is_positive_integer(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'inix','Success':True,'Previous':self.__inix,
+                               'New':val,'ErrorMessage':None})
+      self.__inix = val
+    else:
+      errorMessage("inix must be a positive integer.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'inix','Success':False,'Previous':self.__inix,
+                               'New':val,'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'inix','ErrorMessage':errorMessage})
+
+  @iniy.setter
+  def iniy(self,val):
+    if ti.is_positive_integer(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'iniy','Success':True,'Previous':self.__iniy,
+                               'New':val,'ErrorMessage':None})
+      self.__iniy = val
+    else:
+      errorMessage("iniy must be a positive integer.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'iniy','Success':False,'Previous':self.__iniy,
+                               'New':val,'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'iniy','ErrorMessage':errorMessage})
+
+  @iniz.setter
+  def iniz(self,val):
+    if ti.is_positive_integer(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'iniz','Success':True,'Previous':self.__iniz,
+                               'New':val,'ErrorMessage':None})
+      self.__iniz = val
+    else:
+      errorMessage("iniz must be a positive integer.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'iniz','Success':False,'Previous':self.__iniz,
+                               'New':val,'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'iniz','ErrorMessage':errorMessage})
+
+  @inirot.setter
+  def inirot(self,val):
+    if ti.is_positive_integer(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'inirot','Success':True,'Previous':self.__inirot,
+                               'New':val,'ErrorMessage':None})
+      self.__inirot = val
+    else:
+      errorMessage("inirot must be a positive integer.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'inirot','Success':False,'Previous':self.__inirot,
+                               'New':val,'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'inirot','ErrorMessage':errorMessage})
+
+  @inimix.setter
+  def inimix(self,val):
+    if ti.is_positive_integer(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'inimix','Success':True,'Previous':self.__inimix,
+                               'New':val,'ErrorMessage':None})
+      self.__inimix = val
+    else:
+      errorMessage("inimix must be a positive integer.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'inimix','Success':False,'Previous':self.__inimix,
+                               'New':val,'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'inimix','ErrorMessage':errorMessage})
+
+  @zshift.setter
+  def zshift(self,val):
+    if ti.is_positive_number(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'zshift','Success':True,'Previous':self.__zshift,
+                               'New':val,'ErrorMessage':None})
+      self.__zshift = val
+    else:
+      errorMessage("zshift must be a positive number.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'zshift','Success':False,'Previous':self.__zshift,
+                               'New':val,'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'zshift','ErrorMessage':errorMessage})
+
+  @dshift.setter
+  def dshift(self,val):
+    if ti.is_positive_number(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'dshift','Success':True,'Previous':self.__dshift,
+                               'New':val,'ErrorMessage':None})
+      self.__dshift = val
+    else:
+      errorMessage("dshift must be a positive number.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'dshift','Success':False,'Previous':self.__dshift,
+                               'New':val,'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'dshift','ErrorMessage':errorMessage})
+
+  @use_linkcell.setter
+  def use_linkcell(self,val):
+    if isinstance(val,bool):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'use_linkcell','Success':True,'Previous':self.__use_linkcell,
+                               'New':val,'ErrorMessage':None})
+      self.__use_linkcell = val
+    else:
+      errorMessage("use_linkcell must be a boolean.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'use_linkcell','Success':False,'Previous':self.__use_linkcell,
+                               'New':val,'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'use_linkcell','ErrorMessage':errorMessage})
+
+  @rintramax.setter
+  def rintramax(self,val):
+    if ti.is_positive_number(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'rintramax','Success':True,'Previous':self.__rintramax,
+                               'New':val,'ErrorMessage':None})
+      self.__rintramax = val
+    else:
+      errorMessage("rintramax must be a positive number.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'rintramax','Success':False,'Previous':self.__rintramax,
+                               'New':val,'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'rintramax','ErrorMessage':errorMessage})
