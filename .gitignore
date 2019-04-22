@@ -106,3 +106,5 @@ venv.bak/
 # Default simulation files that shouldn't ever be pushed
 mcsim-changelog.txt
 mcsim-errorlog.txt
+topmon.inp
+fort.4

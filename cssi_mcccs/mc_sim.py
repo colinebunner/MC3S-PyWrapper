@@ -8,6 +8,7 @@ from cssi_mcccs.utilities import objectArray as oba
 from cssi_mcccs.utilities import dateTools   as dt
 from cssi_mcccs.utilities import changeLog   as chl
 from cssi_mcccs.writers   import write_topmon as tw
+from cssi_mcccs.writers   import write_fort4 as fw
 import cssi_mcccs.sections.code as code
 import cssi_mcccs.sections.runtime as runtime
 import cssi_mcccs.sections.io as io
@@ -38,7 +39,7 @@ class Sim:
     self.__homeDirectory      = os.getcwd()
     self.__scratchDirectory   = None
     self.__topmonFile         = "{}/topmon.inp".format(self.__homeDirectory)
-    self.__fort4File          = "{}/fort.4".format(self.__scratchDirectory)
+    self.__fort4File          = "{}/fort.4".format(self.__homeDirectory)
     self.__boxes              = None
     self.__atoms              = None
     self.__bonds              = None
@@ -202,6 +203,11 @@ class Sim:
     if topmonFile is None:
       topmonFile = self.__topmonFile
     tw.write_topmon(self,topmonFile=topmonFile)
+
+  def write_fort4(self,fort4File=None):
+    if fort4File is None:
+      fort4File = self.__fort4File
+    fw.write_fort4(self,fort4File=fort4File)
 
   def write_errorLog(self,fn=None):
     # No argument or explicit None prints to screen

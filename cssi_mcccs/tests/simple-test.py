@@ -202,3 +202,4 @@ mySim.mtypes[1].beads[3].ndihedrals    = 0
 
 mySim.write_changeLog()
 mySim.write_topmon()
+mySim.write_fort4()
