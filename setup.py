@@ -7,7 +7,7 @@ setup(name='cssi_mcccs',
       author='Colin Bunner',
       author_email='colinebunner@gmail.com',
       license='GNU',
-      packages=['cssi_mcccs','cssi_mcccs/sections','cssi_mcccs/utilities'],
+      packages=['cssi_mcccs','cssi_mcccs/sections','cssi_mcccs/utilities','cssi_mcccs/writers'],
       install_requires = [
         'numpy',
       ],

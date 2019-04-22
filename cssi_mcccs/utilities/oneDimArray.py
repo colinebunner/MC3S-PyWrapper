@@ -45,6 +45,12 @@ class oneDimArray(object):
     rep += '{}]'.format(repr(self._data[self._length]))
     return rep
 
+  def unrolledString(self):
+    string = ""
+    for i in range(1,self._length+1):
+      string += "{} ".format(self._data[i])
+    return string
+
   @classmethod
   def listToData(cls,val):
     length = len(val)

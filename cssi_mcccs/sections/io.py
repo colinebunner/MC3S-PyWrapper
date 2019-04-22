@@ -2,9 +2,9 @@ import datetime
 
 class IO:
 
-  def __init__(self,file_input="fort.4",file_restart="fort.77",file_struct="input_struct.xyz",file_run="run1a.dat",
-                    file_movie="movie1a.dat",file_solute="solute.dat",file_traj="fort.12",outputLocation="file",
-                    run_num=1,suffix="a",L_movie_xyz=None,L_movie_pdb=None,file_cbmc_bend="cbmc_bend_table.dat",
+  def __init__(self,file_input=None,file_restart=None,file_struct=None,file_run=None,
+                    file_movie=None,file_solute=None,file_traj=None,io_output=None,
+                    run_num=None,suffix=None,L_movie_xyz=None,L_movie_pdb=None,file_cbmc_bend=None,
                     checkpoint_interval=None,checkpoint_copies=None,use_checkpoint=None,ltraj=None,changeLog=[],
                     errorLog=[],location=""):
 
@@ -15,7 +15,7 @@ class IO:
     self.__file_movie          = file_movie
     self.__file_solute         = file_solute
     self.__file_traj           = file_traj
-    self.__outputLocation      = outputLocation
+    self.__io_output           = io_output
     self.__run_num             = run_num
     self.__suffix              = suffix
     self.__L_movie_xyz         = L_movie_xyz
@@ -25,17 +25,6 @@ class IO:
     self.__changeLog           = changeLog
     self.__errorLog            = errorLog
     self.__location            = location
-    if (outputLocation.upper()=="FILE"):  # Rather have users choose "screen" or "terminal" than 2 or 6 
-                                          # like original MCCCS input
-      self.__io_output = 2
-    elif (outputLocation.upper()=="TERMINAL"):
-      self.__io_output = 6
-    else:
-      errorMessage = ("Couldn't set code output location {}. Options are \"file\" or "
-                      "\"terminal\" (any case).".format(outputLocation))
-      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'__init__','Location':self.__location,
-                              'Variable':'outputLocation','ErrorMessage':errorMessage})
-
 
   @property
   def file_input(self):
@@ -64,10 +53,6 @@ class IO:
   @property
   def file_traj(self):
     return self.__file_traj
-
-  @property
-  def outputLocation(self):
-    return self.__outputLocation
 
   @property
   def io_output(self):
@@ -164,22 +149,20 @@ class IO:
                              'Success':True,'Previous':self.__file_traj,'New':val,'ErrorMessage':None})
     self.__file_traj=str(val)
 
-  @outputLocation.setter
-  def outputLocation(self,val):
-    val = str(val).upper()
-    if val in ["FILE","TERMINAL"]:
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'outputLocation',
-                               'Success':True,'Previous':self.__outputLocation,'New':val,
+  @io_output.setter
+  def io_output(self,val):
+    if val in [2,6]:
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'io_output',
+                               'Success':True,'Previous':self.__io_output,'New':val,
                                'ErrorMessage':None})
-      self.__outputLocation = val
+      self.__io_output = val
     else:
-      errorMessage = ("Error setting outputLocation. Allowed values are \"file\" and \"terminal\" "
-        "(any case).")
-      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'outputLocation',
-                               'Success':False,'Previous':self.__outputLocation,'New':val,
+      errorMessage = ("Error setting io_output. Allowed values are 2 and 6.")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'io_output',
+                               'Success':False,'Previous':self.__io_output,'New':val,
                                'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
-                              'Variable':'outputLocation','ErrorMessage':errorMessage})
+                              'Variable':'io_output','ErrorMessage':errorMessage})
 
   @run_num.setter
   def run_num(self,val):

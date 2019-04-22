@@ -7,6 +7,7 @@ from cssi_mcccs.utilities import oneDimArray as oda
 from cssi_mcccs.utilities import objectArray as oba
 from cssi_mcccs.utilities import dateTools   as dt
 from cssi_mcccs.utilities import changeLog   as chl
+from cssi_mcccs.writers   import write_topmon as tw
 import cssi_mcccs.sections.code as code
 import cssi_mcccs.sections.runtime as runtime
 import cssi_mcccs.sections.io as io
@@ -36,6 +37,8 @@ class Sim:
     self.__location           = "Sim"
     self.__homeDirectory      = os.getcwd()
     self.__scratchDirectory   = None
+    self.__topmonFile         = "{}/topmon.inp".format(self.__homeDirectory)
+    self.__fort4File          = "{}/fort.4".format(self.__scratchDirectory)
     self.__boxes              = None
     self.__atoms              = None
     self.__bonds              = None
@@ -82,6 +85,14 @@ class Sim:
   @property
   def scratchDirectory(self):
     return self.__scratchDirectory
+
+  @property
+  def topmonFile(self):
+    return self.__topmonFile
+
+  @property
+  def fort4File(self):
+    return self.__fort4File
 
   @property
   def code(self):
@@ -186,6 +197,11 @@ class Sim:
                                          location=self.__location))
     self.__dihedrals = oba.objectArray.listToOBA(dihedrals,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                                  location=self.__location)
+
+  def write_topmon(self,topmonFile=None):
+    if topmonFile is None:
+      topmonFile = self.__topmonFile
+    tw.write_topmon(self,topmonFile=topmonFile)
 
   def write_errorLog(self,fn=None):
     # No argument or explicit None prints to screen
