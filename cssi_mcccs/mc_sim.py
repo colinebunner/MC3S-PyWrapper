@@ -24,12 +24,15 @@ import cssi_mcccs.sections.dihedral as dihedral
 
 class Sim:
 
-  def __init__(self,execPath):
+  def __init__(self,execPath,name="mcsim"):
 
+    self.__name               = name
     self.__prod               = False
     self.__ncycles            = None
     self.__errorLog           = []
     self.__changeLog          = chl.changeLog()
+    self.__changeLogFile      = "{}-changelog.txt".format(self.__name)
+    self.__errorLogFile       = "{}-errorlog.txt".format(self.__name)
     self.__location           = "Sim"
     self.__homeDirectory      = os.getcwd()
     self.__scratchDirectory   = None
@@ -48,6 +51,9 @@ class Sim:
     self.__swap               = swap.Swap(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__cbmc               = cbmc.CBMC(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
 
+  @property
+  def name(self):
+    return self.__name
 
   @property
   def prod(self):
@@ -187,8 +193,53 @@ class Sim:
       for error in self.__errorLog:
         print(error)
 
-  def write_changeLog(self,fn=None):
-     # No argument or explicit None prints to screen
-    if fn is None:
-      for change in self.__changeLog:
-        print(change)
+  def write_changeLog(self,keys=None,mask=None,outFile=None,overwrite=True,printToScreen=False):
+
+    if keys is not None and mask is None:
+      chlog = self.__changeLog.returnAbbreviated(keys)
+    elif mask is not None:
+      chlog = self.__changeLog.returnMask(mask)
+      if keys is not None:
+        chlog = chl.returnAbbreviated(keys)
+    else:
+      chlog = self.__changeLog.copy()
+
+    # No argument or explicit None prints to screen
+    if outFile is None:
+      outFile = self.__changeLogFile
+
+    log = "Begin entry: {}\n\n".format(dt.datetimePrettify(datetime.datetime.now()))
+
+    for ch in chlog.data:
+
+      dictKeys = ch.keys()
+
+      if "Location" in dictKeys:
+        log += "  {:<20s}: {:<40s}\n".format("Location",ch["Location"])
+      if "Variable" in dictKeys:
+        log += "  {:<20s}: {:<40s}\n".format("Variable",ch["Variable"])
+      if "Index" in dictKeys:
+        log += "  {:<20s}: {:<40s}\n".format("Index",str(ch["Index"]))
+      if "New" in dictKeys:
+        log += "  {:<20s}: {:<40s}\n".format("New",str(ch["New"]))
+      if "Previous" in dictKeys:
+        log += "  {:<20s}: {:<40s}\n".format("Previous",str(ch["Previous"]))
+      if "Success" in dictKeys:
+        log += "  {:<20s}: {:<40s}\n".format("Success",str(ch["Success"]))
+      if "Date" in dictKeys:
+        log += "  {:<20s}: {:<40s}\n".format("Date",dt.datetimePrettify(ch["Date"]))
+      if "ErrorMessage" in dictKeys:
+        log += "  {:<20s}: {:<40s}\n".format("ErrorMessage",str(ch["ErrorMessage"]))
+
+      log += "\n\n"
+
+    if printToScreen:
+      print(log)
+
+    else:
+      if overwrite:
+        wtype = "w"
+      else:
+        wtype = "a+"
+      with open(outFile,wtype) as f:
+        f.write(log)

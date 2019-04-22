@@ -174,7 +174,6 @@ mySim.mtypes[1].qscale    = 0.5e0
 mySim.mtypes[1].iurot     = 0
 mySim.mtypes[1].isolute   = 1000000
 mySim.mtypes[1].init_beads()
-mySim.mtypes[1].beads[1].unit          = 1
 mySim.mtypes[1].beads[1].ntype         = 102
 mySim.mtypes[1].beads[1].leaderq       = 1
 mySim.mtypes[1].beads[1].nbonds        = 1
@@ -184,5 +183,21 @@ mySim.mtypes[1].beads[1].nangles       = 1
 mySim.mtypes[1].beads[1].init_angles()
 mySim.mtypes[1].beads[1].angles        = (2,3,301)
 mySim.mtypes[1].beads[1].ndihedrals    = 0
+mySim.mtypes[1].beads[2].ntype         = 101
+mySim.mtypes[1].beads[2].leaderq       = 2
+mySim.mtypes[1].beads[2].nbonds        = 2
+mySim.mtypes[1].beads[2].init_bonds()
+mySim.mtypes[1].beads[2].bonds         = [(1,201),(3,201)]
+mySim.mtypes[1].beads[2].nangles       = 0
+mySim.mtypes[1].beads[2].ndihedrals    = 0
+mySim.mtypes[1].beads[3].ntype         = 101
+mySim.mtypes[1].beads[3].leaderq       = 3
+mySim.mtypes[1].beads[3].nbonds        = 1
+mySim.mtypes[1].beads[3].init_bonds()
+mySim.mtypes[1].beads[3].bonds         = (3,201)
+mySim.mtypes[1].beads[3].nangles       = 1
+mySim.mtypes[1].beads[3].init_angles()
+mySim.mtypes[1].beads[3].angles        = (2,1,301)
+mySim.mtypes[1].beads[3].ndihedrals    = 0
 
 mySim.write_changeLog()

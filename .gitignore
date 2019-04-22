@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Default simulation files that shouldn't ever be pushed
+mcsim-changelog.txt
+mcsim-errorlog.txt
