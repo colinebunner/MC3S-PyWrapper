@@ -88,6 +88,36 @@ mySim.angles[1].brben    = 180.0e0
 mySim.angles[1].brbenk   = 0.0e0
 
 ### fort.4 stuff
+#mc_shared
+mySim.shared.seed    = 10
+mySim.shared.nbox    = 2
+mySim.shared.nmolty  = 1
+mySim.shared.nstep   = 2000
+mySim.shared.lstop   = False
+mySim.shared.iratio  = 300
+mySim.shared.rmin    = 1.2
+mySim.shared.softcut = 100.0e0
+mySim.shared.linit   = True
+mySim.shared.lreadq  = False
+mySim.shared.nchain  = 1500
+
+#analysis
+mySim.analysis.iprint        = 10000
+mySim.analysis.imv           = 10000
+mySim.analysis.iblock        = 10000
+mySim.analysis.iratp         = 10
+mySim.analysis.idiele        = 250000
+mySim.analysis.iheatcapacity = 1000000
+mySim.analysis.ianalyze      = 1000000
+mySim.analysis.nbin          = 250
+mySim.analysis.lintra        = False
+mySim.analysis.lstretch      = False
+mySim.analysis.lgvst         = False
+mySim.analysis.lbend         = False
+mySim.analysis.lete          = False
+mySim.analysis.lrhoz         = False
+mySim.analysis.lucall        = False
+
 # Volume namelist
 mySim.volume.tavol  = 0.3e0
 mySim.volume.iratv  = 10

@@ -23,6 +23,8 @@ import cssi_mcccs.sections.atom as atom
 import cssi_mcccs.sections.bond as bond
 import cssi_mcccs.sections.angle as angle
 import cssi_mcccs.sections.dihedral as dihedral
+import cssi_mcccs.sections.shared as shared
+import cssi_mcccs.sections.analysis as analysis
 
 class Sim:
 
@@ -51,6 +53,8 @@ class Sim:
     self.__io                 = io.IO(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__checkpoint         = checkpoint.Checkpoint(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__system             = system.System(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__shared             = shared.Shared(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__analysis           = analysis.Analysis(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__volume             = volume.Volume(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__swap               = swap.Swap(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__cbmc               = cbmc.CBMC(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
@@ -114,6 +118,14 @@ class Sim:
   @property
   def system(self):
     return self.__system
+
+  @property
+  def shared(self):
+    return self.__shared
+
+  @property
+  def analysis(self):
+    return self.__analysis
 
   @property
   def volume(self):

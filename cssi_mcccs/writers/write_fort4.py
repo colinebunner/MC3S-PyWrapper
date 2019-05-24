@@ -6,9 +6,63 @@ def write_fort4(simObj,fort4File="fort.4"):
 
   fort4 += "&mc_shared\n"
 
+  if simObj.shared.seed is not None:
+    fort4 += "  seed= {}\n".format(simObj.shared.seed)
+  if simObj.shared.nbox is not None:
+    fort4 += "  nbox= {}\n".format(simObj.shared.nbox)
+  if simObj.shared.nmolty is not None:
+    fort4 += "  nmolty= {}\n".format(simObj.shared.nmolty)
+  if simObj.shared.nstep is not None:
+    fort4 += "  nstep= {}\n".format(simObj.shared.nstep)
+  if simObj.shared.lstop is not None:
+    fort4 += "  lstop= {}\n".format(su.logicToString(simObj.shared.lstop))
+  if simObj.shared.iratio is not None:
+    fort4 += "  iratio= {}\n".format(simObj.shared.iratio)
+  if simObj.shared.rmin is not None:
+    fort4 += "  rmin= {}\n".format(simObj.shared.rmin)
+  if simObj.shared.softcut is not None:
+    fort4 += "  softcut= {}\n".format(simObj.shared.softcut)
+  if simObj.shared.linit is not None:
+    fort4 += "  linit= {}\n".format(su.logicToString(simObj.shared.linit))
+  if simObj.shared.lreadq is not None:
+    fort4 += "  lreadq= {}\n".format(su.logicToString(simObj.shared.lreadq))
+  if simObj.shared.nchain is not None:
+    fort4 += "  nchain= {}\n".format(simObj.shared.nchain)
+
   fort4 += "/ \n\n"
 
   fort4 += "&analysis\n"
+
+  if simObj.analysis.iprint is not None:
+    fort4 += "  iprint= {}\n".format(simObj.analysis.iprint)
+  if simObj.analysis.imv is not None:
+    fort4 += "  imv= {}\n".format(simObj.analysis.imv)
+  if simObj.analysis.iblock is not None:
+    fort4 += "  iblock= {}\n".format(simObj.analysis.iblock)
+  if simObj.analysis.iratp is not None:
+    fort4 += "  iratp= {}\n".format(simObj.analysis.iratp)
+  if simObj.analysis.idiele is not None:
+    fort4 += "  idiele= {}\n".format(simObj.analysis.idiele)
+  if simObj.analysis.iheatcapacity is not None:
+    fort4 += "  iheatcapacity= {}\n".format(simObj.analysis.iheatcapacity)
+  if simObj.analysis.ianalyze is not None:
+    fort4 += "  ianalyze= {}\n".format(simObj.analysis.ianalyze)
+  if simObj.analysis.nbin is not None:
+    fort4 += "  nbin= {}\n".format(simObj.analysis.nbin)
+  if simObj.analysis.lintra is not None:
+    fort4 += "  lintra= {}\n".format(su.logicToString(simObj.analysis.lintra))
+  if simObj.analysis.lstretch is not None:
+    fort4 += "  lstretch= {}\n".format(su.logicToString(simObj.analysis.lstretch))
+  if simObj.analysis.lgvst is not None:
+    fort4 += "  lgvst= {}\n".format(su.logicToString(simObj.analysis.lgvst))
+  if simObj.analysis.lbend is not None:
+    fort4 += "  lbend= {}\n".format(su.logicToString(simObj.analysis.lbend))
+  if simObj.analysis.lete is not None:
+    fort4 += "  lete= {}\n".format(su.logicToString(simObj.analysis.lete))
+  if simObj.analysis.lrhoz is not None:
+    fort4 += "  lrhoz= {}\n".format(su.logicToString(simObj.analysis.lrhoz))
+  if simObj.analysis.lucall is not None:
+    fort4 += "  lucall= {}\n".format(su.logicToString(simObj.analysis.lucall))
 
   fort4 += "/ \n\n"
 
