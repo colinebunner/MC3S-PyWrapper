@@ -1,5 +1,5 @@
 #Example that uses nearly all setters to test for errors in the code
-from cssi_mcccs import mc_sim as mcs
+from mc3s_pywrapper import mc_sim as mcs
 
 #
 mySim = mcs.Sim("/home/cbunner/git-repos/MCCCS-ABE/exe-pc/src/topmon")

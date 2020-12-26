@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/cssi-cp2k
+    working_directory: ~/mc3s_pywrapper
     docker:
       - image: circleci/python:3.7
       
@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run: sudo chown -R circleci:circleci /usr/local/bin
       - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
-      - run: sudo mkdir -p ~/cssi-cp2k
+      - run: sudo mkdir -p ~/mc3s_pywrapper
       - run:
           name: run setup
           command: |
@@ -17,4 +17,4 @@ jobs:
       - run:
           name: run test
           command: |
-            python3 cssi_mcccs/tests/simple-test.py
+            python3 mc3s_pywrapper/tests/simple-test.py

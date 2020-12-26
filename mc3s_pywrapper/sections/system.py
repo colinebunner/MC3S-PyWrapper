@@ -1,5 +1,5 @@
 import datetime
-import cssi_mcccs.utilities.test_instance as ti
+import mc3s_pywrapper.utilities.test_instance as ti
 
 class System:
 

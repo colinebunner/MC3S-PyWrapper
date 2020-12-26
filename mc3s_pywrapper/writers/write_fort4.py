@@ -1,4 +1,4 @@
-from cssi_mcccs.utilities import string_util as su
+from mc3s_pywrapper.utilities import string_util as su
 
 def write_fort4(simObj,fort4File="fort.4"):
 

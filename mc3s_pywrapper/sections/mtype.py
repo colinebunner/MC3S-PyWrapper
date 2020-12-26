@@ -1,8 +1,8 @@
 import datetime
-from cssi_mcccs.utilities import test_instance as ti
-from cssi_mcccs.utilities import oneDimArray   as oda
-from cssi_mcccs.utilities import objectArray   as oba
-from cssi_mcccs.sections  import bead
+from mc3s_pywrapper.utilities import test_instance as ti
+from mc3s_pywrapper.utilities import oneDimArray   as oda
+from mc3s_pywrapper.utilities import objectArray   as oba
+from mc3s_pywrapper.sections  import bead
 
 class MType:
 

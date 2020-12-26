@@ -1,4 +1,4 @@
-from cssi_mcccs.utilities import oneDimArray as oda
+from mc3s_pywrapper.utilities import oneDimArray as oda
 
 class objectArray(oda.oneDimArray):
 

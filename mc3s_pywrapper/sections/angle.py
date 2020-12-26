@@ -1,36 +1,36 @@
 import datetime
-from cssi_mcccs.utilities import test_instance as ti
-from cssi_mcccs.utilities import oneDimArray   as oda
+from mc3s_pywrapper.utilities import test_instance as ti
+from mc3s_pywrapper.utilities import oneDimArray   as oda
 
-class Bond:
+class Angle:
 
-  def __init__(self,intID=None,bType=None,brvib=None,brvibk=None,errorLog=[],
+  def __init__(self,intID=None,aType=None,brben=None,brbenk=None,errorLog=[],
                changeLog=[],location="",number=None):
 
     self.__intID     = intID
-    self.__bType     = bType
-    self.__brvib     = brvib
-    self.__brvibk    = brvibk
+    self.__aType     = aType
+    self.__brben     = brben
+    self.__brbenk    = brbenk
     self.__number    = number
     self.__errorLog  = errorLog
     self.__changeLog = changeLog
-    self.__location  = "{}/Bond-{}".format(location,number)
+    self.__location  = "{}/Angle-{}".format(location,number)
 
   @property
   def intID(self):
     return self.__intID
 
   @property
-  def bType(self):
-    return self.__bType
+  def aType(self):
+    return self.__aType
 
   @property
-  def brvib(self):
-    return self.__brvib
+  def brben(self):
+    return self.__brben
 
   @property
-  def brvibk(self):
-    return self.__brvibk
+  def brbenk(self):
+    return self.__brbenk
 
   @property
   def number(self):
@@ -63,67 +63,67 @@ class Bond:
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'intID','ErrorMessage':errorMessage})
 
-  @bType.setter
-  def bType(self,val):
+  @aType.setter
+  def aType(self,val):
     if ti.is_positive_integer(val):
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                'Variable':'bType','Success':True,'Previous':self.__bType,'New':val,
+                                'Variable':'aType','Success':True,'Previous':self.__aType,'New':val,
                                 'ErrorMessage':None})
-      self.__bType = val
+      self.__aType = val
     else:
-      errorMessage = "bType must be a positive integer."
+      errorMessage = "aType must be a positive integer."
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                               'Variable':'bType','Success':False,'Previous':self.__bType,'New':val,
+                               'Variable':'aType','Success':False,'Previous':self.__aType,'New':val,
                                'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
-                              'Variable':'bType','ErrorMessage':errorMessage})
+                              'Variable':'aType','ErrorMessage':errorMessage})
 
-  @brvib.setter
-  def brvib(self,val):
+  @brben.setter
+  def brben(self,val):
     if ti.is_positive_number(val):
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                'Variable':'brvib','Success':True,'Previous':self.__brvib,'New':val,
+                                'Variable':'brben','Success':True,'Previous':self.__brben,'New':val,
                                 'ErrorMessage':None})
-      self.__brvib = val
+      self.__brben = val
     else:
-      errorMessage = "brvib must be a positive integer."
+      errorMessage = "brben must be a positive integer."
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                               'Variable':'brvib','Success':False,'Previous':self.__brvib,'New':val,
+                               'Variable':'brben','Success':False,'Previous':self.__brben,'New':val,
                                'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
-                              'Variable':'brvib','ErrorMessage':errorMessage})
+                              'Variable':'brben','ErrorMessage':errorMessage})
 
-  @brvibk.setter
-  def brvibk(self,val):
+  @brbenk.setter
+  def brbenk(self,val):
     if not isinstance(val,oda.oneDimArray):
       if not (isinstance(val,list) or ti.is_number):
-          errorMessage = ("To properly set brvibk you have a few options. You can pass it as a "
-                          " python list (e.g. mySim.bonds[i].brvibk = [0.0e0])."
+          errorMessage = ("To properly set brbenk you have a few options. You can pass it as a "
+                          " python list (e.g. mySim.angles[i].brbenk = [0.0e0])."
                           " This will automatically convert to the special oneDimArray used by the code."
                           " You can also set it as a oneDimArray object yourself, but this is far more "
                           " tedious and you need to be careful that the errorLog, changeLog, location, "
                           " and variable flags are set properly, which involves passing the right "
                           " reference. Not that single values can be passed as a float.")
           self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                                   'Variable':'brvibk','Success':False,'Previous':repr(self.__brvibk),
+                                   'Variable':'brbenk','Success':False,'Previous':repr(self.__brbenk),
                                    'New':repr(val),'ErrorMessage':errorMessage})
           self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
-                                  'Location':self.__location,'Variable':'brvibk',
+                                  'Location':self.__location,'Variable':'brbenk',
                                   'ErrorMessage':errorMessage})
       else:
         if not isinstance(val,list):
           val = [val]
         length = len(val)
         myODA = oda.oneDimArray(length,errorLog=self.__errorLog,changeLog=self.__changeLog,
-                                          location=self.__location,var="brvibk")
-        self.__brvibk = myODA
+                                location=self.__location,var="brbenk")
+        self.__brbenk = myODA
         for i in range(length):
-          self.__brvibk[i+1] = val[i]
+          self.__brbenk[i+1] = val[i]
 
     else:
       length = val.length
       myODA = oda.oneDimArray(length,errorLog=self.__errorLog,changeLog=self.__changeLog,
-                              location=self.__location,var="brvibk")
-      self.__brvibk = myODA
+                                        location=self.__location,var="brbenk")
+      self.__brbenk = myODA
       for i in range(length):
-        self.__brvibk[i+1] = val[i]
+        self.__brbenk[i+1] = val[i]
