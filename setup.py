@@ -9,6 +9,6 @@ setup(name='mc3s_pywrapper',
       license='GNU',
       packages=['mc3s_pywrapper','mc3s_pywrapper/sections','mc3s_pywrapper/utilities','mc3s_pywrapper/writers'],
       install_requires = [
-        'numpy',
+        'numpy', 'f90nml'
       ],
       zip_safe=False)

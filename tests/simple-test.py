@@ -2,7 +2,7 @@
 from mc3s_pywrapper import mc_sim as mcs
 
 #
-mySim = mcs.Sim("/home/cbunner/git-repos/MCCCS-ABE/exe-pc/src/topmon")
+mySim = mcs.Sim("/home/colinbunner/git-repos/MCCCS-ABE/exe-pc/src/topmon")
 
 # runtime info
 mySim.runtime.nProc   = 1
@@ -140,6 +140,17 @@ mySim.cbmc.nchoih = 1
 mySim.cbmc.nchtor = 100
 mySim.cbmc.nchbna = 1000
 mySim.cbmc.nchbnb = 1000
+
+# Simple namelist
+mySim.simple.pm_atom_tra = 0.0e0
+mySim.simple.Armtra = [0.0, 0.0]
+mySim.simple.pmtra = 0.3
+mySim.simple.pmtrmt = 1.0
+mySim.simple.rmtra = 1.0
+mySim.simple.tatra = 0.3
+mySim.simple.pmromt = 1.0
+mySim.simple.rmrot = 1.0
+mySim.simple.tarot = 0.3
 
 mySim.init_boxes(2)
 mySim.boxes[1].set_boxlengths([47.709 for i in range(3)])

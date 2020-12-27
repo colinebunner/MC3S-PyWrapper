@@ -108,3 +108,6 @@ mcsim-changelog.txt
 mcsim-errorlog.txt
 topmon.inp
 fort.4
+
+# VSCode
+settings.json

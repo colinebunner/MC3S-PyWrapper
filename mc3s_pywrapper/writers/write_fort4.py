@@ -128,6 +128,19 @@ def write_fort4(simObj,fort4File="fort.4"):
 
   fort4 += "/ \n\n"
 
+  fort4 += "&mc_simple\n"
+  fort4 += "  pm_atom_tra= {}\n".format(simObj.simple.pm_atom_tra)
+  fort4 += "  Armtra= {}\n".format(simObj.simple.Armtra.unrolledString())
+  fort4 += "  pmtra= {}\n".format(simObj.simple.pmtra)
+  fort4 += "  pmtrmt= {}\n".format(simObj.simple.pmtrmt.unrolledString())
+  fort4 += "  rmtra= {}\n".format(simObj.simple.rmtra.unrolledString())
+  fort4 += "  tatra= {}\n".format(simObj.simple.tatra)
+  fort4 += "  pmromt= {}\n".format(simObj.simple.pmromt.unrolledString())
+  fort4 += "  rmrot= {}\n".format(simObj.simple.rmrot.unrolledString())
+  fort4 += "  tarot= {}\n".format(simObj.simple.tarot)
+
+  fort4 += "/ \n\n"
+
   fort4 += "SIMULATION_BOX\n"
 
   if simObj.boxes is not None:

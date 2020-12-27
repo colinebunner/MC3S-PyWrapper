@@ -26,7 +26,7 @@ def is_positive_number(val):
 def is_probability(val):
   if is_number(val):
     # No restriction to g.t. 0 because sometimes we need to set negative values to make sure moves
-    # aren't done (e.g. I've heard from Rob he needs to set -1 on Argon's computer)
+    # aren't done (e.g. I've heard from Rob he needs to set -1 on Mira computer)
     return val <= 1.0
   else:
     return False

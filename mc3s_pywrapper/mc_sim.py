@@ -15,6 +15,7 @@ import mc3s_pywrapper.sections.io as io
 import mc3s_pywrapper.sections.checkpoint as checkpoint
 import mc3s_pywrapper.sections.system as system
 import mc3s_pywrapper.sections.volume as volume
+import mc3s_pywrapper.sections.simple as simple
 import mc3s_pywrapper.sections.swap as swap
 import mc3s_pywrapper.sections.cbmc as cbmc
 import mc3s_pywrapper.sections.simbox as simbox
@@ -58,6 +59,7 @@ class Sim:
     self.__volume             = volume.Volume(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__swap               = swap.Swap(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__cbmc               = cbmc.CBMC(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__simple             = simple.Simple(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
 
   @property
   def name(self):
@@ -138,6 +140,10 @@ class Sim:
   @property
   def cbmc(self):
     return self.__cbmc
+
+  @property
+  def simple(self):
+    return self.__simple
 
   @property
   def boxes(self):
