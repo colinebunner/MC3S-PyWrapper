@@ -141,6 +141,44 @@ def write_fort4(simObj,fort4File="fort.4"):
 
   fort4 += "/ \n\n"
 
+  fort4 += "&mc_ee"
+  fort4 += "  = {}\n".format(simObj.ee.pmexpc)
+  fort4 += "  = {}\n".format(simObj.ee.pmeemt.unrolledString())
+  fort4 += "  = {}\n".format(simObj.ee.pmexpc1)
+  fort4 += "  = {}\n".format(simObj.ee.lexpand.unrolledString())
+  fort4 += f"/ \n\n"
+
+  fort4 += "&mc_flucq"
+  fort4 += "  = {}\n".format(simObj.flucq.taflcq)
+  fort4 += "  = {}\n".format(simObj.flucq.fqtemp)
+  fort4 += "  = {}\n".format(simObj.flucq.rmflucq)
+  fort4 += "  = {}\n".format(simObj.flucq.pmflcq)
+  fort4 += "  = {}\n".format(simObj.flucq.pmfqmt.unrolledString())
+  fort4 += "  = {}\n".format(simObj.flucq.lflucq.unrolledString())
+  fort4 += "  = {}\n".format(simObj.flucq.lqtrans.unrolledString())
+  fort4 += "  = {}\n".format(simObj.flucq.fqegp.unrolledString())
+  fort4 += "  = {}\n".format(simObj.flucq.nchoiq.unrolledString())
+  fort4 += "  = {}\n".format(simObj.flucq.nswapq)
+  fort4 += f"/ \n\n"
+
+  fort4 += "&external_field"
+  fort4 += "  = {}\n".format(simObj.external_field.Elect_field)
+  fort4 += f"/ \n\n"
+
+  fort4 += "&mc_gcmc"
+  fort4 += "  = {}\n".format(simObj.gcmc.nequil)
+  fort4 += "  = {}\n".format(simObj.gcmc.ninstf)
+  fort4 += "  = {}\n".format(simObj.gcmc.ninsth)
+  fort4 += "  = {}\n".format(simObj.gcmc.ndumph)
+  fort4 += "  = {}\n".format(simObj.gcmc.B.unrolledString())
+  fort4 += f"/ \n\n"
+
+  fort4 += "&mc_swatch"
+  fort4 += "  = {}\n".format(simObj.swatch.pmswat)
+  fort4 += "  = {}\n".format(simObj.swatch.nswaty)
+  fort4 += "  = {}\n".format(simObj.swatch.pmsatc.unrolledString())
+  fort4 += f"/ \n\n"
+
   fort4 += "SIMULATION_BOX\n"
 
   if simObj.boxes is not None:

@@ -30,3 +30,6 @@ def is_probability(val):
     return val <= 1.0
   else:
     return False
+
+def is_boolean(val):
+  return val in [True, False]

@@ -1,6 +1,7 @@
 from mc3s_pywrapper.utilities import test_instance as ti
 from mc3s_pywrapper.utilities import oneDimArray   as oda
 from mc3s_pywrapper.utilities import logging
+from mc3s_pywrapper.utilities.namelist import p2n
 
 def write_section(name, variables):
 
@@ -83,7 +84,8 @@ def write_section(name, variables):
         "positive_number": "is_positive_number",
         "int": "is_integer",
         "positive_int": "is_positive_integer",
-        "probability": "is_probability"
+        "probability": "is_probability",
+        "boolean": "is_boolean"
     }
 
     # Writing the code with good, old-fashioned string operations
@@ -133,3 +135,34 @@ def write_section(name, variables):
             setters += value_setter_template(name, type_2_ti[var_type])
 
     return code + properties + setters
+
+def write_fort4_code(name, variables):
+
+    '''
+        replaceme is so I can change to newlines
+    '''
+
+    namelist_name = p2n[name]
+
+    writer_code = f"  fort4 += \"&{namelist_name}\"\n"
+
+    newline = "\n"
+
+    for v in variables:
+        nm = v["name"]
+        vtype = v["type"]
+
+        # Need to call unrolledString method
+        if vtype == "oda":
+            writer_code += (
+                f"  fort4 += \"  = {{}}replaceme\".format(simObj.{name}.{nm}.unrolledString())\n"
+            )
+        else:
+            writer_code += (
+                f"  fort4 += \"  = {{}}replaceme\".format(simObj.{name}.{nm})\n"
+            )
+    writer_code += (
+        f"  fort4 += f\"/ replacemereplaceme\""
+    )
+
+    return writer_code
