@@ -81,10 +81,9 @@ mySim.bonds[1].bType      = 1
 mySim.bonds[1].bondParams = [1.550e0, 0.0e0]
 
 mySim.init_angles(1)
-mySim.angles[1].intID    = 301
-mySim.angles[1].aType    = 1
-mySim.angles[1].brben    = 180.0e0
-mySim.angles[1].brbenk   = 0.0e0
+mySim.angles[1].intID       = 301
+mySim.angles[1].aType       = 1
+mySim.angles[1].angleParams = [180.0e0, 0.0e0]
 
 ### fort.4 stuff
 #mc_shared

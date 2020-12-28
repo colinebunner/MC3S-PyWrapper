@@ -148,7 +148,7 @@ def write_topmon(simObj,topmonFile="topmon.inp"):
   if simObj.bonds is not None:
     for i in range(simObj.bonds.length):
       bond = simObj.bonds[i+1]
-      topmon += "{} {} {} {}".format(bond.intID, bond.bType, bond.bondParams.unrolledString())
+      topmon += "{} {} {}".format(bond.intID, bond.bType, bond.bondParams.unrolledString())
       if bond.minimumRegrow:
         topmon += " {}".format(bond.minimumRegrow)
       if bond.maximumRegrow:
@@ -163,7 +163,7 @@ def write_topmon(simObj,topmonFile="topmon.inp"):
   if simObj.angles is not None:
     for i in range(simObj.angles.length):
       angle = simObj.angles[i+1]
-      topmon += "{} {} {} {}\n".format(angle.intID, angle.aType, angle.angleParams.unrolledString())
+      topmon += "{} {} {}\n".format(angle.intID, angle.aType, angle.angleParams.unrolledString())
 
   topmon += "END ANGLES\n\n\n"
 
