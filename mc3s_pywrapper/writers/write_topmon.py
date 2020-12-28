@@ -163,7 +163,7 @@ def write_topmon(simObj,topmonFile="topmon.inp"):
   if simObj.angles is not None:
     for i in range(simObj.angles.length):
       angle = simObj.angles[i+1]
-      topmon += "{} {} {} {}\n".format(angle.intID, angle.aType, angle.brben, angle.brbenk.unrolledString())
+      topmon += "{} {} {} {}\n".format(angle.intID, angle.aType, angle.angleParams.unrolledString())
 
   topmon += "END ANGLES\n\n\n"
 
