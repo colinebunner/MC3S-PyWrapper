@@ -69,7 +69,9 @@ n2p = {
     "mc_flucq": "flucq",
     "mc_gcmc": "gcmc",
     "mc_ee": "ee",
-    "mc_simple": "simple"
+    "mc_simple": "simple",
+    "io": "io",
+    "system": "system"
 }
 
 p2n = {val: key for key, val in n2p.items()}

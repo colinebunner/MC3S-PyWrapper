@@ -66,10 +66,6 @@ def write_fort4(simObj,fort4File="fort.4"):
 
   fort4 += "/ \n\n"
 
-  fort4 += "&external_field\n"
-
-  fort4 += "/ \n\n"
-
   fort4 += "&mc_volume\n"
 
   if simObj.volume.tavol is not None:

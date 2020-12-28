@@ -76,10 +76,9 @@ mySim.atoms[2].chemID    = "S"
 mySim.atoms[2].chName    = "S-CS2"
 
 mySim.init_bonds(1)
-mySim.bonds[1].intID     = 201
-mySim.bonds[1].bType     = 1
-mySim.bonds[1].brvib     = 1.550e0
-mySim.bonds[1].brvibk    = 0.0e0
+mySim.bonds[1].intID      = 201
+mySim.bonds[1].bType      = 1
+mySim.bonds[1].bondParams = [1.550e0, 0.0e0]
 
 mySim.init_angles(1)
 mySim.angles[1].intID    = 301

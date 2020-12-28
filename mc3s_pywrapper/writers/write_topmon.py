@@ -148,7 +148,12 @@ def write_topmon(simObj,topmonFile="topmon.inp"):
   if simObj.bonds is not None:
     for i in range(simObj.bonds.length):
       bond = simObj.bonds[i+1]
-      topmon += "{} {} {} {}\n".format(bond.intID, bond.bType, bond.brvib, bond.brvibk.unrolledString())
+      topmon += "{} {} {} {}".format(bond.intID, bond.bType, bond.bondParams.unrolledString())
+      if bond.minimumRegrow:
+        topmon += " {}".format(bond.minimumRegrow)
+      if bond.maximumRegrow:
+        topmon += " {}".format(bond.maximumRegrow)
+      topmon += "\n"
 
   topmon += "END BONDS\n\n\n"
 

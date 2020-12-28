@@ -1,6 +1,7 @@
 import f90nml
 
 from mc3s_pywrapper.utilities import string_util as su
+from mc3s_pywrapper.utilities.namelist import n2p
 from mc3s_pywrapper.mc_sim import Sim
 
 def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=False):
@@ -46,4 +47,20 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
 
     for nml_var, nml in f4_namelists.items():
         # We need to grab the right section of our simulation
-        
+        sim_nml = getattr(mc_sim, n2p[nml_var])
+        # Need to see if the section is empty to avoid calling items() on an empty namespace
+        # NOTE: that if you have duplicate entries in your fort.4, this will cause problems.
+        if len(nml):
+            for var, val in nml.items():
+                try:
+                    setattr(sim_nml, var, val)
+                except ValueError:
+                    print(
+                        f"Failed in reading in your fort.4 data from the file {file_path}.\n"
+                        "This is likely due to one of your entries not matching the allowed "
+                        "types for that namelist variable.\n"
+                        "If you think this is in error, please contact Colin personally "
+                        "or open an issue on the github page."
+                    )
+    
+    return mc_sim
