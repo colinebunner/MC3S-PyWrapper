@@ -156,11 +156,13 @@ def write_fort4_code(name, variables):
         # Need to call unrolledString method
         if vtype == "oda":
             writer_code += (
-                f"  fort4 += \"  = {{}}replaceme\".format(simObj.{name}.{nm}.unrolledString())\n"
+                f"  if simObj.{name}.{nm} is not None:\n"
+                f"    fort4 += \"  = {{}}replaceme\".format(simObj.{name}.{nm}.unrolledString())\n"
             )
         else:
             writer_code += (
-                f"  fort4 += \"  = {{}}replaceme\".format(simObj.{name}.{nm})\n"
+                f"  if simObj.{name}.{nm} is not None:\n"
+                f"    fort4 += \"  = {{}}replaceme\".format(simObj.{name}.{nm})\n"
             )
     writer_code += (
         f"  fort4 += f\"/ replacemereplaceme\""

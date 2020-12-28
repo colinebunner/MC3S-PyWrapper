@@ -129,54 +129,85 @@ def write_fort4(simObj,fort4File="fort.4"):
   fort4 += "/ \n\n"
 
   fort4 += "&mc_simple\n"
-  fort4 += "  pm_atom_tra= {}\n".format(simObj.simple.pm_atom_tra)
-  fort4 += "  Armtra= {}\n".format(simObj.simple.Armtra.unrolledString())
-  fort4 += "  pmtra= {}\n".format(simObj.simple.pmtra)
-  fort4 += "  pmtrmt= {}\n".format(simObj.simple.pmtrmt.unrolledString())
-  fort4 += "  rmtra= {}\n".format(simObj.simple.rmtra.unrolledString())
-  fort4 += "  tatra= {}\n".format(simObj.simple.tatra)
-  fort4 += "  pmromt= {}\n".format(simObj.simple.pmromt.unrolledString())
-  fort4 += "  rmrot= {}\n".format(simObj.simple.rmrot.unrolledString())
-  fort4 += "  tarot= {}\n".format(simObj.simple.tarot)
-
+  if simObj.simple.pm_atom_tra is not None:
+    fort4 += "  pm_atom_tra= {}\n".format(simObj.simple.pm_atom_tra)
+  if simObj.simple.Armtra is not None:
+    fort4 += "  Armtra= {}\n".format(simObj.simple.Armtra.unrolledString())
+  if simObj.simple.pmtra is not None:
+    fort4 += "  pmtra= {}\n".format(simObj.simple.pmtra)
+  if simObj.simple.pmtrmt is not None:
+    fort4 += "  pmtrmt= {}\n".format(simObj.simple.pmtrmt.unrolledString())
+  if simObj.simple.rmtra is not None:
+    fort4 += "  rmtra= {}\n".format(simObj.simple.rmtra.unrolledString())
+  if simObj.simple.tatra is not None:
+    fort4 += "  tatra= {}\n".format(simObj.simple.tatra)
+  if simObj.simple.pmromt is not None:
+    fort4 += "  pmromt= {}\n".format(simObj.simple.pmromt.unrolledString())
+  if simObj.simple.rmrot is not None:
+    fort4 += "  rmrot= {}\n".format(simObj.simple.rmrot.unrolledString())
+  if simObj.simple.tarot is not None:
+    fort4 += "  tarot= {}\n".format(simObj.simple.tarot)
   fort4 += "/ \n\n"
 
-  fort4 += "&mc_ee"
-  fort4 += "  = {}\n".format(simObj.ee.pmexpc)
-  fort4 += "  = {}\n".format(simObj.ee.pmeemt.unrolledString())
-  fort4 += "  = {}\n".format(simObj.ee.pmexpc1)
-  fort4 += "  = {}\n".format(simObj.ee.lexpand.unrolledString())
+  fort4 += "&mc_ee\n"
+  if simObj.ee.pmexpc is not None:
+    fort4 += "  = {}\n".format(simObj.ee.pmexpc)
+  if simObj.ee.pmeemt is not None:
+    fort4 += "  = {}\n".format(simObj.ee.pmeemt.unrolledString())
+  if simObj.ee.pmexpc1 is not None:
+    fort4 += "  = {}\n".format(simObj.ee.pmexpc1)
+  if simObj.ee.lexpand is not None:
+    fort4 += "  = {}\n".format(simObj.ee.lexpand.unrolledString())
   fort4 += f"/ \n\n"
 
-  fort4 += "&mc_flucq"
-  fort4 += "  = {}\n".format(simObj.flucq.taflcq)
-  fort4 += "  = {}\n".format(simObj.flucq.fqtemp)
-  fort4 += "  = {}\n".format(simObj.flucq.rmflucq)
-  fort4 += "  = {}\n".format(simObj.flucq.pmflcq)
-  fort4 += "  = {}\n".format(simObj.flucq.pmfqmt.unrolledString())
-  fort4 += "  = {}\n".format(simObj.flucq.lflucq.unrolledString())
-  fort4 += "  = {}\n".format(simObj.flucq.lqtrans.unrolledString())
-  fort4 += "  = {}\n".format(simObj.flucq.fqegp.unrolledString())
-  fort4 += "  = {}\n".format(simObj.flucq.nchoiq.unrolledString())
-  fort4 += "  = {}\n".format(simObj.flucq.nswapq)
+  fort4 += "&external_field\n"
+  if simObj.external_field.Elect_field is not None:
+    fort4 += "  = {}\n".format(simObj.external_field.Elect_field)
   fort4 += f"/ \n\n"
 
-  fort4 += "&external_field"
-  fort4 += "  = {}\n".format(simObj.external_field.Elect_field)
+  fort4 += "&mc_flucq\n"
+  if simObj.flucq.taflcq is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.taflcq)
+  if simObj.flucq.fqtemp is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.fqtemp)
+  if simObj.flucq.rmflucq is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.rmflucq)
+  if simObj.flucq.pmflcq is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.pmflcq)
+  if simObj.flucq.pmfqmt is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.pmfqmt.unrolledString())
+  if simObj.flucq.lflucq is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.lflucq.unrolledString())
+  if simObj.flucq.lqtrans is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.lqtrans.unrolledString())
+  if simObj.flucq.fqegp is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.fqegp.unrolledString())
+  if simObj.flucq.nchoiq is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.nchoiq.unrolledString())
+  if simObj.flucq.nswapq is not None:
+    fort4 += "  = {}\n".format(simObj.flucq.nswapq)
   fort4 += f"/ \n\n"
 
-  fort4 += "&mc_gcmc"
-  fort4 += "  = {}\n".format(simObj.gcmc.nequil)
-  fort4 += "  = {}\n".format(simObj.gcmc.ninstf)
-  fort4 += "  = {}\n".format(simObj.gcmc.ninsth)
-  fort4 += "  = {}\n".format(simObj.gcmc.ndumph)
-  fort4 += "  = {}\n".format(simObj.gcmc.B.unrolledString())
+  fort4 += "&mc_gcmc\n"
+  if simObj.gcmc.nequil is not None:
+    fort4 += "  = {}\n".format(simObj.gcmc.nequil)
+  if simObj.gcmc.ninstf is not None:
+    fort4 += "  = {}\n".format(simObj.gcmc.ninstf)
+  if simObj.gcmc.ninsth is not None:
+    fort4 += "  = {}\n".format(simObj.gcmc.ninsth)
+  if simObj.gcmc.ndumph is not None:
+    fort4 += "  = {}\n".format(simObj.gcmc.ndumph)
+  if simObj.gcmc.B is not None:
+    fort4 += "  = {}\n".format(simObj.gcmc.B.unrolledString())
   fort4 += f"/ \n\n"
 
-  fort4 += "&mc_swatch"
-  fort4 += "  = {}\n".format(simObj.swatch.pmswat)
-  fort4 += "  = {}\n".format(simObj.swatch.nswaty)
-  fort4 += "  = {}\n".format(simObj.swatch.pmsatc.unrolledString())
+  fort4 += "&mc_swatch\n"
+  if simObj.swatch.pmswat is not None:
+    fort4 += "  = {}\n".format(simObj.swatch.pmswat)
+  if simObj.swatch.nswaty is not None:
+    fort4 += "  = {}\n".format(simObj.swatch.nswaty)
+  if simObj.swatch.pmsatc is not None:
+    fort4 += "  = {}\n".format(simObj.swatch.pmsatc.unrolledString())
   fort4 += f"/ \n\n"
 
   fort4 += "SIMULATION_BOX\n"

@@ -154,6 +154,26 @@ class Sim:
   @property
   def simple(self):
     return self.__simple
+  
+  @property
+  def external_field(self):
+    return self.__external_field
+  
+  @property
+  def swatch(self):
+    return self.__swatch
+
+  @property
+  def flucq(self):
+    return self.__flucq
+  
+  @property
+  def gcmc(self):
+    return self.__gcmc
+
+  @property
+  def ee(self):
+    return self.__ee
 
   @property
   def boxes(self):
