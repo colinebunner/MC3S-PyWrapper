@@ -2,7 +2,7 @@ from mc3s_pywrapper.utilities import test_instance as ti
 from mc3s_pywrapper.utilities import oneDimArray   as oda
 from mc3s_pywrapper.utilities import logging
 
-class Gcmc:
+class GCMC:
 
     def __init__(
         self,nequil=None,ninstf=None,ninsth=None,ndumph=None,B=None,

@@ -2,7 +2,7 @@ from mc3s_pywrapper.utilities import test_instance as ti
 from mc3s_pywrapper.utilities import oneDimArray   as oda
 from mc3s_pywrapper.utilities import logging
 
-class Flucq:
+class FlucQ:
 
     def __init__(
         self,taflcq=None,fqtemp=None,rmflucq=None,pmflcq=None,pmfqmt=None,

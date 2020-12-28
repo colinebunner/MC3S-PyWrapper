@@ -139,7 +139,8 @@ def write_section(name, variables):
 def write_fort4_code(name, variables):
 
     '''
-        replaceme is so I can change to newlines
+        replaceme is so I can change to newlines (otherwise the file write would just expand
+        that newline).
     '''
 
     namelist_name = p2n[name]

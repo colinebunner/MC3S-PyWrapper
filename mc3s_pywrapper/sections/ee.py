@@ -2,7 +2,7 @@ from mc3s_pywrapper.utilities import test_instance as ti
 from mc3s_pywrapper.utilities import oneDimArray   as oda
 from mc3s_pywrapper.utilities import logging
 
-class Ee:
+class EE:
 
     def __init__(
         self,pmexpc=None,pmeemt=None,pmexpc1=None,lexpand=None,

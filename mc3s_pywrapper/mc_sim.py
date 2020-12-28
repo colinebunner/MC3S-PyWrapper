@@ -26,6 +26,11 @@ import mc3s_pywrapper.sections.angle as angle
 import mc3s_pywrapper.sections.dihedral as dihedral
 import mc3s_pywrapper.sections.shared as shared
 import mc3s_pywrapper.sections.analysis as analysis
+import mc3s_pywrapper.sections.external_field as external_field
+import mc3s_pywrapper.sections.swatch as swatch
+import mc3s_pywrapper.sections.flucq as flucq
+import mc3s_pywrapper.sections.gcmc as gcmc
+import mc3s_pywrapper.sections.ee as ee
 
 class Sim:
 
@@ -60,6 +65,11 @@ class Sim:
     self.__swap               = swap.Swap(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__cbmc               = cbmc.CBMC(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__simple             = simple.Simple(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__external_field     = external_field.External_field(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__swatch             = swatch.Swatch(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__flucq              = flucq.FlucQ(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__gcmc               = gcmc.GCMC(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__ee                 = ee.EE(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
 
   @property
   def name(self):
