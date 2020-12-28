@@ -274,7 +274,7 @@ class Bead:
     self.__location     = "{}/bead-{}".format(location,unit)
 
   def __repr__(self):
-    return "Bead-{}".format(unit)
+    return "Bead-{}".format(self.__unit)
 
   def init_bonds(self,nbonds=None):
     if nbonds is None:
