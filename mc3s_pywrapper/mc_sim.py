@@ -9,6 +9,7 @@ from mc3s_pywrapper.utilities import dateTools   as dt
 from mc3s_pywrapper.utilities import changeLog   as chl
 from mc3s_pywrapper.writers   import write_topmon as tw
 from mc3s_pywrapper.writers   import write_fort4 as fw
+# Namelists
 import mc3s_pywrapper.sections.code as code
 import mc3s_pywrapper.sections.runtime as runtime
 import mc3s_pywrapper.sections.io as io
@@ -31,6 +32,8 @@ import mc3s_pywrapper.sections.swatch as swatch
 import mc3s_pywrapper.sections.flucq as flucq
 import mc3s_pywrapper.sections.gcmc as gcmc
 import mc3s_pywrapper.sections.ee as ee
+# Custom sections
+import mc3s_pywrapper.sections.swap_table as swap_table
 
 class Sim:
 
@@ -70,6 +73,8 @@ class Sim:
     self.__flucq              = flucq.FlucQ(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__gcmc               = gcmc.GCMC(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__ee                 = ee.EE(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
+    self.__swap_table         = None
+    self.__box_table          = None
 
   @property
   def name(self):
@@ -199,6 +204,9 @@ class Sim:
   def mtypes(self):
     return self.__mtypes
 
+  # For more advanced sections (i.e. not the namelists), I need to have these constructors.
+  # This is because they build my custom objectArray to allow full access to getters/setters
+  # of individual elements. This requires the user to specify how large each array is.
   def init_boxes(self,nbox):
     boxes = []
     for i in range(1,nbox+1):
@@ -246,6 +254,68 @@ class Sim:
                                          location=self.__location))
     self.__dihedrals = oba.objectArray.listToOBA(dihedrals,errorLog=self.__errorLog,changeLog=self.__changeLog,
                                                  location=self.__location)
+
+#  def init_swap_table(self, nmolty, nswapb, probabilities=None, boxPairs=None):
+#    '''
+#        Instantiate the swap table found in SECTION MC_SWAP. Need to know the number of molecule types
+#        and how many box pairs are specified for each molecule type.
+#    '''
+#
+#    assert len(nswapb) == nmolty, "# of moltypes and length of nswapb don't match"
+#    if probabilities:
+#      assert len(probabilities) == nmolty, "# of moltypes and length of probabilities list don't match"
+#
+#    nswapb = oda.listToODA(
+#      nswapb, errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
+#    )
+#
+#    # Setting the probability for a move between each box pair is optional at this stage. If the
+#    # probabilities are unspecified (they must be specified in whole), then they are left as None.
+#    if probabilities:
+#      probs = []
+#      # The probabilities are a list of probabilities between each box pair specified for each moltype.
+#      # Hence, we must make one of the objectArrays for this.      
+#      for plist in probabilities:
+#        myODA = oda.oneDimArray.listToODA(
+#          plist, errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
+#        )
+#        probs.append(myODA)
+#    else:
+#      probs = None
+#      #for i in range(nmolty):
+#      #  myODA = oda.oneDimArray.listToODA(
+#      #    [0.0]*nswapb[i], errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
+#      #  )
+#      #  probs.append(myODA)
+#
+#    # Setting the list of box pairs is optional at this stage. If they are unspecified 
+#    # (they must be specified in whole), then they are left as None.
+#    if boxPairs:
+#      pairs = []     
+#      for plist in boxPairs:
+#        myODA = oda.oneDimArray.listToODA(
+#          [tuple(v) for v in plist], errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
+#        )
+#        pairs.append(myODA)
+#    else:
+#      pairs = None
+#    
+#    self.__swap_table = swap_table.SwapTable(
+#      nswapb=nswapb, pmswapb=probs, boxPairs=pairs, errorLog=self.__errorLog, changeLog=self.__changeLog,
+#      location=self.__location
+#    )
+
+    def init_swap_table(self, nmolty):
+      stables = []
+      for i in range(nmolty):
+        stables.append(
+          swap_table.SwapTable(
+            number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
+          )
+        )
+      self.__swap_table = oba.objectArray.listToOBA(
+        stables,errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
+      )
 
   def write_topmon(self,topmonFile=None):
     if topmonFile is None:

@@ -15,7 +15,6 @@ def write_section(name, variables):
 
     # Generate setter for oneDimArrays
     def oda_setter_template(var_name, probability, ti_func):
-        # Yes, I use spaces not tabs
         return (
             f"    @{var_name}.setter\n"
             f"    def {var_name}(self, val):\n\n"

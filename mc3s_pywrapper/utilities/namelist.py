@@ -1,20 +1,16 @@
 namelists = {
-    #"simple":
-    #    [
-    #        {"name": "pm_atom_tra", "type": "probability"},
-    #        {"name": "Armtra", "type": "oda", "oda_type": "positive_number"},
-    #        {"name": "pmtra", "type": "probability"},
-    #        {"name": "pmtrmt", "type": "oda", "oda_type": "probability"},
-    #        {"name": "rmtra", "type": "oda", "oda_type": "positive_number"},
-    #        {"name": "tatra", "type": "probability"},
-    #        {"name": "pmromt", "type": "oda", "oda_type": "probability"},
-    #        {"name": "rmrot", "type": "oda", "oda_type": "positive_number"},
-    #        {"name": "tarot", "type": "probability"}
-    #    ],
-    #"volume":
-    #    [
-    #        {"name": }
-    #    ],
+    "simple":
+        [
+            {"name": "pm_atom_tra", "type": "probability"},
+            {"name": "Armtra", "type": "oda", "oda_type": "positive_number"},
+            {"name": "pmtra", "type": "probability"},
+            {"name": "pmtrmt", "type": "oda", "oda_type": "probability"},
+            {"name": "rmtra", "type": "oda", "oda_type": "positive_number"},
+            {"name": "tatra", "type": "probability"},
+            {"name": "pmromt", "type": "oda", "oda_type": "probability"},
+            {"name": "rmrot", "type": "oda", "oda_type": "positive_number"},
+            {"name": "tarot", "type": "probability"}
+        ],
     "external_field":
         [
             {"name": "Elect_field", "type": "number"}
@@ -53,6 +49,33 @@ namelists = {
             {"name": "pmexpc1", "type": "probability"},
             {"name": "lexpand", "type": "oda", "oda_type": "boolean"}
         ],
+    "box":
+        [
+            {"name": "boxlx", "type": "positive_number"},
+            {"name": "boxly", "type": "positive_number"},
+            {"name": "boxlz", "type": "positive_number"},
+            {"name": "rcut", "type": "positive_number"},
+            {"name": "kalp", "type": "positive_number"},
+            {"name": "rcutnn", "type": "positive_number"},
+            {"name": "numDimIso", "type": "int"},
+            {"name": "lsolid", "type": "boolean"},
+            {"name": "lrect", "type": "boolean"},
+            {"name": "lideal", "type": "boolean"},
+            {"name": "ltwice", "type": "boolean"},
+            {"name": "T", "type": "positive_number"},
+            {"name": "P", "type": "positive_number"},
+            {"name": "ininch", "type": "oda", "oda_type": "positive_int"},
+            {"name": "ghost_particles", "type": "oda", "oda_type": "positive_int"},
+            {"name": "inix", "type": "positive_int"},
+            {"name": "iniy", "type": "positive_int"},  
+            {"name": "iniz", "type": "positive_int"},  
+            {"name": "inirot", "type": "number"},
+            {"name": "inimix", "type": "number"},
+            {"name": "zshift", "type": "positive_number"},
+            {"name": "dshift", "type": "positive_number"},
+            {"name": "use_linkcell", "type": "boolean"},
+            {"name": "rintramax", "type": "positive_number"}
+        ]
 }
 
 # What is this? Well, I thought it would be clever to combine some sections of the input files

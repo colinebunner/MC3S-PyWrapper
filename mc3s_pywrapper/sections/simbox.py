@@ -264,8 +264,8 @@ class SimBox:
                                'ErrorMessage':None})
       self.__numDimensionIsIsotropic = val
     else:
-      errorMessage = ("Allowed values for number of isotropic dimensions is 0, 2, or 3. You for some "
-                      "reason though {} made sense.".format(val))
+      errorMessage = ("Allowed values for number of isotropic dimensions is 0, 2, or 3. You passed the "
+                      "value {}.".format(val))
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                'Variable':'numDimensionIsIsotropic','Success':False,
                                'Previous':self.__numDimensionIsIsotropic,'New':val,
