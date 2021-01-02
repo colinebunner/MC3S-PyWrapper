@@ -309,4 +309,72 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                             msg = f"Failed reading the {mt_num}(st/nd/rd/th) MOLECULE_TYPE declaration."
                             raise ValueError(e, msg)
 
+            # Reading MC_SWAP section
+            if line.startswith("MC_SWAP"):
+
+                # First, we need to figure out how many moltypes there are
+                nmty = 0
+                inc = 1
+                while True:
+                    nl, cnt = nextline(f4_lines, i + inc)
+                    inc += cnt
+                    if nl.startswith("END"):
+                        break
+                    else:
+                        nl = nl.split()
+                        nswapb = int(nl[0])
+                        for j in range(nswapb):
+                            nl, cnt = nextline(f4_lines, i + inc)
+                            inc += cnt + 1
+                        nmty += 1
+                print(f"Found box pair definition(s) for {nmty} molecule types in MC_SWAP")
+
+
+                # Next, we need to know whether mtypes already exist in this simulation. If so,
+                # we won't override them.
+                if mc_sim.swap_table:
+                    nexists = len(mc_sim.swap_table.data.values())
+                    print(
+                        "Sim already has {nexists} molecule type swap definitions defined vs {nmty} molecule types defs found here.\n"
+                        "I am skipping this section."
+                    )
+                    continue
+                
+                mc_sim.init_swap_table(nmty)
+                inc = 1
+                mt_num = 1
+                while True:
+                    first  = f4_lines[i+inc]
+                    if first.startswith("END"):
+                        break
+                    # Skip comments
+                    elif first.startswith("!"):
+                        inc += 1
+                        first = f4_lines[i+inc]
+                    else:
+                        first = first.split()
+                        try:
+                            nswapb = int(first[0])
+                            pmswapb = [float(v) for v in first[1:nswapb+1]]
+
+                            new_mtype = mc_sim.swap_table[mt_num]
+                            new_mtype.nswapb = nswapb
+                            new_mtype.pmswapb = pmswapb
+
+                            inc += 1
+
+                            box_pairs = []
+                            for bp in range(nswapb):
+                                nl, cnt = nextline(f4_lines, i+inc)
+                                inc += cnt
+                                nl = nl.split()
+                                box_pairs.append((int(nl[0]), int(nl[1])))
+                                inc += 1
+
+                            mt_num += 1
+
+                        except (IndexError, ValueError) as e:
+                            msg = f"Failed reading the {mt_num}(st/nd/rd/th) MC_SWAP swap declaration."
+                            raise ValueError(e, msg)
+
     return mc_sim
