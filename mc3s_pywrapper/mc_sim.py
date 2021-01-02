@@ -204,6 +204,10 @@ class Sim:
   def mtypes(self):
     return self.__mtypes
 
+  @property
+  def swap_table(self):
+    return self.__swap_table
+
   # For more advanced sections (i.e. not the namelists), I need to have these constructors.
   # This is because they build my custom objectArray to allow full access to getters/setters
   # of individual elements. This requires the user to specify how large each array is.
@@ -305,17 +309,17 @@ class Sim:
 #      location=self.__location
 #    )
 
-    def init_swap_table(self, nmolty):
-      stables = []
-      for i in range(nmolty):
-        stables.append(
-          swap_table.SwapTable(
-            number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
-          )
+  def init_swap_table(self, nmolty):
+    stables = []
+    for i in range(nmolty):
+      stables.append(
+        swap_table.SwapTable(
+          number=i+1,errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
         )
-      self.__swap_table = oba.objectArray.listToOBA(
-        stables,errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
       )
+    self.__swap_table = oba.objectArray.listToOBA(
+      stables,errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location
+    )
 
   def write_topmon(self,topmonFile=None):
     if topmonFile is None:

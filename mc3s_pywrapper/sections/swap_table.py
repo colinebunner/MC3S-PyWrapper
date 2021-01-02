@@ -61,21 +61,37 @@ class SwapTable:
 
     @pmswapb.setter
     def pmswapb(self, val):
-        if not ti.is_probability(val):
-            errorMessage = "pmswapb must be a probability"
-            self.__changeLog.append(
-                logging.changelog_entry(
-                    self.__location, "pmswapb", False, repr(getattr(self, "pmswapb")), repr(val),
-                    errorMessage
+
+        var = "pmswapb"
+
+        if not isinstance(val, oda.oneDimArray):
+            if not (isinstance(val, list) or ti.is_probability(val)):
+                errorMessage = logging.multidimensional_error(var, False)
+                self.__changeLog.append(
+                    logging.changelog_entry(
+                        self.__location, var, False, repr(getattr(self, var)), repr(val),
+                        errorMessage
+                    )
                 )
-            )
-            self.__errorLog.append(
-                logging.errorlog_entry("Setter", errorMessage)
-            )
+                self.__errorLog.append(
+                    logging.errorlog_entry("Setter", errorMessage)
+                )
+            else:
+                if not isinstance(val,list):
+                    val = [val]
+                myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                location=self.__location,var=var)
+                self.__changeLog.append(
+                    logging.changelog_entry(
+                        self.__location, var, True, repr(getattr(self, var)), repr(val),
+                        None
+                    )
+                )
+                self.__pmswapb = myODA
         else:
             self.__changeLog.append(
                 logging.changelog_entry(
-                    self.__location, "pmswapb", False, repr(getattr(self, "pmswapb")), repr(val),
+                    self.__location, var, True, repr(getattr(self, var)), repr(val),
                     None
                 )
             )
@@ -105,7 +121,7 @@ class SwapTable:
                                 location=self.__location,var=var)
                 self.__changeLog.append(
                     logging.changelog_entry(
-                        self.__location, var, False, repr(getattr(self, var)), repr(val),
+                        self.__location, var, True, repr(getattr(self, var)), repr(val),
                         None
                     )
                 )
@@ -113,7 +129,7 @@ class SwapTable:
         else:
             self.__changeLog.append(
                 logging.changelog_entry(
-                    self.__location, var, False, repr(getattr(self, var)), repr(val),
+                    self.__location, var, True, repr(getattr(self, var)), repr(val),
                     None
                 )
             )
