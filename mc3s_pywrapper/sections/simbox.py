@@ -6,9 +6,10 @@ class SimBox:
 
   def __init__(self,boxlx=None,boxly=None,boxlz=None,rcut=None,kalp=None,rcutnn=None,
                numDimensionIsIsotropic=None,lsolid=None,lrect=None,lideal=None,ltwice=None,
-               temperature=None,pressure=None,nchain_mt=None,inix=None,iniy=None,iniz=None,inirot=None,
-               inimix=None,zshift=None,dshift=None,use_linkcell=None,rintramax=None,errorLog=[],
-               changeLog=[],location="",number=None):
+               temperature=None,pressure=None,nchain_mt=None,ghost_particles=None,inix=None,
+               iniy=None,iniz=None,inirot=None,inimix=None,zshift=None,dshift=None,
+               use_linkcell=None,rintramax=None,errorLog=[],changeLog=[],location="",number=None
+  ):
 
     self.__boxlx                   = boxlx
     self.__boxly                   = boxly
@@ -24,6 +25,7 @@ class SimBox:
     self.__temperature             = temperature
     self.__pressure                = pressure
     self.__nchain_mt               = nchain_mt
+    self.__ghost_particles         = ghost_particles
     self.__inix                    = inix
     self.__iniy                    = iniy
     self.__iniz                    = iniz
@@ -112,6 +114,10 @@ class SimBox:
   @property
   def nchain_mt(self):
     return self.__nchain_mt
+
+  @property
+  def ghost_particles(self):
+    return self.__ghost_particles
 
   @property
   def inix(self):
@@ -366,7 +372,6 @@ class SimBox:
   @nchain_mt.setter
   def nchain_mt(self,val):
     if not isinstance(val,oda.oneDimArray):
-      # Single numbers not allowed because will always be at least two values (one moltype and ghost)
       if not isinstance(val,list):
         errorMessage = ("To properly set nchain_mt you have a few options. You can always pass it as a "
                         " python list (e.g. mySim.swap.nchain_mt = [1200,600,0])."
@@ -374,7 +379,7 @@ class SimBox:
                         " You can also set it as a oneDimArray object yourself, but this is far more "
                         " tedious and you need to be careful that the errorLog, changeLog, location, "
                         " and variable flags are set properly, which involves passing the right "
-                        " reference. Don't forget ghost particles!")
+                        " reference.")
         self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
                                  'Variable':'nchain_mt','Success':False,
                                  'Previous':repr(self.__nchain_mt),'New':repr(val),
@@ -391,6 +396,23 @@ class SimBox:
                                  'Variable':'nchain_mt','Success':True,'Previous':repr(self.__nchain_mt),
                                  'New':repr(val),'ErrorMessage':None})
       self.__nchain_mt = val
+
+  @ghost_particles.setter
+  def ghost_particles(self,val):
+    if not ti.is_integer(val):
+      errorMessage = ("failed setting ghost_particles")
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                'Variable':'ghost_particles','Success':False,
+                                'Previous':repr(self.__ghost_particles),'New':repr(val),
+                                'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+                              'Location':self.__location,'Variable':'ghost_particles',
+                              'ErrorMessage':errorMessage})
+    else:
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                  'Variable':'ghost_particles','Success':True,'Previous':repr(self.__ghost_particles),
+                                  'New':repr(val),'ErrorMessage':None})
+      self.__ghost_particles = val
 
   @inix.setter
   def inix(self,val):

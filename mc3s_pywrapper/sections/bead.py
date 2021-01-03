@@ -535,10 +535,10 @@ class Bead:
           bds.append(beadDihedral(errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location,number=i+1))
         myOBA = oba.objectArray.listToOBA(bds,errorLog=self.__errorLog,changeLog=self.__changeLog,location=self.__location,var="dihedrals")
         for i in range(length):
-          myOBA[i+1].junit   = val[i][0]
-          myOBA[i+1].kunit   = val[i][1]
-          myOBA[i+1].lunit   = val[i][2]
-          myOBA[i+1].angleID = val[i][3]
+          myOBA[i+1].junit      = val[i][0]
+          myOBA[i+1].kunit      = val[i][1]
+          myOBA[i+1].lunit      = val[i][2]
+          myOBA[i+1].dihedralID = val[i][3]
 
         self.__dihedrals = myOBA
     else:

@@ -1,0 +1,65 @@
+&io
+  ltraj= T
+/ 
+
+&system
+  lnpt= F
+  lgibbs= T
+  lgrand= F
+  lvirial= F
+  lmipsw= F
+  lexpee= F
+  ldielect= F
+  lijall= F
+  lchgall= F
+  lewald= T
+  lcutcm= T
+  ltailc= T
+  lshift= F
+  ldual= T
+  lneigh= F
+  L_Coul_CBMC= T
+  L_Ewald_Auto= T
+  lmixlb= T
+  lmixjo= F
+  lanes= F
+  lpbc= T
+  lpbcx= T
+  lpbcy= T
+  lpbcz= T
+  lfold= T
+  lexzeo= F
+  lslit= F
+  lgraphite= F
+  lsami= F
+  lmuir= F
+  L_spline= F
+  L_linear= F
+  L_vib_table= F
+  L_bend_table= F
+  L_elect_table= F
+/ 
+
+
+ATOMS
+101 1 50.0 2.8  -0.26 12.0 C
+102 1 180.0 3.6  0.13 32.07 S
+END ATOMS
+
+
+NONBOND
+END NONBOND
+
+
+BONDS
+201 1 1.55 0.0 
+END BONDS
+
+
+ANGLES
+301 1 180.0 0.0 
+END ANGLES
+
+
+DIHEDRALS
+END DIHEDRALS

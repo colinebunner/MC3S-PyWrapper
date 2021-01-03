@@ -74,9 +74,12 @@ def read_topmon(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec
 
                 # First, we need to figure out how many there are
                 natoms = 0
+                ncomment = 0
                 while True:
-                    if top_lines[i+natoms].startswith("END"):
+                    if top_lines[i+natoms+ncomment+1].startswith("END"):
                         break
+                    elif top_lines[i+natoms+ncomment+1].startswith("!"):
+                        ncomment += 1
                     else:
                         natoms += 1
 
@@ -136,9 +139,12 @@ def read_topmon(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec
 
                 # First, we need to figure out how many there are
                 nbonds = 0
+                ncomment = 0
                 while True:
-                    if top_lines[i+nbonds].startswith("END"):
+                    if top_lines[i+nbonds+ncomment+1].startswith("END"):
                         break
+                    elif top_lines[i+nbonds+ncomment+1].startswith("!"):
+                        ncomment += 1
                     else:
                         nbonds += 1
 
@@ -201,9 +207,13 @@ def read_topmon(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec
 
                 # First, we need to figure out how many there are
                 nangles = 0
+                ncomment = 0
                 while True:
-                    if top_lines[i+nangles].startswith("END"):
+                    nl = top_lines[i+nangles+ncomment+1]
+                    if nl.startswith("END"):
                         break
+                    elif nl.startswith("!"):
+                        ncomment += 1
                     else:
                         nangles += 1
 
@@ -251,9 +261,13 @@ def read_topmon(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec
 
                 # First, we need to figure out how many there are
                 ndih = 0
+                ncomment = 0
                 while True:
-                    if top_lines[i+ndih].startswith("END"):
+                    nl = top_lines[i+ndih+ncomment+1]
+                    if nl.startswith("END"):
                         break
+                    elif nl.startswith("!"):
+                        ncomment += 1
                     else:
                         ndih += 1
 
@@ -288,7 +302,7 @@ def read_topmon(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec
                             # For better or worse, these lists are indexed starting at 1 for consistency with Fortran
                             new_atype = mc_sim.dihedrals[inc]
                             new_atype.intID = iunit
-                            new_atype.aType = itype
+                            new_atype.dType = itype
                             new_atype.vtt = dih_params
                             # fin
                             inc += 1

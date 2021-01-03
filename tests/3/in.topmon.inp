@@ -1,0 +1,81 @@
+
+ &io
+     io_output=           2
+     run_num=           1
+     suffix=a
+     L_movie_xyz= F
+ /
+
+
+ &system
+     lnpt= F
+     lgibbs= T
+     lgrand= F
+     lanes= F
+     lvirial= F
+     lmipsw= F
+     lexpee= F
+     ldielect= F
+     lpbc= T
+     lpbcx= T
+     lpbcy= T
+     lpbcz= T
+     lfold= T
+     lijall= F
+     lchgall= F
+     lewald= T
+     lcutcm= T
+     ltailc= T
+     lshift= F
+     ldual= T
+     L_Coul_CBMC= T
+     lneigh= F
+     lexzeo= F
+     lslit= F
+     lgraphite= F
+     lsami= F
+     lmuir= F
+     lelect_field= F
+     lgaro= F
+     lionic= F
+     L_Ewald_Auto= T
+     lmixlb= T
+     lmixjo= F
+     L_spline= F
+     L_linear= F
+     L_vib_table= F
+     L_bend_table= F
+     L_elect_table= F
+ /
+
+
+ATOMS
+  4 1   98.0000  3.75000  0.0000  15.0347000 C   #Tr-UA CH3 alkane
+  5 1   46.0000  3.95000  0.0000  14.0268000 C   #Tr-UA CH2 alkane
+ 61 1    0.0000  0.00000  0.4350   1.0079000 H   #Tr-UA H alkanol
+ 62 1   93.0000  3.02000 -0.7000  15.9990000 O   #Tr-UA O alkanol
+ 64 1   46.0000  3.95000  0.2650  14.0268000 C   #Tr-UA CH2 alkanol
+ 65 1   10.0000  4.33000  0.2650  13.0191000 C   #Tr-UA CH alkanol
+END ATOMS
+
+NONBOND
+END NONBOND
+
+BONDS
+  1 1 1.54000   0.00000
+ 29 1 0.94500   0.00000
+ 30 1 1.43000   0.00000
+END BONDS
+
+ANGLES
+  1 1 114.0000   31250.0
+  2 1 112.0000   31250.0
+ 35 1 108.5000   27720.0
+ 36 1 109.4700   25200.0
+END ANGLES
+
+DIHEDRALS
+  2 1  -251.060  428.730  -111.850  441.270  0.0  0.0  0.0  0.0  0.0  0.0
+  5 1  0.0  209.820  -29.170  187.930  0.0  0.0  0.0  0.0  0.0  0.0
+  7 1  215.890  197.330  31.460  -173.920  0.0  0.0  0.0  0.0  0.0  0.0
+END DIHEDRALS

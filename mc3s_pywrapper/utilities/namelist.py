@@ -11,6 +11,23 @@ namelists = {
             {"name": "rmrot", "type": "oda", "oda_type": "positive_number"},
             {"name": "tarot", "type": "probability"}
         ],
+    "volume":
+        [
+            {"name": "tavol", "type": "probability"},
+            {"name": "iratv", "type": "positive_int"},
+            {"name": "pmvlmt", "type": "oda", "oda_type": "probability"},
+            {"name": "pmvolb", "type": "oda", "oda_type": "probability"},
+            {"name": "box5", "type": "oda", "oda_type": "positive_int"},
+            {"name": "box6", "type": "oda", "oda_type": "positive_int"},
+            {"name": "pmvol", "type": "probability"},
+            {"name": "pmvolx", "type": "probability"},
+            {"name": "pmvoly", "type": "probability"},
+            {"name": "rmvolume", "type": "positive_number"},
+            {"name": "allow_cutoff_failure", "type": "int"},
+            {"name": "l_bilayer", "type": "boolean"},
+            {"name": "pm_consv", "type": "probability"},
+            {"name": "pmvol_xy", "type": "probability"}
+        ],
     "external_field":
         [
             {"name": "Elect_field", "type": "number"}
@@ -75,6 +92,28 @@ namelists = {
             {"name": "dshift", "type": "positive_number"},
             {"name": "use_linkcell", "type": "boolean"},
             {"name": "rintramax", "type": "positive_number"}
+        ],
+    "cbmc":
+        [
+            {"name": "rcutin", "type": "positive_number"},
+            {"name": "pmcb", "type": "probability"},
+            {"name": "pmcbmt", "type": "oda", "oda_type": "probability"},
+            {"name": "pmall", "type": "oda", "oda_type": "probability"},
+            {"name": "nchoi1", "type": "oda", "oda_type": "positive_int"},
+            {"name": "nchoi", "type": "oda", "oda_type": "positive_int"},
+            {"name": "nchoir", "type": "oda", "oda_type": "positive_int"},
+            {"name": "nchoih", "type": "oda", "oda_type": "positive_int"},
+            {"name": "nchtor", "type": "oda", "oda_type": "positive_int"},
+            {"name": "nchbna", "type": "oda", "oda_type": "positive_int"},
+            {"name": "nchbnb", "type": "oda", "oda_type": "positive_int"},
+            {"name": "icbdir", "type": "oda", "oda_type": "int"},
+            {"name": "icbsta", "type": "oda", "oda_type": "int"},
+            {"name": "rbsmax", "type": "positive_number"},
+            {"name": "rbsmin", "type": "positive_number"},
+            {"name": "avbmc_version", "type": "int"},
+            {"name": "pmbias", "type": "oda", "oda_type": "probability"},
+            {"name": "pmbsmt", "type": "oda", "oda_type": "probability"},
+            {"name": "pmbias2", "type": "oda", "oda_type": "probability"}
         ]
 }
 
@@ -94,7 +133,8 @@ n2p = {
     "mc_ee": "ee",
     "mc_simple": "simple",
     "io": "io",
-    "system": "system"
+    "system": "system",
+    "mc_swap": "swap"
 }
 
 p2n = {val: key for key, val in n2p.items()}

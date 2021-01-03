@@ -65,13 +65,13 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
             for var, val in nml.items():
                 try:
                     setattr(sim_nml, var, val)
-                except ValueError:
-                    print(
+                except (AttributeError, ValueError) as e:
+                    raise AttributeError(e, 
                         f"Failed in reading in your fort.4 data from the file {file_path}.\n"
                         "This is likely due to one of your entries not matching the allowed "
                         "types for that namelist variable.\n"
                         "If you think this is in error, please contact Colin personally "
-                        "or open an issue on the github page."
+                        f"or open an issue on the github page.\nVars: {var}, {val}"
                     )
     
     # Now for the custom sections
@@ -135,7 +135,7 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                             nmty = int(len(second)//2)
                             print(f"Found ininch/ghost_particles for {nmty} molecule types")
                             ininch = second[:nmty]
-                            gp = second[nmty:]
+                            gp = second[-1]
                             inix, iniy, iniz, inirot, inimix, zshift, dshift, ul, rimax = third.split()
 
                             # For better or worse, these lists are indexed starting at 1 for consistency with Fortran
@@ -153,8 +153,8 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                             new_box.ltwice = bool(ltw)
                             new_box.T = bool(t)
                             new_box.P = bool(p)
-                            new_box.ininch = [int(v) for v in ininch]
-                            new_box.ghost_particles = [int(v) for v in gp]
+                            new_box.nchain_mt = [int(v) for v in ininch]
+                            new_box.ghost_particles = int(gp)
                             new_box.inix = int(inix)
                             new_box.iniy = int(iniy)
                             new_box.iniz = int(iniz)
@@ -317,7 +317,7 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                 inc = 1
                 while True:
                     nl, cnt = nextline(f4_lines, i + inc)
-                    inc += cnt
+                    inc += cnt + 1
                     if nl.startswith("END"):
                         break
                     else:
@@ -371,6 +371,7 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                                 box_pairs.append((int(nl[0]), int(nl[1])))
                                 inc += 1
 
+                            new_mtype.boxPairs = box_pairs
                             mt_num += 1
 
                         except (IndexError, ValueError) as e:

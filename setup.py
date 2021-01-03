@@ -7,7 +7,10 @@ setup(name='mc3s_pywrapper',
       author='Colin Bunner',
       author_email='colinebunner@gmail.com',
       license='GNU',
-      packages=['mc3s_pywrapper','mc3s_pywrapper/sections','mc3s_pywrapper/utilities','mc3s_pywrapper/writers'],
+      packages=[
+        'mc3s_pywrapper','mc3s_pywrapper/sections','mc3s_pywrapper/utilities','mc3s_pywrapper/writers',
+        'mc3s_pywrapper/readers','mc3s_pywrapper/chemistry'
+      ],
       install_requires = [
         'numpy', 'f90nml'
       ],

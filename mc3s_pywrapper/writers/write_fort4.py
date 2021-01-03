@@ -250,7 +250,7 @@ def write_fort4(simObj,fort4File="fort.4"):
           fort4 += "{}\n".format(bead.nangles)
           for k in range(bead.nangles):
             ba = bead.angles[k+1]
-            fort4 += "{} {}\n".format(ba.junit, ba.kunit, ba.angleID)
+            fort4 += "{} {} {}\n".format(ba.junit, ba.kunit, ba.angleID)
         else:
           fort4 += "0\n"
 
@@ -258,11 +258,22 @@ def write_fort4(simObj,fort4File="fort.4"):
           fort4 += "{}\n".format(bead.ndihedrals)
           for k in range(bead.ndihedrals):
             bd = bead.dihedrals[k+1]
-            fort4 += "{} {}\n".format(bd.junit, bd.kunit, bd.lunit,  bd.dihedralID)
+            fort4 += "{} {} {} {}\n".format(bd.junit, bd.kunit, bd.lunit,  bd.dihedralID)
         else:
           fort4 += "0\n"
 
   fort4 += "END MOLECULE_TYPE\n"
+
+  fort4 += "MC_SWAP\n"
+
+  if simObj.swap_table:
+    for i in range(simObj.swap_table.length):
+      stab = simObj.swap_table[i+1]
+      fort4 += "{} {}\n".format(stab.nswapb, stab.pmswapb.unrolledString())
+      for j in range(stab.nswapb):
+        fort4 += "{} {}\n".format(stab.boxPairs[j+1][0], stab.boxPairs[j+1][1])
+  
+  fort4 += "END MC_SWAP\n"
 
   with open(fort4File,"w") as f:
     f.write(fort4)

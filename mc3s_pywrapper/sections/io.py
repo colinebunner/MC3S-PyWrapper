@@ -1,5 +1,7 @@
 import datetime
 
+from mc3s_pywrapper.utilities import test_instance as ti
+
 class IO:
 
   def __init__(self,file_input=None,file_restart=None,file_struct=None,file_run=None,
@@ -166,7 +168,7 @@ class IO:
 
   @run_num.setter
   def run_num(self,val):
-    if utilities.is_integer(val):
+    if ti.is_integer(val):
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'run_num',
                                'Success':True,'Previous':self.__run_num,'New':val,'ErrorMessage':None})
       self.__run_num=val
