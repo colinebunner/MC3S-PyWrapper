@@ -273,7 +273,15 @@ def write_fort4(simObj,fort4File="fort.4"):
       for j in range(stab.nswapb):
         fort4 += "{} {}\n".format(stab.boxPairs[j+1][0], stab.boxPairs[j+1][1])
   
-  fort4 += "END MC_SWAP\n"
+  fort4 += "END MC_SWAP\n\n\n"
+
+  fort4 += "MC_SWATCH"
+  fort4 += "END MC_SWATCH"
+
+  if simObj.swatch_table:
+    for i in range(simObj.swatch_table.length):
+      stab = simObj.swatch_table[i+1]
+      fort4 +=
 
   with open(fort4File,"w") as f:
     f.write(fort4)

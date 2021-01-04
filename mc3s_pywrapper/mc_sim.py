@@ -1,12 +1,16 @@
 # Python standard modules
-import os
 import datetime
+import os
 import random
+import subprocess
+import time
 # Our module files
 from mc3s_pywrapper.utilities import oneDimArray as oda
 from mc3s_pywrapper.utilities import objectArray as oba
 from mc3s_pywrapper.utilities import dateTools   as dt
 from mc3s_pywrapper.utilities import changeLog   as chl
+from mc3s_pywrapper.readers   import read_topmon
+from mc3s_pywrapper.readers   import read_fort4
 from mc3s_pywrapper.writers   import write_topmon as tw
 from mc3s_pywrapper.writers   import write_fort4 as fw
 # Namelists
@@ -34,6 +38,8 @@ import mc3s_pywrapper.sections.gcmc as gcmc
 import mc3s_pywrapper.sections.ee as ee
 # Custom sections
 import mc3s_pywrapper.sections.swap_table as swap_table
+# Logging
+#import mc3s_pywrapper.utilities.job_log
 
 class Sim:
 
@@ -47,10 +53,11 @@ class Sim:
     self.__changeLogFile      = "{}-changelog.txt".format(self.__name)
     self.__errorLogFile       = "{}-errorlog.txt".format(self.__name)
     self.__location           = "Sim"
-    self.__homeDirectory      = os.getcwd()
-    self.__scratchDirectory   = None
-    self.__topmonFile         = "{}/topmon.inp".format(self.__homeDirectory)
-    self.__fort4File          = "{}/fort.4".format(self.__homeDirectory)
+    self.__jobLog             = {} # Will make this more full-featured later
+#    self.__homeDirectory      = os.getcwd()
+#    self.__scratchDirectory   = None
+    self.__topmonFile         = None #"{}/topmon.inp".format(self.__homeDirectory)
+    self.__fort4File          = None #"{}/fort.4".format(self.__homeDirectory)
     self.__boxes              = None
     self.__atoms              = None
     self.__bonds              = None
@@ -74,7 +81,7 @@ class Sim:
     self.__gcmc               = gcmc.GCMC(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__ee                 = ee.EE(changeLog=self.__changeLog,errorLog=self.__errorLog,location=self.__location)
     self.__swap_table         = None
-    self.__box_table          = None
+    self.__swatch_table       = None
 
   @property
   def name(self):
@@ -100,13 +107,13 @@ class Sim:
   def location(self):
     return self.__location
 
-  @property
-  def homeDirectory(self):
-    return self.__homeDirectory
-
-  @property
-  def scratchDirectory(self):
-    return self.__scratchDirectory
+#  @property
+#  def homeDirectory(self):
+#    return self.__homeDirectory
+#
+#  @property
+#  def scratchDirectory(self):
+#    return self.__scratchDirectory
 
   @property
   def topmonFile(self):
@@ -387,3 +394,74 @@ class Sim:
         wtype = "a+"
       with open(outFile,wtype) as f:
         f.write(log)
+
+  def run_mc3s(self, workdir=None):
+    """
+        Run the MCCCS-MN executable
+    """
+
+    if workdir:
+      os.chdir(workdir)
+
+    start = time.ctime(time.time())
+    args = [self.exec_path]
+
+    if self.runtime.nProc:
+      args += ["-n", self.runtime.nProc]
+    if self.runtime.nThreadsPerProc:
+      args += ["--threads", self.runtime.nThreadsPerProc]
+    if self.topmonFile:
+      args += ["--input", self.topmonFile]
+
+    rc = subprocess.check_call(args)
+
+    end = time.ctime(time.time())
+
+    return start, end, os.getcwd(), rc == 0, None
+
+  def logJob(
+    self, start, end, direc, success, msg, name, copy=False
+  ):
+  
+    self.__jobLog[name] = {
+      "start_time": start,
+      "end_time": end,
+      "directory": direc,
+      "success": success,
+      "slurm_message": msg,
+    }
+    
+    # copy functionality is so that we can reuse project
+    # workdirs without designating a "stage" (i.e. "melt" or "cool")
+    # in the project schema
+    if copy:
+      for fn in os.path.listdir(direc):
+        shutil.copyfile(
+          os.path.join(direc, fn), os.path.join(direc, f"{name}.{fn}")
+        )
+        
+
+  @classmethod
+  def from_inputs(cls, topmon, execPath, fort4=None, name="mcsim"):
+    """
+        Construct a Sim object from input files (topmon.inp, optionally fort.4). If no fort.4 file
+        path is passed, it will be assumed that the fort.4 file can be inferred from the 'io' section
+        of the topmon file.
+
+        Input:
+            topmon [str, os.path.abspath]: Path to topmon.inp file
+            execPath [str, os.path.abspath]: Path to MCCCS-MN executable
+            fort4 [Optional[str, os.path.abspath]]: Path to fort.4 file (optional, may be inferred from
+                topmon.inp io section)
+            name [Optional[str]]: Optional name for the `name` section of the Sim object
+        Output:
+            A Sim() instance with inputs properly sourced from the arguments/input files.
+    """
+
+    mc_sim = cls(execPath, name=name)
+    mc_sim = read_topmon(topmon, mc_sim=mc_sim)
+    if fort4:
+      mc_sim = read_fort4(fort4, mc_sim=mc_sim)
+    else:
+      assert mc_sim.io.file_input, "Didn't pass file_input and couldn't be inferred from topmon"
+      mc_sim = read_fort4(mc_sim.io.file_input, mc_sim=mc_sim)
