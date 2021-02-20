@@ -155,7 +155,7 @@ mySim.boxes[1].set_boxlengths([47.709 for i in range(3)])
 mySim.boxes[1].rcut                    = 14.0e0
 mySim.boxes[1].kalp                    = 0.250
 mySim.boxes[1].rcutnn                  = 0.0e0
-mySim.boxes[1].numDimensionIsIsotropic = 3
+mySim.boxes[1].numDimIso = 3
 mySim.boxes[1].lsolid                  = False
 mySim.boxes[1].lrect                   = False
 mySim.boxes[1].lideal                  = False
@@ -178,7 +178,7 @@ mySim.boxes[2].set_boxlengths([bl for i in range(3)])
 mySim.boxes[2].rcut                    = bl*0.30
 mySim.boxes[2].kalp                    = 0.250
 mySim.boxes[2].rcutnn                  = 0.0e0
-mySim.boxes[2].numDimensionIsIsotropic = 3
+mySim.boxes[2].numDimIso = 3
 mySim.boxes[2].lsolid                  = False
 mySim.boxes[2].lrect                   = False
 mySim.boxes[2].lideal                  = False

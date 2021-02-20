@@ -1,5 +1,7 @@
 import datetime
 
+from mc3s_pywrapper.utilities.string_util import logicToString
+
 class oneDimArray(object):
 
   def __init__(self,length,errorLog=[],changeLog=[],location="",var=""):
@@ -48,7 +50,11 @@ class oneDimArray(object):
   def unrolledString(self):
     string = ""
     for i in range(1,self._length+1):
-      string += "{} ".format(self._data[i])
+      v = self._data[i]
+      # Have to see if it is a logical, as those are different in Fortran inputs
+      string += "{} ".format(
+        v if not isinstance(v, bool) else logicToString(v)
+      )
     return string
 
   @classmethod

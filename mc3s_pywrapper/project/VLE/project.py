@@ -1,4 +1,4 @@
-# A Signac-Flow project for one-component VLE simulations, a standard simulation in the Siepmann group
+# A Signac-Flow project for one-component VLE simulations
 import json
 import os
 import pickle
@@ -45,7 +45,7 @@ def melt(job):
     if not mySim.shared.linit:
         mySim.shared.linit = True
 
-    # The way I'm setting up electrostatics in this simulation
+    # The way I'm setting up electrostatics in this simulation,
     # I want LEwaldAuto
     if not mySim.system.L_Ewald_Auto:
         mySim.system.L_Ewald_Auto = True

@@ -5,8 +5,8 @@ from mc3s_pywrapper.utilities import oneDimArray   as oda
 class SimBox:
 
   def __init__(self,boxlx=None,boxly=None,boxlz=None,rcut=None,kalp=None,rcutnn=None,
-               numDimensionIsIsotropic=None,lsolid=None,lrect=None,lideal=None,ltwice=None,
-               temperature=None,pressure=None,nchain_mt=None,ghost_particles=None,inix=None,
+               numDimIso=None,lsolid=None,lrect=None,lideal=None,ltwice=None,
+               T=None,P=None,nchain_mt=None,ghost_particles=None,inix=None,
                iniy=None,iniz=None,inirot=None,inimix=None,zshift=None,dshift=None,
                use_linkcell=None,rintramax=None,errorLog=[],changeLog=[],location="",number=None
   ):
@@ -17,13 +17,13 @@ class SimBox:
     self.__rcut                    = rcut
     self.__kalp                    = kalp
     self.__rcutnn                  = rcutnn
-    self.__numDimensionIsIsotropic = numDimensionIsIsotropic
+    self.__numDimIso = numDimIso
     self.__lsolid                  = lsolid
     self.__lrect                   = lrect
     self.__lideal                  = lideal
     self.__ltwice                  = ltwice
-    self.__temperature             = temperature
-    self.__pressure                = pressure
+    self.__T                       = T
+    self.__P                       = P
     self.__nchain_mt               = nchain_mt
     self.__ghost_particles         = ghost_particles
     self.__inix                    = inix
@@ -84,8 +84,8 @@ class SimBox:
     return self.__rcutnn
 
   @property
-  def numDimensionIsIsotropic(self):
-    return self.__numDimensionIsIsotropic
+  def numDimIso(self):
+    return self.__numDimIso
 
   @property
   def lsolid(self):
@@ -104,12 +104,12 @@ class SimBox:
     return self.__ltwice
 
   @property
-  def temperature(self):
-    return self.__temperature
+  def T(self):
+    return self.__T
 
   @property
-  def pressure(self):
-    return self.__pressure
+  def P(self):
+    return self.__P
 
   @property
   def nchain_mt(self):
@@ -261,23 +261,23 @@ class SimBox:
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'rcutnn','ErrorMessage':errorMessage})
 
-  @numDimensionIsIsotropic.setter
-  def numDimensionIsIsotropic(self,val):
+  @numDimIso.setter
+  def numDimIso(self,val):
     if val in [0,2,3]:
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                               'Variable':'numDimensionIsIsotropic','Success':True,
-                               'Previous':self.__numDimensionIsIsotropic,'New':val,
+                               'Variable':'numDimIso','Success':True,
+                               'Previous':self.__numDimIso,'New':val,
                                'ErrorMessage':None})
-      self.__numDimensionIsIsotropic = val
+      self.__numDimIso = val
     else:
       errorMessage = ("Allowed values for number of isotropic dimensions is 0, 2, or 3. You passed the "
                       "value {}.".format(val))
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                               'Variable':'numDimensionIsIsotropic','Success':False,
-                               'Previous':self.__numDimensionIsIsotropic,'New':val,
+                               'Variable':'numDimIso','Success':False,
+                               'Previous':self.__numDimIso,'New':val,
                                'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
-                              'Variable':'numDimensionIsIsotropic','ErrorMessage':errorMessage})
+                              'Variable':'numDimIso','ErrorMessage':errorMessage})
 
   @lsolid.setter
   def lsolid(self,val):
@@ -339,35 +339,35 @@ class SimBox:
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'ltwice','ErrorMessage':errorMessage})
 
-  @temperature.setter
-  def temperature(self,val):
+  @T.setter
+  def T(self,val):
     if ti.is_positive_number(val):
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                               'Variable':'temperature','Success':True,'Previous':self.__temperature,
+                               'Variable':'T','Success':True,'Previous':self.__T,
                                'New':val,'ErrorMessage':None})
-      self.__temperature = val
+      self.__T = val
     else:
-      errorMessage("temperature is in K, so must be a positive number.")
+      errorMessage("T is in K, so must be a positive number.")
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                               'Variable':'temperature','Success':False,'Previous':self.__temperature,
+                               'Variable':'T','Success':False,'Previous':self.__T,
                                'New':val,'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
-                              'Variable':'temperature','ErrorMessage':errorMessage})
+                              'Variable':'T','ErrorMessage':errorMessage})
 
-  @pressure.setter
-  def pressure(self,val):
+  @P.setter
+  def P(self,val):
     if ti.is_number(val):
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                               'Variable':'pressure','Success':True,'Previous':self.__pressure,
+                               'Variable':'P','Success':True,'Previous':self.__P,
                                'New':val,'ErrorMessage':None})
-      self.__pressure = val
+      self.__P = val
     else:
-      errorMessage("pressure must be a number.")
+      errorMessage("P must be a number.")
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
-                               'Variable':'pressure','Success':False,'Previous':self.__pressure,
+                               'Variable':'P','Success':False,'Previous':self.__P,
                                'New':val,'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
-                              'Variable':'pressure','ErrorMessage':errorMessage})
+                              'Variable':'P','ErrorMessage':errorMessage})
 
   @nchain_mt.setter
   def nchain_mt(self,val):

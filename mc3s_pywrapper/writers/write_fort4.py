@@ -147,63 +147,63 @@ def write_fort4(simObj,fort4File="fort.4"):
 
   fort4 += "&mc_ee\n"
   if simObj.ee.pmexpc is not None:
-    fort4 += "  = {}\n".format(simObj.ee.pmexpc)
+    fort4 += "  pmexpc= {}\n".format(simObj.ee.pmexpc)
   if simObj.ee.pmeemt is not None:
-    fort4 += "  = {}\n".format(simObj.ee.pmeemt.unrolledString())
+    fort4 += "  pmeemt= {}\n".format(simObj.ee.pmeemt.unrolledString())
   if simObj.ee.pmexpc1 is not None:
-    fort4 += "  = {}\n".format(simObj.ee.pmexpc1)
+    fort4 += "  pmexpc1= {}\n".format(simObj.ee.pmexpc1)
   if simObj.ee.lexpand is not None:
-    fort4 += "  = {}\n".format(simObj.ee.lexpand.unrolledString())
+    fort4 += "  lexpand= {}\n".format(simObj.ee.lexpand.unrolledString())
   fort4 += f"/ \n\n"
 
   fort4 += "&external_field\n"
   if simObj.external_field.Elect_field is not None:
-    fort4 += "  = {}\n".format(simObj.external_field.Elect_field)
+    fort4 += "  Elect_field= {}\n".format(simObj.external_field.Elect_field)
   fort4 += f"/ \n\n"
 
   fort4 += "&mc_flucq\n"
   if simObj.flucq.taflcq is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.taflcq)
+    fort4 += "  taflcq= {}\n".format(simObj.flucq.taflcq)
   if simObj.flucq.fqtemp is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.fqtemp)
+    fort4 += "  fqtemp= {}\n".format(simObj.flucq.fqtemp)
   if simObj.flucq.rmflucq is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.rmflucq)
+    fort4 += "  rmflucq= {}\n".format(simObj.flucq.rmflucq)
   if simObj.flucq.pmflcq is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.pmflcq)
+    fort4 += "  pmflcq= {}\n".format(simObj.flucq.pmflcq)
   if simObj.flucq.pmfqmt is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.pmfqmt.unrolledString())
+    fort4 += "  pmfqmt= {}\n".format(simObj.flucq.pmfqmt.unrolledString())
   if simObj.flucq.lflucq is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.lflucq.unrolledString())
+    fort4 += "  lflucq= {}\n".format(simObj.flucq.lflucq.unrolledString())
   if simObj.flucq.lqtrans is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.lqtrans.unrolledString())
+    fort4 += "  lqtrans= {}\n".format(simObj.flucq.lqtrans.unrolledString())
   if simObj.flucq.fqegp is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.fqegp.unrolledString())
+    fort4 += "  fqegp= {}\n".format(simObj.flucq.fqegp.unrolledString())
   if simObj.flucq.nchoiq is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.nchoiq.unrolledString())
+    fort4 += "  nchoiq= {}\n".format(simObj.flucq.nchoiq.unrolledString())
   if simObj.flucq.nswapq is not None:
-    fort4 += "  = {}\n".format(simObj.flucq.nswapq)
+    fort4 += "  nswapq= {}\n".format(simObj.flucq.nswapq)
   fort4 += f"/ \n\n"
 
   fort4 += "&mc_gcmc\n"
   if simObj.gcmc.nequil is not None:
-    fort4 += "  = {}\n".format(simObj.gcmc.nequil)
+    fort4 += "  nequil= {}\n".format(simObj.gcmc.nequil)
   if simObj.gcmc.ninstf is not None:
-    fort4 += "  = {}\n".format(simObj.gcmc.ninstf)
+    fort4 += "  ninstf= {}\n".format(simObj.gcmc.ninstf)
   if simObj.gcmc.ninsth is not None:
-    fort4 += "  = {}\n".format(simObj.gcmc.ninsth)
+    fort4 += "  ninsth= {}\n".format(simObj.gcmc.ninsth)
   if simObj.gcmc.ndumph is not None:
-    fort4 += "  = {}\n".format(simObj.gcmc.ndumph)
+    fort4 += "  ndumph= {}\n".format(simObj.gcmc.ndumph)
   if simObj.gcmc.B is not None:
-    fort4 += "  = {}\n".format(simObj.gcmc.B.unrolledString())
+    fort4 += "  B= {}\n".format(simObj.gcmc.B.unrolledString())
   fort4 += f"/ \n\n"
 
   fort4 += "&mc_swatch\n"
   if simObj.swatch.pmswat is not None:
-    fort4 += "  = {}\n".format(simObj.swatch.pmswat)
+    fort4 += "  pmswat= {}\n".format(simObj.swatch.pmswat)
   if simObj.swatch.nswaty is not None:
-    fort4 += "  = {}\n".format(simObj.swatch.nswaty)
+    fort4 += "  nswaty= {}\n".format(simObj.swatch.nswaty)
   if simObj.swatch.pmsatc is not None:
-    fort4 += "  = {}\n".format(simObj.swatch.pmsatc.unrolledString())
+    fort4 += "  pmsatc= {}\n".format(simObj.swatch.pmsatc.unrolledString())
   fort4 += f"/ \n\n"
 
   fort4 += "SIMULATION_BOX\n"
@@ -211,11 +211,13 @@ def write_fort4(simObj,fort4File="fort.4"):
   if simObj.boxes is not None:
     for i in range(simObj.boxes.length):
       box = simObj.boxes[i+1]
-      fort4 += "{} {} {} {} {} {} {} {} {} {} {} {} {}\n".format(box.boxlx, box.boxly, box.boxlz, 
-                box.rcut, box.kalp, box.rcutnn, box.numDimensionIsIsotropic,
-                su.logicToString(box.lsolid), su.logicToString(box.lrect), su.logicToString(box.lideal),
-                su.logicToString(box.ltwice), box.temperature, box.pressure)
-      fort4 += "{}\n".format(box.nchain_mt.unrolledString())
+      fort4 += "{} {} {} {} {} {} {} {} {} {} {} {} {}\n".format(
+        box.boxlx, box.boxly, box.boxlz, 
+        box.rcut, box.kalp, box.rcutnn, box.numDimIso,
+        su.logicToString(box.lsolid), su.logicToString(box.lrect), su.logicToString(box.lideal),
+        su.logicToString(box.ltwice), box.T, box.P
+      )
+      fort4 += "{} {}\n".format(box.nchain_mt.unrolledString(), box.ghost_particles)
       fort4 += "{} {} {} {} {} {} {} {} {}\n".format(box.inix, box.iniy, box.iniz, box.inirot, 
                 box.inimix, box.zshift, box.dshift, su.logicToString(box.use_linkcell), box.rintramax) 
 
@@ -262,7 +264,7 @@ def write_fort4(simObj,fort4File="fort.4"):
         else:
           fort4 += "0\n"
 
-  fort4 += "END MOLECULE_TYPE\n"
+  fort4 += "END MOLECULE_TYPE\n\n\n"
 
   fort4 += "MC_SWAP\n"
 
@@ -275,13 +277,13 @@ def write_fort4(simObj,fort4File="fort.4"):
   
   fort4 += "END MC_SWAP\n\n\n"
 
-  fort4 += "MC_SWATCH"
-  fort4 += "END MC_SWATCH"
+  fort4 += "MC_SWATCH\n"
+  fort4 += "END MC_SWATCH\n\n\n"
 
-  if simObj.swatch_table:
-    for i in range(simObj.swatch_table.length):
-      stab = simObj.swatch_table[i+1]
-      fort4 +=
+# SWATCH table not yet supported (nswaty must be 0)
+#  if simObj.swatch_table:
+#    for i in range(simObj.swatch_table.length):
+#      stab = simObj.swatch_table[i+1]
 
   with open(fort4File,"w") as f:
     f.write(fort4)

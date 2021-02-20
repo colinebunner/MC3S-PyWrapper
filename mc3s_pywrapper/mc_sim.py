@@ -9,8 +9,8 @@ from mc3s_pywrapper.utilities import oneDimArray as oda
 from mc3s_pywrapper.utilities import objectArray as oba
 from mc3s_pywrapper.utilities import dateTools   as dt
 from mc3s_pywrapper.utilities import changeLog   as chl
-from mc3s_pywrapper.readers   import read_topmon
-from mc3s_pywrapper.readers   import read_fort4
+from mc3s_pywrapper.readers.read_topmon import read_topmon
+from mc3s_pywrapper.readers.read_fort4  import read_fort4
 from mc3s_pywrapper.writers   import write_topmon as tw
 from mc3s_pywrapper.writers   import write_fort4 as fw
 # Namelists
@@ -56,8 +56,8 @@ class Sim:
     self.__jobLog             = {} # Will make this more full-featured later
 #    self.__homeDirectory      = os.getcwd()
 #    self.__scratchDirectory   = None
-    self.__topmonFile         = None #"{}/topmon.inp".format(self.__homeDirectory)
-    self.__fort4File          = None #"{}/fort.4".format(self.__homeDirectory)
+    self.__topmonFile         = "topmon.inp" #.format(self.__homeDirectory)
+    self.__fort4File          = "fort.4" #.format(self.__homeDirectory)
     self.__boxes              = None
     self.__atoms              = None
     self.__bonds              = None
@@ -465,3 +465,5 @@ class Sim:
     else:
       assert mc_sim.io.file_input, "Didn't pass file_input and couldn't be inferred from topmon"
       mc_sim = read_fort4(mc_sim.io.file_input, mc_sim=mc_sim)
+
+    return mc_sim
