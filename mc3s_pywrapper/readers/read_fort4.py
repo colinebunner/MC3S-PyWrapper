@@ -166,10 +166,14 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                 if mc_sim.mtypes:
                     nexists = len(mc_sim.mtypes.data.values())
                     print(
-                        "Sim already has {nexists} molecule types defined vs {nmty} molecule types found here.\n"
+                        f"Sim already has {nexists} molecule types defined vs {nmty} molecule types found here.\n"
                         "I am skipping this section."
                     )
                     continue
+                else:
+                    print(
+                        f"Found {nmty} molecule type(s)."
+                    )
                 
                 mc_sim.init_mtypes(nmty)
                 inc = 1
@@ -187,12 +191,28 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                         try:
                             assert len(first) == 15, first
                             nunit, nugrow, ncar, maxcb, maxgr, ir, lel, lring, lrig, lbr, lset, lq, qs, iur, isol = first
-                            if bool(lrig):
-                                inc += 1
-                                nl, cnt = nextline(f4_lines, i+inc)
-                                inc += cnt
-                                gpoints = nl.split()
 
+                            # If this molecule type is rigid, we need to read in the growpoints
+                            if bool(lrig):
+                                # Need to move at least one line. nextline will take care of comments.
+                                inc += 1
+
+                                # Number of growpoints
+                                nugrowp, cnt = nextline(f4_lines, i+inc)
+                                nugrowp = int(nugrowp.strip())
+
+                                # Increment file index after reading number of growpoints plus
+                                # any comment lines
+                                inc += cnt
+                                
+                                # Read growpoint beads
+                                growbeads = []
+                                for _ in range(nugrowp):
+                                    bgrow, cnt = nextline(f4_lines, i+inc)
+                                    growbeads.append(int(bgrow.strip()))
+                                    inc += cnt
+
+                                inc += 1
                             # We have all the info needed to set up the molecule type now (but not the beads attribute)
                             new_mtype = mc_sim.mtypes[mt_num]
                             new_mtype.nunit = int(nunit)
@@ -211,6 +231,10 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                             new_mtype.iurot = int(iur)
                             new_mtype.isolute = int(isol)
 
+
+                            new_mtype.num_growpoints = nugrowp
+                            new_mtype.growpoints = growbeads
+
                             # Now for the beads portion
                             new_mtype.init_beads()
                             for iunit in range(int(nunit)):
@@ -221,7 +245,7 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                                 bead_def, cnt = nextline(f4_lines, i+inc)
                                 inc += cnt
                                 # Pull info, assert that unit matches number based on loop
-                                un, nt, lq = bead_def.split()
+                                un, nt, lq = bead_def.strip().split()
                                 assert int(un) == iunit+1, un
                                 new_bead.ntype   = int(nt)
                                 new_bead.leaderq = int(lq)

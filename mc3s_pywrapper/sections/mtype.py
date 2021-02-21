@@ -6,12 +6,13 @@ from mc3s_pywrapper.sections  import bead
 
 class MType:
 
-  def __init__(self,nunit=None,nugrow=None,ncarbon=None,maxcbmc=None,maxgrow=None,iring=None,
+  def __init__(self,nunit=None,nugrow=None,num_growpoints=None,ncarbon=None,maxcbmc=None,maxgrow=None,iring=None,
                lelect=None,lring=None,lrigid=None,lbranch=None,lsetup=None,lq14scale=None,qscale=None,
-               iurot=None,isolute=None,beads=None,errorLog=[],changeLog=[],location="",number=None):
+               iurot=None,isolute=None,beads=None,growpoints=None,errorLog=[],changeLog=[],location="",number=None):
 
     self.__nunit     = nunit
     self.__nugrow    = nugrow
+    self.__num_growpoints = num_growpoints
     self.__ncarbon   = ncarbon
     self.__maxcbmc   = maxcbmc
     self.__maxgrow   = maxgrow
@@ -26,6 +27,7 @@ class MType:
     self.__iurot     = iurot
     self.__isolute   = isolute
     self.__beads     = beads
+    self.__growpoints = growpoints
     self.__errorLog  = errorLog
     self.__changeLog = changeLog
     self.__location  = "{}/mtype-{}".format(location,number)
@@ -46,6 +48,11 @@ class MType:
   @property
   def nugrow(self):
     return self.__nugrow
+
+  @property
+  def num_growpoints(self):
+    return self.__num_growpoints
+
 
   @property
   def ncarbon(self):
@@ -104,6 +111,10 @@ class MType:
     return self.__beads
 
   @property
+  def growpoints(self):
+    return self.__growpoints
+
+  @property
   def errorLog(self):
     return self.__errorLog
 
@@ -146,6 +157,22 @@ class MType:
                                'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'nugrow','ErrorMessage':errorMessage})
+
+  @num_growpoints.setter
+  def num_growpoints(self,val):
+    if ti.is_integer(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'num_growpoints','Success':True,'Previous':self.__num_growpoints,'New':val,
+                               'ErrorMessage':None})
+
+      self.__num_growpoints = val
+    else:
+      errorMessage = "num_growpoints must be an integer."
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'num_growpoints','Success':False,'Previous':self.__num_growpoints,'New':val,
+                               'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'num_growpoints','ErrorMessage':errorMessage})
 
   @ncarbon.setter
   def ncarbon(self,val):
@@ -387,3 +414,31 @@ class MType:
                                  'Variable':'beads','Success':True,'Previous':repr(self.__beads),
                                  'New':repr(val),'ErrorMessage':None})
       self.__beads = val
+
+  @growpoints.setter
+  def growpoints(self,val):
+    if not isinstance(val,oda.oneDimArray):
+      if not isinstance(val,list):
+        print(type(val))
+        if not isinstance(val,int):
+          errorMessage = (" Error setting growpoints")
+          self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                   'Variable':'growpoints','Success':False,'Previous':repr(self.__growpoints),
+                                   'New':repr(val),'ErrorMessage':errorMessage})
+          self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+                                  'Location':self.__location,'Variable':'growpoints',
+                                  'ErrorMessage':errorMessage})
+      else:
+        # For single values, cast to list
+        val = list(val)
+        myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                          location=self.__location,var="growpoints")
+        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'growpoints','Success':True,'Previous':repr(self.__growpoints),
+                                 'New':repr(myODA),'ErrorMessage':None})
+        self.__growpoints = myODA
+    else:
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'growpoints','Success':True,'Previous':repr(self.__growpoints),
+                                 'New':repr(val),'ErrorMessage':None})
+      self.__growpoints = val
