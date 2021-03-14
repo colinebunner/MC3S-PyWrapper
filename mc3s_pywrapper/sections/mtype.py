@@ -6,29 +6,30 @@ from mc3s_pywrapper.sections  import bead
 
 class MType:
 
-  def __init__(self,nunit=None,nugrow=None,ncarbon=None,maxcbmc=None,maxgrow=None,iring=None,
+  def __init__(self,nunit=None,nugrow=None,num_growpoints=None,ncarbon=None,maxcbmc=None,maxgrow=None,iring=None,
                lelect=None,lring=None,lrigid=None,lbranch=None,lsetup=None,lq14scale=None,qscale=None,
                iurot=None,isolute=None,beads=None,errorLog=[],changeLog=[],location="",number=None):
 
-    self.__nunit     = nunit
-    self.__nugrow    = nugrow
-    self.__ncarbon   = ncarbon
-    self.__maxcbmc   = maxcbmc
-    self.__maxgrow   = maxgrow
-    self.__iring     = iring
-    self.__lelect    = lelect
-    self.__lring     = lring
-    self.__lrigid    = lrigid
-    self.__lbranch   = lbranch
-    self.__lsetup    = lsetup
-    self.__lq14scale = lq14scale
-    self.__qscale    = qscale
-    self.__iurot     = iurot
-    self.__isolute   = isolute
-    self.__beads     = beads
-    self.__errorLog  = errorLog
-    self.__changeLog = changeLog
-    self.__location  = "{}/mtype-{}".format(location,number)
+    self.__nunit          = nunit
+    self.__nugrow         = nugrow
+    self.__num_growpoints = num_growpoints
+    self.__ncarbon        = ncarbon
+    self.__maxcbmc        = maxcbmc
+    self.__maxgrow        = maxgrow
+    self.__iring          = iring
+    self.__lelect         = lelect
+    self.__lring          = lring
+    self.__lrigid         = lrigid
+    self.__lbranch        = lbranch
+    self.__lsetup         = lsetup
+    self.__lq14scale      = lq14scale
+    self.__qscale         = qscale
+    self.__iurot          = iurot
+    self.__isolute        = isolute
+    self.__beads          = beads
+    self.__errorLog       = errorLog
+    self.__changeLog      = changeLog
+    self.__location       = "{}/mtype-{}".format(location,number)
 
   def init_beads(self,nbeads=None):
     if nbeads is None:
@@ -146,6 +147,22 @@ class MType:
                                'ErrorMessage':errorMessage})
       self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
                               'Variable':'nugrow','ErrorMessage':errorMessage})
+
+  @num_growpoints.setter
+  def num_growpoints(self,val):
+    if ti.is_integer(val):
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'num_growpoints','Success':True,'Previous':self.__num_growpoints,'New':val,
+                               'ErrorMessage':None})
+
+      self.__num_growpoints = val
+    else:
+      errorMessage = "num_growpoints must be an integer."
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                               'Variable':'num_growpoints','Success':False,'Previous':self.__num_growpoints,'New':val,
+                               'ErrorMessage':errorMessage})
+      self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter','Location':self.__location,
+                              'Variable':'num_growpoints','ErrorMessage':errorMessage})
 
   @ncarbon.setter
   def ncarbon(self,val):

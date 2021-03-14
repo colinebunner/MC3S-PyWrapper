@@ -2,6 +2,7 @@
 import datetime
 import os
 import random
+import shutil
 import subprocess
 import time
 # Our module files
@@ -55,7 +56,7 @@ class Sim:
     self.__location           = "Sim"
     self.__jobLog             = {} # Will make this more full-featured later
 #    self.__homeDirectory      = os.getcwd()
-#    self.__scratchDirectory   = None
+    self.__scratchDirectory   = None
     self.__topmonFile         = "topmon.inp" #.format(self.__homeDirectory)
     self.__fort4File          = "fort.4" #.format(self.__homeDirectory)
     self.__boxes              = None
@@ -111,9 +112,9 @@ class Sim:
 #  def homeDirectory(self):
 #    return self.__homeDirectory
 #
-#  @property
-#  def scratchDirectory(self):
-#    return self.__scratchDirectory
+  @property
+  def scratchDirectory(self):
+    return self.__scratchDirectory
 
   @property
   def topmonFile(self):
@@ -395,16 +396,38 @@ class Sim:
       with open(outFile,wtype) as f:
         f.write(log)
 
-  def run_mc3s(self, workdir=None):
+  def run_mc3s(self, workdir=None, scratch=True):
     """
-        Run the MCCCS-MN executable
+        Run the MCCCS-MN executable. Pass in a workdir to specify where to run the process
+        from. Additionally, specifying scratch=True will auto-handle building a scratch
+        directory for you, moving your files over, and cleaning up after completion.
     """
 
     if workdir:
       os.chdir(workdir)
 
+    if scratch:
+      # Our goal is to create a unique scratch directory and move all relevant simulation files over
+      # (i.e. a fort.4, topmon.inp, and maybe input_struc.xyz). Maybe need to fix this for more
+      # advanced simulations (i.e. porous material simulations) that I didn't consider.
+      
+      # Give ourselves a clean scratch directory
+      if os.path.isdir(self.scratchDirectory):
+        shutil.rmtree(self.scratchDirectory)
+      os.makedirs(self.scratchDirectory)
+
+      if os.path.isfile("fort.4"):
+        shutil.copyfile("fort.4", os.path.join(self.scratchDirectory, "fort.4"))
+      if os.path.isfile("topmon.inp"):
+        shutil.copyfile("topmon.inp", os.path.join(self.scratchDirectory, "topmon.inp"))
+      if os.path.isfile("input_struc.xyz"):
+        shutil.copyfile("input_struc.xyz", os.path.join(self.scratchDirectory, "input_struc.xyz"))
+
+      os.chdir(self.scratchDirectory)
+      
+
     start = time.ctime(time.time())
-    args = [self.exec_path]
+    args = [self.code.execPath]
 
     if self.runtime.nProc:
       args += ["-n", self.runtime.nProc]
@@ -413,9 +436,17 @@ class Sim:
     if self.topmonFile:
       args += ["--input", self.topmonFile]
 
+    print(f"Running topmon executable with args {args}")
     rc = subprocess.check_call(args)
 
     end = time.ctime(time.time())
+
+    if scratch:
+      for f in os.listdir(self.scratchDirectory):
+        shutil.copyfile(
+          f, workdir
+        )
+      os.chdir(workdir)
 
     return start, end, os.getcwd(), rc == 0, None
 
@@ -435,7 +466,7 @@ class Sim:
     # workdirs without designating a "stage" (i.e. "melt" or "cool")
     # in the project schema
     if copy:
-      for fn in os.path.listdir(direc):
+      for fn in os.listdir(direc):
         shutil.copyfile(
           os.path.join(direc, fn), os.path.join(direc, f"{name}.{fn}")
         )

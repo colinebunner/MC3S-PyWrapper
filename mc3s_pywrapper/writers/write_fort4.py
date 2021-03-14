@@ -228,7 +228,7 @@ def write_fort4(simObj,fort4File="fort.4"):
   if simObj.mtypes is not None:
     for i in range(simObj.mtypes.length):
       mtype = simObj.mtypes[i+1]
-      fort4 += "{} {} {} {} {} {} {} {} {} {} {} {} {} {}\n".format(mtype.nunit, mtype.nugrow,
+      fort4 += "{} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n".format(mtype.nunit, mtype.nugrow,
                 mtype.ncarbon, mtype.maxcbmc, mtype.maxgrow, mtype.iring, su.logicToString(mtype.lelect),
                 su.logicToString(mtype.lring), su.logicToString(mtype.lrigid), 
                 su.logicToString(mtype.lbranch), su.logicToString(mtype.lsetup),

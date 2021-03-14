@@ -85,7 +85,7 @@ class Code:
     testCode = "{} -v".format(val)
     args = shlex.split(testCode)
     try:
-      version = subprocess.check_output(args)      
+      subprocess.check_output(args)      
       self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,'Variable':'execPath',
                                'Success':True,'Previous':self.__execPath,'New':val,'ErrorMessage':None})
       self.__execPath = val
