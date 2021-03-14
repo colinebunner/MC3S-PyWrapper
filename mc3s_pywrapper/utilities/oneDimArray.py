@@ -41,10 +41,13 @@ class oneDimArray(object):
       self._data[pos] = val
 
   def __repr__(self):
-    rep = '['
-    for i in range(self._length-1):
-      rep += '{}, '.format(repr(self._data[i+1]))
-    rep += '{}]'.format(repr(self._data[self._length]))
+    if self._length == 0:
+        return "[]"
+    else:
+      rep = '['
+      for i in range(self._length-1):
+        rep += '{}, '.format(repr(self._data[i+1]))
+      rep += '{}]'.format(repr(self._data[self._length]))
     return rep
 
   def unrolledString(self):

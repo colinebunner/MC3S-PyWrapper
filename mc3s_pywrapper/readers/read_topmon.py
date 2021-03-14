@@ -36,7 +36,7 @@ def read_topmon(file_path, mc_sim):
                         "or open an issue on the github page."
                     )
                     raise ValueError(msg)
-    
+
     # Now for the custom sections
     with open(file_path, "r") as top:
         top_lines = top.readlines()

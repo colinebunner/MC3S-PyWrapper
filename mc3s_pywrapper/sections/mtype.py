@@ -8,7 +8,7 @@ class MType:
 
   def __init__(self,nunit=None,nugrow=None,num_growpoints=None,ncarbon=None,maxcbmc=None,maxgrow=None,iring=None,
                lelect=None,lring=None,lrigid=None,lbranch=None,lsetup=None,lq14scale=None,qscale=None,
-               iurot=None,isolute=None,beads=None,errorLog=[],changeLog=[],location="",number=None):
+               iurot=None,isolute=None,beads=None,growpoints=None,errorLog=[],changeLog=[],location="",number=None):
 
     self.__nunit          = nunit
     self.__nugrow         = nugrow
@@ -47,6 +47,11 @@ class MType:
   @property
   def nugrow(self):
     return self.__nugrow
+
+  @property
+  def num_growpoints(self):
+    return self.__num_growpoints
+
 
   @property
   def ncarbon(self):
@@ -103,6 +108,10 @@ class MType:
   @property
   def beads(self):
     return self.__beads
+
+  @property
+  def growpoints(self):
+    return self.__growpoints
 
   @property
   def errorLog(self):
@@ -404,3 +413,31 @@ class MType:
                                  'Variable':'beads','Success':True,'Previous':repr(self.__beads),
                                  'New':repr(val),'ErrorMessage':None})
       self.__beads = val
+
+  @growpoints.setter
+  def growpoints(self,val):
+    if not isinstance(val,oda.oneDimArray):
+      if not isinstance(val,list):
+        print(type(val))
+        if not isinstance(val,int):
+          errorMessage = (" Error setting growpoints")
+          self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                   'Variable':'growpoints','Success':False,'Previous':repr(self.__growpoints),
+                                   'New':repr(val),'ErrorMessage':errorMessage})
+          self.__errorLog.append({'Date':datetime.datetime.now(),'Type':'Setter',
+                                  'Location':self.__location,'Variable':'growpoints',
+                                  'ErrorMessage':errorMessage})
+      else:
+        # For single values, cast to list
+        val = list(val)
+        myODA = oda.oneDimArray.listToODA(val,errorLog=self.__errorLog,changeLog=self.__changeLog,
+                                          location=self.__location,var="growpoints")
+        self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'growpoints','Success':True,'Previous':repr(self.__growpoints),
+                                 'New':repr(myODA),'ErrorMessage':None})
+        self.__growpoints = myODA
+    else:
+      self.__changeLog.append({'Date':datetime.datetime.now(),'Location':self.__location,
+                                 'Variable':'growpoints','Success':True,'Previous':repr(self.__growpoints),
+                                 'New':repr(val),'ErrorMessage':None})
+      self.__growpoints = val
