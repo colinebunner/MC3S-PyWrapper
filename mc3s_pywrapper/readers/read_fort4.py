@@ -119,10 +119,10 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                             new_box.kalp  = float(kalp)
                             new_box.rcutnn = float(rcnn)
                             new_box.numDimIso = int(niso)
-                            new_box.lsolid = bool(lsol)
-                            new_box.lrect = bool(lrec)
-                            new_box.lideal = bool(lid)
-                            new_box.ltwice = bool(ltw)
+                            new_box.lsolid = (True if lsol == "T" else False) #bool(lsol)
+                            new_box.lrect = (True if lrec == "T" else False) #bool(lrec)
+                            new_box.lideal = (True if lid == "T" else False) #bool(lid)
+                            new_box.ltwice = (True if ltw == "T" else False) #bool(ltw)
                             new_box.T = float(t)
                             new_box.P = float(p)
                             new_box.nchain_mt = [int(v) for v in ininch]
@@ -134,7 +134,7 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                             new_box.inimix = int(inimix)
                             new_box.zshift = float(zshift)
                             new_box.dshift = float(dshift)
-                            new_box.use_linkcell = bool(ul)
+                            new_box.use_linkcell = (True if ul == "T" else False)
                             new_box.rintramax = float(rimax)
                             box_num += 1
                             inc += 1
@@ -193,7 +193,7 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                             nunit, nugrow, ncar, maxcb, maxgr, ir, lel, lring, lrig, lbr, lset, lq, qs, iur, isol = first
 
                             # If this molecule type is rigid, we need to read in the growpoints
-                            if bool(lrig):
+                            if lrig == "T":
                                 # Need to move at least one line. nextline will take care of comments.
                                 inc += 1
 
@@ -221,12 +221,12 @@ def read_fort4(file_path, mc_sim=None, exec_path=None, sim_name=None, skip_exec=
                             new_mtype.maxcbmc = int(maxcb)
                             new_mtype.maxgrow = int(maxgr)
                             new_mtype.iring = int(ir)
-                            new_mtype.lelect = bool(lel)
-                            new_mtype.lring = bool(lring)
-                            new_mtype.lrigid = bool(lrig)
-                            new_mtype.lbranc = bool(lbr)
-                            new_mtype.lsetup = bool(lset)
-                            new_mtype.lq14scale = bool(lq)
+                            new_mtype.lelect = (True if lel == "T" else False) #bool(lel)
+                            new_mtype.lring = (True if lring == "T" else False) #bool(lring)
+                            new_mtype.lrigid = (True if lrig == "T" else False) #bool(lrig)
+                            new_mtype.lbranc = (True if lbr == "T" else False) #bool(lbr)
+                            new_mtype.lsetup = (True if lset == "T" else False) #bool(lset)
+                            new_mtype.lq14scale = (True if lq == "T" else False) #bool(lq)
                             new_mtype.qscale = float(qs)
                             new_mtype.iurot = int(iur)
                             new_mtype.isolute = int(isol)

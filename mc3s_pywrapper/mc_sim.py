@@ -440,7 +440,7 @@ class Sim:
     if self.topmonFile:
       args += ["--input", self.topmonFile]
 
-    print(f"Running topmon executable with args {args}")
+    print(f"Running topmon executable with args {args} from directory {os.getcwd()}")
     rc = subprocess.check_call(args)
 
     end = time.ctime(time.time())
