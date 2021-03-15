@@ -27,6 +27,7 @@ class MType:
     self.__iurot          = iurot
     self.__isolute        = isolute
     self.__beads          = beads
+    self.__growpoints     = growpoints
     self.__errorLog       = errorLog
     self.__changeLog      = changeLog
     self.__location       = "{}/mtype-{}".format(location,number)
@@ -108,6 +109,10 @@ class MType:
   @property
   def beads(self):
     return self.__beads
+
+  @property
+  def growpoints(self):
+    return self.__growpoints
 
   @property
   def growpoints(self):
