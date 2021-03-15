@@ -115,10 +115,6 @@ class MType:
     return self.__growpoints
 
   @property
-  def growpoints(self):
-    return self.__growpoints
-
-  @property
   def errorLog(self):
     return self.__errorLog
 
